@@ -48,6 +48,7 @@ class Read():
                 
                 list.append(addhouse)
                 self.smartgrid[index_battery]['HH'] = list
+                print (len(list))
             else:
                 index_battery += 1
                 list = []
@@ -55,7 +56,7 @@ class Read():
 
 
     
-        print(self.smartgrid)
+        # print(self.smartgrid)
 
 
     def read_houses(self):
