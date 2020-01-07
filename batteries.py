@@ -14,12 +14,12 @@ class Batteries():
             self.batteries.pop(0)
             
             for b in self.batteries:
-
                 xy = b[0]
                 xy = xy.strip('[]')
                 xy = xy.split(", ")
                 capacity = b[1].strip(' ')
                 battery = Battery(xy[0], xy[1], capacity)
+                # print (battery)
 
 class Battery(object):
 
@@ -30,22 +30,7 @@ class Battery(object):
         self.houses = [] 
 
     def __str__(self):
-        return f"{self.x_battery}"
-
-#     def read_batteries(self):
-#         with open("Huizen_Batterijen/wijk1_batterijen.csv", "r") as csv_file:
-#             reader = csv.reader(csv_file)
-#             batteries = list(reader)
-#             batteries.pop(0)
-            
-#             for battery in batteries:
-#                 dict = {}
-#                 dict['location'] = batteries_results[i][0]
-#                 dict['capacity'] = batteries_results[i][1].strip(' ')
-#                 dict['spare_capacity'] = dict['capacity']
-#                 dict['houses'] = []
-
-#                 self.battery.append(dict)
+        return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
 
 if __name__ == "__main__":
     bat = Batteries()
