@@ -4,19 +4,23 @@ from houses import Houses
 class SmartGrid():
 
     def __init__(self):
-        self.idk = []
+        self.smartgrid = []
 
     # filename als attribuut? ivm meerdere wijken
     def houses_to_battery(self): 
+        parsed_bat = []
         house = Houses()
         bat = Battery()
         
         bats = bat.read_batteries()
-        houses_left = house.parse_houses()
-        
+        houses = house.parse_houses()
+
         index_battery = 0
         list = []
-        self.smartgrid[index_battery]['houses'] = list
+        current_bat = self.smartgrid[index_battery]
+        parsed_bat.append(current_bat)
+        current_bat['houses'] = list
+        current_bat
         for house in houses:
             output = house[2]
             current_battery = self.smartgrid[index_battery]
