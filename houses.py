@@ -23,7 +23,8 @@ class Houses():
                 info.append(dict)
                 self.houses.append(info)
             
-            print (self.houses)
+            return (self.houses)
+            # print (self.houses)
 
 if __name__ == "__main__":
     house = Houses()
