@@ -9,24 +9,34 @@ class Houses():
     def parse_houses(self):
         with open("Huizen_Batterijen/wijk1_huizen.csv", "r") as csv_file:
             reader = csv.reader(csv_file)
-            houses = list(reader)
-            houses.pop(0)
-            
-            for house in houses:
-                info = []
+            self.houses = list(reader)
+            self.houses.pop(0)
 
-                dict = {}
-                dict['x'] = house[0]
-                dict['y'] = house[1].strip(' ')
-                dict['location'] = f"{dict['x'],dict['y']}"
-                dict['output'] = house[2].strip(' ')
-                info.append(dict)
-                self.houses.append(info)
             
-            return (self.houses)
-            # print (self.houses)
+            for house in self.houses:
+                x = house[0]
+                y = house[1]
+                output = house[2]
+
+                housing = House(x, y, output)
+
+                print(housing)
+
+class House(object):
+
+    def __init__(self, x, y, output):
+
+        self.x_house = x
+        self.y_house = y
+        self.output = output
+
+    def __str__(self):
+
+        return f"x-coordinate: {self.x_house}, y-coordinate: {self.y_house}, output: {self.output}"
+
+
+
 
 if __name__ == "__main__":
     house = Houses()
     house.parse_houses()
-
