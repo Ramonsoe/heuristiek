@@ -1,4 +1,4 @@
-from batteries import Battery
+from batteries import Battery, Batteries
 from houses import Houses
 
 class SmartGrid():
@@ -6,73 +6,33 @@ class SmartGrid():
     def __init__(self):
         self.smartgrid = []
 
-    # filename als attribuut? ivm meerdere wijken
+    # filename als attribuut? ivm meerdere wijken > of in houses / batteries juist
     def houses_to_battery(self): 
-        parsed_bat = []
         house = Houses()
-        bat = Battery()
-        
-        bats = bat.read_batteries()
-        houses = house.parse_houses()
-
-        index_battery = 0
-        list = []
-        current_bat = self.smartgrid[index_battery]
-        parsed_bat.append(current_bat)
-        current_bat['houses'] = list
-        current_bat
-        for house in houses:
-            output = house[2]
-            current_battery = self.smartgrid[index_battery]
+        house_objects = house.parse_houses()
+        batteries = Batteries()
+        battery_objects = batteries.read_batteries()
+        i = 0 
+        for battery in battery_objects:
+            battery_houses = []
            
-            spare_capacity = float(current_battery['spare_capacity']) - float(output)
-            if (spare_capacity > 0):
-                
-                current_battery['spare_capacity'] = spare_capacity
-                addhouse = {}
-                x_coordinate = house[0]
-                y_coordinate = house[1]
-                addhouse['location'] = f"{x_coordinate, y_coordinate}"
-                addhouse['output'] = output
-                
-                list.append(addhouse)
-                self.smartgrid[index_battery]['houses'] = list
-                
+            cap = battery.spare_capacity
+            out = house_objects[i].output
+
+            while cap - out > 0:
+                cap = cap - out
+                battery_houses.append(house_objects[i])
+                i += 1
+            
             else:
-                # self.spare_houses.append(house)
-                index_battery += 1
-                list = []
-
-                addhouse = {}
-                x_coordinate = house[0]
-                y_coordinate = house[1]
-                addhouse['location'] = f"{x_coordinate, y_coordinate}"
-                addhouse['output'] = output
-                self.smartgrid[index_battery]['houses']
-                list.append(addhouse)
-                # return self.smartgrid
-
-        print (self.smartgrid)
-
-
-    def divide_spares(self):
-        # for battery in self.smartgrid:
-        
-        current_battery = self.smartgrid[4]
-        if current_battery['spare_capacity'] > 0:
-            for house in self.spare_houses:
-                poep = float(current_battery['spare_capacity'])
-                plas = float(house[2])
-                if poep - plas > 0:
-                    current_battery['spare_capacity'] = poep - plas
-                    # print (current_battery)
-                    # current_battery['houses'] = house
-                    house.clear()
-
-        print (self.spare_houses)
-        print (self.smartgrid[4])
-
+                battery.houses = battery_houses
+                i += 1
+                
 
 if __name__ == "__main__":
     smart = SmartGrid()
+    bat = Batteries()
+    bat.read_batteries()
+    house = Houses()
+    house.parse_houses()
     smart.houses_to_battery()

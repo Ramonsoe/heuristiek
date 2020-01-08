@@ -27,11 +27,12 @@ class Batteries():
 class Battery(object):
 
     def __init__(self, x, y, capacity):
-        self.x_battery = x
-        self.y_battery = y
-        self.capacity = capacity
+        self.x_battery = int(x)
+        self.y_battery = int(y)
+        self.capacity = float(capacity)
+        self.spare_capacity = float(capacity)
         self.houses = []
-        self.spare_capacity = capacity
+        self.cables []
 
     def __str__(self):
         return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"

@@ -19,16 +19,15 @@ class Houses():
                 output = house[2].strip(' ')
                 house_object = House(x, y, output)
                 self.house_objects.append(house_object)
-            print (self.house_objects)
             
             return (self.house_objects)
             
 
 class House(object):
     def __init__(self, x, y, output):
-        self.x_house = x
-        self.y_house = y
-        self.output = output
+        self.x_house = int(x)
+        self.y_house = int(y)
+        self.output = float(output)
 
     def __str__(self):
         return f"x-coordinate: {self.x_house}, y-coordinate: {self.y_house}, output: {self.output}"
