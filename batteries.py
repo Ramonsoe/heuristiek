@@ -6,6 +6,7 @@ class Batteries():
 
     def __init__(self):
         self.batteries = []
+        self.battery_objects = []
 
     def read_batteries(self):
         with open("Huizen_Batterijen/wijk1_batterijen.csv", "r") as csv_file:
@@ -19,7 +20,9 @@ class Batteries():
                 xy = xy.split(", ")
                 capacity = b[1].strip(' ')
                 battery = Battery(xy[0], xy[1], capacity)
-                # print (battery)
+                self.battery_objects.append(battery)
+
+        return self.battery_objects
 
 class Battery(object):
 
@@ -27,7 +30,8 @@ class Battery(object):
         self.x_battery = x
         self.y_battery = y
         self.capacity = capacity
-        self.houses = [] 
+        self.houses = []
+        self.spare_capacity = capacity
 
     def __str__(self):
         return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
