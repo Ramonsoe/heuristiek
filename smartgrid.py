@@ -22,11 +22,11 @@ class SmartGrid():
             while cap - out > 0:
                 cap = cap - out
                 battery_houses.append(house_objects[i])
-                i += 1
             
             else:
                 battery.houses = battery_houses
-                i += 1
+                
+            i += 1
                 
 
 if __name__ == "__main__":

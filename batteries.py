@@ -32,7 +32,7 @@ class Battery(object):
         self.capacity = float(capacity)
         self.spare_capacity = float(capacity)
         self.houses = []
-        self.cables []
+        self.cables = []
 
     def __str__(self):
         return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
