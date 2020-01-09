@@ -23,5 +23,5 @@ class Houses():
                 output = house[2].strip(' ')
                 house_object = House(x, y, output)
                 house_objects.append(house_object)
-        
+
         return house_objects

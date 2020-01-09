@@ -13,3 +13,7 @@ class Battery():
 
     def add_house(self, house):
         self.houses.append(house)
+
+    def check_spare_capacity(self):
+
+        return self.spare_capacity

@@ -3,36 +3,13 @@ from houses import Houses
 import random
 
 
-class SmartGrid():
+def random_battery(batteries):
+    """pak een random batterij met genoeg spare capacity"""
+    pass
 
-    def __init__(self):
-        self.smartgrid = []
-
-    # filename als attribuut? ivm meerdere wijken > of in houses / batteries juist
-    def houses_to_battery(self):
-        house = Houses()
-        house_objects = house.parse_houses()
-        batteries = Batteries()
-        battery = batteries.read_batteries()
-        # battery_objects = batteries.read_batteries()
-        appended_houses = []
-        print(battery)
-        for house in house_objects:
-            current_battery = random.choice(battery_objects)
-            current_capacity = current_battery.capacity
-            current_spare_capacity = current_capacity - sum(item['output'] for item in current_battery.houses)
-            current_house = random.choice(house_objects)
-
-            if current_house in appended_houses:
-                break
-            else:
-                current_battery.houses.append(current_house)
-                appended_houses.append(current_house)
-
-if __name__ == "__main__":
-    smart = SmartGrid()
-    bat = Batteries()
-    bat.read_batteries()
-    house = Houses()
-    house.parse_houses()
-    # smart.houses_to_battery()
+def random_house(houses):
+    """pak een random huis die nog niet connected is"""
+    pass
+def connect_house_to_battery(self):
+    """stop het random huis in de battery"""
+    pass
