@@ -4,9 +4,11 @@ from .battery import Battery
 class Batteries():
 
     def __init__(self, battery_file):
-        self.batteries = self.load_batteries(battery_file)
+        self.batteries = self.read_batteries(battery_file)
 
-    def load_batteries(self, battery_file):
+    def read_batteries(self, battery_file):
+        """Loads all the batteries into a list"""
+
         battery_objects = []
         with open(battery_file, "r") as csv_file:
             reader = csv.reader(csv_file)
@@ -21,6 +23,4 @@ class Batteries():
                 battery = Battery(xy[0], xy[1], capacity)
                 battery_objects.append(battery)
 
-        print (battery_objects)
         return battery_objects
-
