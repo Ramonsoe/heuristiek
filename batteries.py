@@ -13,7 +13,7 @@ class Batteries():
             reader = csv.reader(csv_file)
             self.batteries = list(reader)
             self.batteries.pop(0)
-            
+
             for b in self.batteries:
                 xy = b[0]
                 xy = xy.strip('[]')
@@ -34,5 +34,14 @@ class Battery(object):
         self.houses = []
         self.cables = []
 
+<<<<<<< HEAD
     def __repr__(self):
         return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
+=======
+    def __str__(self):
+        return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
+
+if __name__ == "__main__":
+    bat = Batteries()
+    bat.read_batteries()
+>>>>>>> f3f18e25ba05f1d49780afeccca27baafa069a2a
