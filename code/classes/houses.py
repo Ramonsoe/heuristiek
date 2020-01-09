@@ -3,11 +3,9 @@ import csv
 class Houses():
 
     def __init__(self, file):
-        self.houses = []
-        self.house_objects = []
-        self.file = file
+        self.houses = self.load_houses(house_file)
 
-    def parse_houses(self):
+    def load_houses(self, house_file):
         with open(self.file, "r") as csv_file:
             reader = csv.reader(csv_file)
             self.houses = list(reader)
