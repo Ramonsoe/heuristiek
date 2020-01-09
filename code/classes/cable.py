@@ -1,22 +1,10 @@
-from test import Read
-
-class Cables():
-
-    def kabels(self, smartgrid):
-        """Deze functie heeft als input de smartgrid lijst nodig """
-
-    self.smartgrid = smartgrid
-
-    battery_nr = 0
-    battery_location = self.smartgrid[battery_nr]['location']
-
-    houses = self.smartgrid[battery_nr]['HH']
-    print(hello)
-    # houses[i]['location']
+from .battery import batteries
 
 
-if __name__ == "__main__":
+class Cable():
+    """Maak cables"""
 
-    object = Cables()
-
-    object.kabels(hoi)
+    def __init__(self, point_1, point_2, house):
+        self.battery = battery
+        self.point_1 = point_1
+        self.point_2 = point_2

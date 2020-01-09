@@ -9,3 +9,7 @@ class Battery():
 
     def __repr__(self):
         return f"({self.x_battery},{self.y_battery})"
+
+
+    def add_house(self, house):
+        self.houses.append(house)
