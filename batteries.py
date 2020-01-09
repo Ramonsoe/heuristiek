@@ -34,10 +34,5 @@ class Battery(object):
         self.houses = []
         self.cables = []
 
-    def __str__(self):
+    def __repr__(self):
         return f"x-coordinate: {self.x_battery}, y-coordinate: {self.y_battery}, capacity: {self.capacity}"
-
-if __name__ == "__main__":
-    bat = Batteries()
-    bat.read_batteries()
-    
