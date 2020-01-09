@@ -1,34 +1,27 @@
 import csv
+from .house import House
+
 
 class Houses():
 
-    def __init__(self, file):
-        self.houses = []
-        self.house_objects = []
-        self.file = file
+    def __init__(self, house_file):
+        self.houses = self.load_houses(house_file)
 
-    def parse_houses(self):
-        with open(self.file, "r") as csv_file:
+    def load_houses(self, house_file):
+        """load the houses from the input file into a list"""
+
+        house_objects = []
+
+        with open(house_file, "r") as csv_file:
             reader = csv.reader(csv_file)
-            self.houses = list(reader)
-            self.houses.pop(0)
-            for house in self.houses:
+            houses = list(reader)
+            houses.pop(0)
+
+            for house in houses:
                 x = house[0]
                 y = house[1].strip(' ')
                 output = house[2].strip(' ')
                 house_object = House(x, y, output)
-                self.house_objects.append(house_object)
-            
-        return (self.house_objects)
-            
-
-class House(object):
-    def __init__(self, x, y, output):
-        self.x_house = int(x)
-        self.y_house = int(y)
-        self.output = float(output)
-
-    def __repr__(self):
-        return f"x-coordinate: {self.x_house}, y-coordinate: {self.y_house}, output: {self.output}"
-
-
+                house_objects.append(house_object)
+        print(house_objects[20])
+        return house_objects
