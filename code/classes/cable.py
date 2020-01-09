@@ -15,7 +15,7 @@ class Cables():
     # houses[i]['location']
 
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
 
     object = Cables()
 
