@@ -36,4 +36,8 @@ def connect_house_to_battery(random_house, random_battery):
     # def remove_house(random_house, houses):
     #     if random_house.check_connection():
     #         print("<><<>,.,mll;mer;lermb;lr")
+<<<<<<< HEAD
     #         house.pop_house(random_house)
+=======
+    #         house.pop_house(random_house)
+>>>>>>> ed4cb77d8af9559f89462bf8b4a91cd974433884

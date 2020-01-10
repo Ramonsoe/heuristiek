@@ -15,9 +15,6 @@ class Battery(object):
     def add_house(self, house):
 
         self.houses.append(house)
-        Houses.
-        Connected.connected_house(house)
-        
 
     def check_spare_capacity(self):
 
