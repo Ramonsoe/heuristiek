@@ -7,6 +7,8 @@ class Houses():
     def __init__(self, house_file):
         self.houses = self.load_houses(house_file)
 
+        self.connected = []
+
     def load_houses(self, house_file):
         """load the houses from the input file into a list"""
 
@@ -25,3 +27,14 @@ class Houses():
                 house_objects.append(house_object)
 
         return house_objects
+
+    def connected_house(self, house):
+        print(self.houses)
+        print(self.connected)
+
+        connected_houses = self.connected
+        connected_houses.append(house)
+
+    def all_houses_connected(self):
+        if len(self.connected) != len(self.houses):
+            return False

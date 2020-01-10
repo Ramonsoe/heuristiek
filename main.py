@@ -14,6 +14,6 @@ if __name__ == "__main__":
     bat1 = randomgrid.random_battery(bat.batteries)
     house1 = randomgrid.random_house(house.houses)
     randomgrid.connect_house_to_battery(house1, bat1)
-    print(house.houses)
-    # while len(house) > 0:
-    #     randomgrid.connect_house_to_battery(house1, bat1)
+
+    while House.all_houses_connected() == False:
+        randomgrid.connect_house_to_battery(house1, bat1)
