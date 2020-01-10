@@ -1,5 +1,6 @@
 import csv
 from .house import House
+import copy
 
 
 class Houses():
@@ -7,7 +8,8 @@ class Houses():
     def __init__(self, house_file):
         self.houses = self.load_houses(house_file)
 
-        self.connected = []
+        self.houses_copy = copy.deepcopy(self.houses)
+        self.connected = 0
 
     def load_houses(self, house_file):
         """load the houses from the input file into a list"""
@@ -28,13 +30,15 @@ class Houses():
 
         return house_objects
 
-    def connected_house(self, house):
-        print(self.houses)
-        print(self.connected)
+    def connected_house(self):
 
-        connected_houses = self.connected
-        connected_houses.append(house)
+        self.connected += 1
 
     def all_houses_connected(self):
-        if len(self.connected) != len(self.houses):
+        if self.connected != len(self.houses):
             return False
+        return True
+
+    def pop_house(self, house):
+        # print(self.houses_copy)
+        self.houses_copy.remove(house)
