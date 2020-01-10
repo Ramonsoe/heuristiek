@@ -1,11 +1,11 @@
 import csv
 from .house import House
 
-
 class Houses():
 
     def __init__(self, house_file):
         self.houses = self.load_houses(house_file)
+        self.connected = []
 
     def load_houses(self, house_file):
         """load the houses from the input file into a list"""

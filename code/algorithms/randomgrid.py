@@ -1,38 +1,32 @@
-from batteries import Battery, Batteries
-from houses import Houses
 import random
 
 
-class SmartGrid():
+def random_battery(batteries):
+    """pak een random batterij met genoeg spare capacity"""
 
-    def __init__(self):
-        self.smartgrid = []
+    random_battery = random.choice(batteries)
+    return random_battery
 
-    # filename als attribuut? ivm meerdere wijken > of in houses / batteries juist
-    def houses_to_battery(self):
-        house = Houses()
-        house_objects = house.parse_houses()
-        batteries = Batteries()
-        battery = batteries.read_batteries()
-        # battery_objects = batteries.read_batteries()
-        appended_houses = []
-        print(battery)
-        for house in house_objects:
-            current_battery = random.choice(battery_objects)
-            current_capacity = current_battery.capacity
-            current_spare_capacity = current_capacity - sum(item['output'] for item in current_battery.houses)
-            current_house = random.choice(house_objects)
+def random_house(houses):
+    """pak een random huis die nog niet connected is"""
 
-            if current_house in appended_houses:
-                break
-            else:
-                current_battery.houses.append(current_house)
-                appended_houses.append(current_house)
+    while True:
+        random_house = random.choice(houses)
+        if not random_house.connected:
+            return random_house
 
-if __name__ == "__main__":
-    smart = SmartGrid()
-    bat = Batteries()
-    bat.read_batteries()
-    house = Houses()
-    house.parse_houses()
-    # smart.houses_to_battery()
+def connect_house_to_battery(random_house, random_battery):
+    """stop het random huis in de battery"""
+
+    battery_capacity = random_battery.spare_capacity
+    house_output = random_house.output
+
+    if (battery_capacity - house_output) >= 0:
+
+        random_battery.add_house(random_house)
+        random_house.connect_house()
+        random_battery.new_spare_capacity(random_house)
+
+        print(random_battery.houses)
+        print(random_battery.spare_capacity)
+        
