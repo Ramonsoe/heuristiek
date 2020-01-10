@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-=======
-# from code.algorithms import *
+from code.algorithms import randomgrid
 from code.classes import batteries, houses
 # from code.visualisation import *
 
@@ -10,4 +8,12 @@ if __name__ == "__main__":
     bat = batteries.Batteries('data/wijk1_batterijen.csv')
     # house = Houses()
     house = houses.Houses('data/wijk1_huizen.csv')
->>>>>>> 3675c66c5b91c2742fb999cadbbd27db958b149f
+
+    # algorithms
+
+    bat1 = randomgrid.random_battery(bat.batteries)
+    house1 = randomgrid.random_house(house.houses)
+    randomgrid.connect_house_to_battery(house1, bat1)
+    print(house.houses)
+    # while len(house) > 0:
+    #     randomgrid.connect_house_to_battery(house1, bat1)
