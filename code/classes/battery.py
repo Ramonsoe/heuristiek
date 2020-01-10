@@ -1,7 +1,7 @@
-from .houses import Houses
+from .houses import Houses, Connected
 
-class Battery():
-    def _init_(self, x, y, capacity):
+class Battery(object):
+    def __init__(self, x, y, capacity):
         self.x_battery = int(x)
         self.y_battery = int(y)
         self.capacity = float(capacity)
@@ -9,14 +9,15 @@ class Battery():
         self.houses = []
         self.cables = []
 
-    def _repr_(self):
+    def __repr__(self):
         return f"({self.x_battery},{self.y_battery})"
 
-
     def add_house(self, house):
+
         self.houses.append(house)
-        print(house)
-        Houses.connected_house(self, house)
+        Houses.
+        Connected.connected_house(house)
+        
 
     def check_spare_capacity(self):
 
