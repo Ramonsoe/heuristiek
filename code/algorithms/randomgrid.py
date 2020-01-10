@@ -26,7 +26,4 @@ def connect_house_to_battery(random_house, random_battery):
         random_battery.add_house(random_house)
         random_house.connect_house()
         random_battery.new_spare_capacity(random_house)
-
-        print(random_battery.houses)
-        print(random_battery.spare_capacity)
         

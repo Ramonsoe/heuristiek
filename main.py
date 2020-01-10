@@ -1,7 +1,7 @@
 from code.algorithms import randomgrid
 from code.classes import batteries, houses
 
-if _name_ == "_main_":
+if __name__ == "__main__":
 
     # bat = Batteries()
     bat = batteries.Batteries('data/wijk1_batterijen.csv')
@@ -14,5 +14,5 @@ if _name_ == "_main_":
     house1 = randomgrid.random_house(house.houses)
     randomgrid.connect_house_to_battery(house1, bat1)
 
-    while Houses.connected_houses():
-        doe alles
+    while House.all_houses_connected() == False:
+        randomgrid.connect_house_to_battery(house1, bat1)

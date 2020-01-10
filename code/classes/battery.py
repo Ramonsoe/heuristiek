@@ -1,4 +1,4 @@
-from houses import Connected
+from .houses import Houses
 
 class Battery():
     def _init_(self, x, y, capacity):
@@ -15,8 +15,11 @@ class Battery():
 
     def add_house(self, house):
         self.houses.append(house)
+        print(house)
+        Houses.connected_house(self, house)
 
     def check_spare_capacity(self):
+
         return self.spare_capacity
 
     def new_spare_capacity(self, output):
