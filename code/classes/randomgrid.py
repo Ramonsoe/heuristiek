@@ -9,53 +9,55 @@ class Randomgrid():
     # algorithms
     def random_dist(self, houses, batteries):
 
+        houses_list = houses.copy_houses(houses.houses)
+
         go_on = True
-        i = 0
-        while i < 5:
-            # print(len(houses.houses_copy))
+
+        while go_on:
+
             # fill battery by battery
             for battery in batteries.batteries:
-                # print(battery)
-                # print(f"eerste{len(houses.houses_copy)}")
-                # print(len(houses.houses))
+
+                # initialize count
                 count = 0
 
-                if houses.houses_copy is None:
+                # check if list with houses is not empty
+                if houses_list is None:
                     exit()
 
-                length_houses = len(houses.houses_copy)
+                length_houses = len(houses_list)
 
-                while count < 100 and len(houses.houses_copy) != 0:
+                while count < 100 and len(houses_list) != 0:
                     # random huis
-                    house1 = randomgrid.random_house(houses.houses_copy)
-                    # print(house1.output)
+                    house1 = randomgrid.random_house(houses_list)
+
                     # voeg huis toe
                     randomgrid.connect_house_to_battery(house1, battery)
 
-                    
+
                     # verwijder huis van lijst
                     if house1.check_connection():
-                        houses.pop_house(house1)
+                        randomgrid.remove_house(house1, houses_list)
 
                     previous_length = length_houses
-                    length_houses = len(houses.houses_copy)
+                    length_houses = len(houses_list)
+
+                    # check if the house is connected
                     if previous_length == length_houses:
                         count += 1
                     else:
                         count = 0
 
-                # print(len(battery.houses))
-                # print(go_on)
 
-            if len(houses.houses_copy) == 0:
+            if len(houses_list) == 0:
                 print("succes")
-                houses.houses_copy = houses.houses
+
                 go_on = False
-                i += 1
 
             else:
-                houses.houses_copy = houses.houses
-                # print(len(houses.houses))
-                # print("nieuwe", len(houses.houses_copy))
-                i += 1
-                # print(">>>>>>failure")
+                houses_list = houses.copy_houses(houses.houses)
+
+                for battery in batteries.batteries:
+                    battery.houses = []
+                    battery.spare_capacity = battery.capacity
+                print("failure")
