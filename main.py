@@ -16,7 +16,6 @@ if __name__ == "__main__":
     bat = batteries.Batteries('data/wijk1_batterijen.csv')
     house = houses.Houses('data/wijk1_huizen.csv')
 
-    areadivider = areadivider.AreaDivider(bats1, houses1)
+    # areadivider = areadivider.AreaDivider(bats1, houses1)
 
-    # randomgrid = randomgrid.Randomgrid(house, bat)
-    
+    randomgrid = randomgrid.Randomgrid(house, bat)

@@ -7,7 +7,7 @@ class Houses():
     def __init__(self, house_file):
         self.houses = self.load_houses(house_file)
 
-        self.houses_copy = copy.deepcopy(self.houses)
+        self.houses_copy = self.copy_houses(self.houses)
         self.connected = False
 
     def load_houses(self, house_file):
@@ -38,5 +38,9 @@ class Houses():
             return False
         return True
 
+    def copy_houses(self, houses):
+
+        return copy.deepcopy(houses)
+        
     def pop_house(self, house):
         self.houses_copy.remove(house)
