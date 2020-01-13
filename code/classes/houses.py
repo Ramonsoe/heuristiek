@@ -39,5 +39,4 @@ class Houses():
         return True
 
     def pop_house(self, house):
-        # print(self.houses_copy)
         self.houses_copy.remove(house)
