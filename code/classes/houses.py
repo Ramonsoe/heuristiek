@@ -8,7 +8,7 @@ class Houses():
         self.houses = self.load_houses(house_file)
 
         self.houses_copy = copy.deepcopy(self.houses)
-        self.connected = 0
+        self.connected = False
 
     def load_houses(self, house_file):
         """load the houses from the input file into a list"""
@@ -31,7 +31,7 @@ class Houses():
 
     def connected_house(self):
 
-        self.connected += 1
+        self.connected = True
 
     def all_houses_connected(self):
         if self.connected != len(self.houses):
