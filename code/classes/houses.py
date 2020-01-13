@@ -30,7 +30,6 @@ class Houses():
         return house_objects
 
     def connected_house(self):
-
         self.connected += 1
 
     def all_houses_connected(self):
@@ -39,5 +38,4 @@ class Houses():
         return True
 
     def pop_house(self, house):
-        # print(self.houses_copy)
         self.houses_copy.remove(house)
