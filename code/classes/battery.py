@@ -1,4 +1,4 @@
-from .houses import Houses, Connected
+from .houses import Houses
 
 class Battery(object):
     def __init__(self, x, y, capacity):
