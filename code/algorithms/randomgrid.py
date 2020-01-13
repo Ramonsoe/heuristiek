@@ -20,6 +20,19 @@ def random_house(houses):
         if not random_house.connected:
             return random_house
 
+def remove_house(house, houses):
+    houses.remove(house)
+
+def clean_batteries(batteries):
+    for battery in batteries.batteries:
+        battery.houses = []
+        battery.spare_capacity = battery.capacity
+
+def show_results(batteries):
+    for battery in batteries.batteries:
+        print(f"({battery.x_battery}, {battery.y_battery})")
+        print(battery.houses)
+
 def connect_house_to_battery(random_house, random_battery):
     """stop het random huis in de battery"""
 

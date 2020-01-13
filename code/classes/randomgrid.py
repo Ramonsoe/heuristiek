@@ -11,10 +11,10 @@ class Randomgrid():
 
         houses_list = houses.copy_houses(houses.houses)
 
+        # boolean to check if the algorithm has to continue or stop
         go_on = True
 
         while go_on:
-
             # fill battery by battery
             for battery in batteries.batteries:
 
@@ -51,13 +51,10 @@ class Randomgrid():
 
             if len(houses_list) == 0:
                 print("succes")
-
+                # randomgrid.show_results(batteries)
                 go_on = False
 
             else:
                 houses_list = houses.copy_houses(houses.houses)
-
-                for battery in batteries.batteries:
-                    battery.houses = []
-                    battery.spare_capacity = battery.capacity
+                randomgrid.clean_batteries(batteries)
                 print("failure")
