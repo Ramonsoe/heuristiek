@@ -4,6 +4,8 @@ import numpy as np
 
 from bokeh.plotting import figure, show
 
+from code.classes import cables
+
 
 class Visual():
 
@@ -17,6 +19,7 @@ class Visual():
         self.coordinates_battery_y = []
 
     def get_values(self):
+        """Setting x and y coordinates of batteries and houses in separate lists"""
 
         for house in self.houses:
 
@@ -27,6 +30,7 @@ class Visual():
 
             self.coordinates_battery_x.append(bat.x_battery)
             self.coordinates_battery_y.append(bat.y_battery)
+
 
         return self.coordinates_house_x, self.coordinates_house_y, self.coordinates_battery_x, self.coordinates_battery_y
 
@@ -43,8 +47,11 @@ class Visual():
         # add batteries
         grid.circle(battery_x, battery_y, size=10, color='red')
 
-        #add cables
-        # TO DO: Get all the cable sequences in separated x and y lists
-        # grid.line([10,10],[10,40], line_width=0.5, color='black')
+        # add cables
+
+        cable_x = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 42, 42, 42, 42, 42, 42, 42, 42]
+        cable_y = [11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 9, 8, 7, 6, 5, 4, 3]
+
+        grid.line(cable_x, cable_y, line_width=0.5, color='black')
 
         return show(grid)
