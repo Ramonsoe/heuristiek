@@ -3,7 +3,7 @@ import copy
 
 # from code.classes import houses
 from code.classes.houses import Houses
-from code.classes import batteries, houses, cables, house
+from code.classes import batteries, houses, cables, battery, house
 
 
 def random_battery(batteries):
@@ -33,7 +33,7 @@ def show_results(batteries):
         print(f"({battery.x_battery}, {battery.y_battery})")
         print(battery.houses)
 
-def connect_house_to_battery(random_house, random_battery):
+def connect_house_to_battery(random_house, random_battery, houses, batteries):
     """stop het random huis in de battery"""
 
     battery_capacity = random_battery.spare_capacity
@@ -41,12 +41,17 @@ def connect_house_to_battery(random_house, random_battery):
 
 
     if (battery_capacity - house_output) >= 0:
-        random_battery.add_house(random_house)
+        # print(house.add_house(random_battery))
         random_house.connect_house(random_battery)
+        houses.connect_house(random_house)
         random_battery.new_spare_capacity(random_house)
+        random_battery.add_house(random_house)
 
 def place_cables(house, battery):
 
     cable = cables.Cables(house, battery)
     house_coordinate, battery_coordinate = cable.get_all_coordinates()
-    house.cables.append(cable.make_cable_list(house_coordinate, battery_coordinate))
+    cable.make_cable_list(house_coordinate, battery_coordinate)
+    cables_house = cable.make_cable_list(house_coordinate, battery_coordinate)
+    house.add_cable(cables_house)
+    
