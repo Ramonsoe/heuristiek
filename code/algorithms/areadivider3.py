@@ -14,10 +14,12 @@ class AreaDivider():
             # all batteries in one neighbourhood have the same capacity
             self.battery_capacity = all_batteries.batteries[0].capacity
             self.area_objects = []
-            self.divided = self.sort()
+            self.sort()
+
+            self.connected_houses = []
 
     def sort(self):
-        """Divide grid into areas"""
+        """Sort houses from largest to smallest output"""
 
         # bubble sort
         swap = True
@@ -28,8 +30,55 @@ class AreaDivider():
                     self.houses[i], self.houses[i + 1] = self.houses[i + 1], self.houses[i]
                     swap = True
 
+        # for house in self.houses:
+        #     print ('output:', house.output, 'coordinates:', house.x_house, ',', house.y_house)
+
+        self.divide_largest()
+
+    def divide_largest(self):
+
+        num_batteries = len(self.batteries)
+        spares = []
         for house in self.houses:
-            print (house.output)
+
+            x_difference = 300 # magic number
+            y_difference = 300
+            for battery in self.batteries:
+                curr_x_diff = house.x_house - battery.x_battery
+                curr_y_diff = house.y_house - battery.y_battery
+                if battery.spare_capacity - house.output >= 0:
+                    if curr_x_diff < x_difference and curr_x_diff < y_difference:
+                        x_difference = curr_x_diff
+                        nearest_battery = battery
+                    elif curr_y_diff < y_difference and curr_y_diff < x_difference:
+                        y_difference = curr_y_diff
+                        nearest_battery = battery
+
+            if nearest_battery.spare_capacity - house.output >= 0:
+                house.battery = nearest_battery
+                house.connected = True
+                nearest_battery.spare_capacity -= house.output
+                nearest_battery.add_house(house)
+            # else:
+            #     spares.append(nearest_battery)
+
+        for house in self.houses:
+            if house.connected == True:
+                self.connected_houses.append(house)
+
+        # for spare in spares:
+        #     print (spare)
+        houses_in_batteries = 0
+
+        for bat in self.batteries:
+            print (bat.spare_capacity)
+            houses_in_batteries += len(bat.houses)
+
+        print ('Aantal huizen geplaatst:', houses_in_batteries)
+            
+    def output(self):
+
+        return self.connected_houses, self.batteries
 
 class Area(object):
 
