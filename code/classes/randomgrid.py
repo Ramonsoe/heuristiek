@@ -5,7 +5,7 @@ class Randomgrid():
     def __init__(self, houses, batteries):
 
         self.randomgrid = self.random_dist(houses, batteries)
-
+        
     # algorithms
     def random_dist(self, houses, batteries):
 
@@ -52,9 +52,9 @@ class Randomgrid():
 
             if len(houses_list) == 0:
                 print("succes")
-                randomgrid.show_results(batteries)
+                # randomgrid.show_results(batteries)
                 go_on = False
-
+                return houses.houses_connected
             else:
                 houses_list = houses.copy_houses(houses.houses)
                 randomgrid.clean_batteries(batteries)
