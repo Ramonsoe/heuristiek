@@ -66,12 +66,12 @@ class Cables():
     def make_cable_list(self, list_x, list_y):
         """ Puts all the x and y coordinates in one list """
 
-            for i in range(len(self.cable_x)):
+        for i in range(len(self.cable_x)):
 
-                cable_points = [self.cable_x[i], self.cable_y[i]]
-                self.cable_list.append(cable_points)
+            cable_points = [self.cable_x[i], self.cable_y[i]]
+            self.cable_list.append(cable_points)
 
-            return self.cable_list
+        return self.cable_list
 
     def connected_to_battery(self, battery):
         """ Deze functie moet gaan checken welke huizen al connected zijn """
