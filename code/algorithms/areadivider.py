@@ -14,14 +14,11 @@ class AreaDivider():
             # all batteries in one neighbourhood have the same capacity
             self.battery_capacity = all_batteries.batteries[0].capacity
 
-            self.houses_copy = copy.deepcopy(self.all_houses)
             self.max_x = 0
             self.max_y = 0
-            self.areas = {}
+            self.area_objects = []
 
             self.divided = self.sort(self.all_houses, self.all_batteries)
-
-            # self.connected = 0
 
     def sort(self, houses, batteries):
         """Divide grid into areas"""
@@ -81,7 +78,6 @@ class AreaDivider():
         for house in houses:
 
             if house.x_house <= end_area:
-                # print (start_area, end_area)
                 if spare_cap - house.output >= 0:
                     spare_cap = spare_cap - house.output
                     area.append(house)
@@ -91,63 +87,93 @@ class AreaDivider():
             else:
 
                 # add area to dict
-                self.areas[spare_cap] = area
+                area_object = Area()
+                self.area_objects.append(area_object)
+                area_object.houses = area
+                area_object.spare_capacity = spare_cap
                 spare_houses.append(house)
+
                 # start new area
                 start_area = end_area + 1
                 end_area = start_area + area_width - 1
                 spare_cap = self.battery_capacity
                 area = []
 
-        self.areas[spare_cap] = area
+        area_object = Area()
+        self.area_objects.append(area_object)
+        area_object.houses = area
+        area_object.spare_capacity = spare_cap
 
         index = 0
-        for area in self.areas:
+        print ('Vóór het verdelen:')
+        for area in self.area_objects:
             index += 1
-            print ('batterij', index, 'capaciteit over:', area)
+            print ('batterij', index, '- capaciteit over:', area.spare_capacity, 'huizen verbonden', len(area.houses))
 
-        all = 0
-        for area in self.areas.values():
-            all += len(area)
-        
-        print ('huizen verdeeld:', all)
+        self.divide_spares(spare_houses)
 
-        print ('spares:', len(spare_houses))
+    def divide_spares(self, spares):
 
-        self.divide_spares(self.areas, spare_houses)
+        x_difference = 300 # magic number
+        y_difference = 300
 
-    def divide_spares(self, areas, spares):
+        all_areas = self.area_objects
+        areas = []
+        used_spares = []
+        smallest_output = 300 # magic number
 
-        x_difference = 0
-        y_difference = 0
+        for spare in spares:
+            if spare.output < smallest_output:
+                smallest_output = spare.output
+
+        for area in all_areas:
+            if area.spare_capacity > smallest_output:
+                areas.append(area)
+
         for spare_house in spares:
             options = []
-            for cap, houses in areas.items():
-                for house in houses:
-                    if cap - house.output >= 0:
-                        options.append(spare_house)
+            for area in areas:
+                for house in area.houses:
+                    if area.spare_capacity - spare_house.output >= 0:
+                        options.append(house)
 
-            # for option in options:
+            for option in options:
+                curr_x_diff = option.x_house - spare_house.x_house
+                curr_y_diff = option.y_house - spare_house.y_house
+                
+                if curr_x_diff < x_difference and curr_x_diff < y_difference:
+                    x_difference = curr_x_diff
+                    best_option = option
+                elif curr_y_diff < y_difference and curr_y_diff < x_difference:
+                    y_difference = curr_y_diff
+                    best_option = option
 
-            x_swap = True
-            while x_swap:
-                x_swap = False
-                for i in range(len(houses) - 1):
-                    if houses[i].x_house > houses[i + 1].x_house:
-                        houses[i], houses[i + 1] = houses[i + 1], houses[i]
-                        x_swap = True
-                # if x_difference > option.x_house - spare_house.x_house:
-                #     hallo = 0
-                # elif 
-                # x_difference = option.x_house - spare_house.x_house
-                # y_difference = option.y_house - spare_house.y_house
+            for area in areas:
+                if best_option in area.houses:
+                    if area.spare_capacity - best_option.output >= 0:
+                        area.append_houses(spare_house)
+                        area.spare_capacity -= best_option.output
+                        used_spares.append(spare_house)
 
-                        # print ('poep')
-                # if area.value 
-                # print (cap, houses)
-                # print (house.output, house.x_house, ',', house.y_house)
-        pass
+        print ('Na het verdelen:')
+        length = 0
 
+        for house in spares:
+            if house not in used_spares:
+                for area in areas:
+                    if area.spare_capacity - house.output >= 0:
+                        area.append_houses(spare_house)
+                        area.spare_capacity -= house.output
+
+        houses_used = []
+        for area in self.area_objects:
+            for house in area.houses:
+                houses_used.append(house)
+            print (area)
+            length += len(area.houses)
+        
+        
+        print (length, 'huizen verdeeld')
 
     def random_house(houses):
         """Returns random battery if it's not connected"""
@@ -157,7 +183,7 @@ class AreaDivider():
             if not random_house.connected:
                 return random_house
 
-    def connect_house_to_battery(random_house, random_battery):
+    def connect_house_to_battery(house, battery):
         """stop het random huis in de battery"""
 
         battery_capacity = random_battery.spare_capacity
@@ -170,7 +196,15 @@ class AreaDivider():
             random_battery.new_spare_capacity(random_house)
 
 
-        # def remove_house(random_house, houses):
-        #     if random_house.check_connection():
-        #         print("<><<>,.,mll;mer;lermb;lr")
-        #         house.pop_house(random_house)
+class Area(object):
+
+    def __init__(self):
+        self.houses = []
+        self.battery = None
+        self.spare_capacity = 0
+    
+    def append_houses(self, house):
+        self.houses.append(house)
+
+    def __repr__(self):
+        return f"Connected to: {self.battery}, spare capacity: {self.spare_capacity}, Number of houses: {len(self.houses)}"
