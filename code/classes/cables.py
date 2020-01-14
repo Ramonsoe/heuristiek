@@ -4,40 +4,45 @@ from .cable import Cable
 
 
 class Cables():
-    """list van cables"""
+    """Creates different lists of cable coordinates from house to battery"""
 
-    def __init__(self):
+    def __init__(self, house, battery):
 
-        self.battery = battery
+        self.x1 = house.x_house
+        self.y1 = house.y_house
+        self.x2 = battery.x_battery
+        self.y2 = battery.y_battery
+
         self.cable_list = []
         self.cable_x = []
         self.cable_y = []
 
-    def add_cable(self, cable):
-
-        cable = Cable(x1, y1, x2, y2)
-        self.cable_list.append(cable)
-
-    # def distance(self):
+    # def add_cable(self, cable):
     #
-    #     mdist = abs(self.x1 - self.x2) + abs(self.y1 - self.y2)
-    #     return mdist
+    #     cable = Cable(x1, y1, x2, y2)
+    #     self.cable_list.append(cable)
+
+    def distance(self):
+        """ Returns manhattan distance of two coordinates """
+
+        distance = abs(self.x1 - self.x2) + abs(self.y1 - self.y2)
+        return distance
 
     def add_cable_coords(self, X, Y):
+        """This functie may be removed"""
 
         self.cable_x.append(X)
         self.cable_y.append(Y)
 
-        self.cable_list.append(X,Y)
-
-    def get_all_coordinates(self, mdist):
+    def get_all_coordinates(self):
+        """ Appends the x and y coordinates in separated lists for visualisation purposes """
 
         Xi, Yi = self.x1, self.y1
         Xf, Yf = self.x2, self.y2
 
         self.add_cable_coords(Xi, Yi)
 
-        for i in range(mdist):
+        for i in range(self.distance()):
 
             if Xi < Xf:
                 Xi += 1
@@ -56,16 +61,21 @@ class Cables():
                 Yi -= 1
                 self.add_cable_coords(Xi, Yi)
 
+        return self.cable_x, self.cable_y
+
+    def make_cable_list(self, list_x, list_y):
+        """ Puts all the x and y coordinates in one list """
+
+            for i in range(len(self.cable_x)):
+
+                cable_points = [self.cable_x[i], self.cable_y[i]]
+                self.cable_list.append(cable_points)
+
+            return self.cable_list
 
     def connected_to_battery(self, battery):
+        """ Deze functie moet gaan checken welke huizen al connected zijn """
 
-        # get the last cable
-        last_cable = self.cable_list[-1]
-
-        # check whether last cable connects to battery
-        if battery.battery_x == last_cable.x2 and battery.battery_y == last_cable.y2:
-            return True
-        return False
 
     def which_battery(self):
 
