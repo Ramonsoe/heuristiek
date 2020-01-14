@@ -37,6 +37,7 @@ class Randomgrid():
 
                     # verwijder huis van lijst
                     if house1.check_connection():
+                        randomgrid.place_cables(batteries)
                         randomgrid.remove_house(house1, houses_list)
 
                     previous_length = length_houses
@@ -51,6 +52,7 @@ class Randomgrid():
 
             if len(houses_list) == 0:
                 print("succes")
+
                 # randomgrid.show_results(batteries)
                 go_on = False
 
