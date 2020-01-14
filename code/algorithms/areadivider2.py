@@ -71,59 +71,77 @@ class AreaDivider():
         spare_cap = self.battery_capacity
         spare_houses = []
         area = []
-        areas = []
 
         for house in houses:
             if spare_cap - house.output >= 0:
                 spare_cap = spare_cap - house.output
                 area.append(house)
             else:
+                print (house.output)
                 area_object = Area()
                 self.area_objects.append(area_object)
                 area_object.houses = area
                 area_object.spare_capacity = spare_cap
                 area = []
+                area.append(house)
                 spare_cap = self.battery_capacity
-                # spare_houses.append(house)
-                # spare_houses.append(house)
-
-        area_object = Area()
-        self.area_objects.append(area_object)
-        area_object.houses = area
-        area_object.spare_capacity = spare_cap
-        
-        # areas.append(area)
-        for area in self.area_objects:
-            print (area)
-                
-
-        #     else:
-
-        #         # add area to dict
-        #         area_object = Area()
-        #         self.area_objects.append(area_object)
-        #         area_object.houses = area
-        #         area_object.spare_capacity = spare_cap
-        #         spare_houses.append(house)
-
-        #         # start new area
-        #         start_area = end_area + 1
-        #         end_area = start_area + area_width - 1
-        #         spare_cap = self.battery_capacity
-        #         area = []
+                spare_cap = spare_cap - house.output
+                spare_houses.append(house)
 
         # area_object = Area()
         # self.area_objects.append(area_object)
         # area_object.houses = area
         # area_object.spare_capacity = spare_cap
 
-        # index = 0
-        # print ('Vóór het verdelen:')
-        # for area in self.area_objects:
-        #     index += 1
-        #     print ('batterij', index, '- capaciteit over:', area.spare_capacity, 'huizen verbonden', len(area.houses))
+        print ('Voor het verdelen van spares:')
+        for area in self.area_objects:
+            print (area)
+        
+        # for house in spare_houses:
+        #     print (house)
+        # print (len(spare_houses))
 
-            
+        self.sort_spares(spare_houses)
+
+    def sort_spares(self, spares):
+
+        swap_spares = True
+        while swap_spares:
+            swap_spares = False
+            for i in range(len(spares) - 1):
+                if spares[i].output < spares[i + 1].output:
+                    spares[i], spares[i + 1] = spares[i + 1], spares[i]
+                    swap_spares = True
+
+        swap_areas = True
+        while swap_areas:
+            swap_areas = False
+            for i in range(len(self.area_objects) - 1):
+                if self.area_objects[i].spare_capacity < self.area_objects[i + 1].spare_capacity:
+                    self.area_objects[i], self.area_objects[i + 1] = self.area_objects[i + 1], self.area_objects[i]
+                    swap_areas = True
+        # print (spares)
+        # print (self.area_objects)
+
+        self.divide_spares(spares)
+
+    def divide_spares(self, spares):
+        # spare_spares = []
+        index = 0
+        for area in self.area_objects:
+            if area.spare_capacity - spares[index].output >= 0:
+                area.append_houses(spares[index])
+                area.spare_capacity -= spares[index].output
+            index += 1
+
+        print ('Na het verdelen van spares:')
+        index = 0
+        for area in self.area_objects:
+            index += len(area.houses)
+
+        print (index)
+
+        # print (spare_spares)
 
 class Area(object):
 
