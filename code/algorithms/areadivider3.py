@@ -8,15 +8,14 @@ class AreaDivider():
 
     def __init__(self, all_batteries, all_houses):
 
-            self.houses = all_houses.houses
-            self.batteries = all_batteries.batteries
+        self.houses = all_houses.houses
+        self.batteries = all_batteries.batteries
 
-            # all batteries in one neighbourhood have the same capacity
-            self.battery_capacity = all_batteries.batteries[0].capacity
-            self.area_objects = []
-            self.sort()
-
-            self.connected_houses = []
+        # all batteries in one neighbourhood have the same capacity
+        self.battery_capacity = all_batteries.batteries[0].capacity
+        self.area_objects = []
+        self.connected_houses = []
+        self.sort()
 
     def sort(self):
         """Sort houses from largest to smallest output"""
@@ -37,8 +36,8 @@ class AreaDivider():
 
     def divide_largest(self):
 
-        num_batteries = len(self.batteries)
-        spares = []
+        # num_batteries = len(self.batteries)
+        # spares = []
         for house in self.houses:
 
             x_difference = 300 # magic number
@@ -73,6 +72,9 @@ class AreaDivider():
         for bat in self.batteries:
             print (bat.spare_capacity)
             houses_in_batteries += len(bat.houses)
+
+        for house in self.connected_houses:
+            print (house)
 
         print ('Aantal huizen geplaatst:', houses_in_batteries)
             
