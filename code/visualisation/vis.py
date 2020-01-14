@@ -4,15 +4,17 @@ import numpy as np
 
 from bokeh.plotting import figure, show
 
-from code.classes import cables
+from code.classes import cables, batteries, houses
 
 
 class Visual():
 
-    def __init__(self, batteries, houses):
+    def __init__(self, houses, batteries):
 
         self.batteries = batteries
         self.houses = houses
+        # self.batteries = houses.battery
+
         self.coordinates_house_x = []
         self.coordinates_house_y = []
         self.coordinates_battery_x = []
@@ -31,9 +33,7 @@ class Visual():
             self.coordinates_battery_x.append(bat.x_battery)
             self.coordinates_battery_y.append(bat.y_battery)
 
-
         return self.coordinates_house_x, self.coordinates_house_y, self.coordinates_battery_x, self.coordinates_battery_y
-
 
     def make_plot(self, house_x, house_y, battery_x, battery_y):
         """Creates a gridplot with all the batteries and houses that are connected"""
@@ -48,10 +48,7 @@ class Visual():
         grid.circle(battery_x, battery_y, size=10, color='red')
 
         # add cables
-
-        cable_x = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 42, 42, 42, 42, 42, 42, 42, 42]
-        cable_y = [11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 10, 9, 8, 7, 6, 5, 4, 3]
-
-        grid.line(cable_x, cable_y, line_width=0.5, color='black')
+        
+        # grid.line(cable_x, cable_y, line_width=0.5, color='black')
 
         return show(grid)
