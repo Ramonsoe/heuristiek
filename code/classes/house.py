@@ -13,7 +13,10 @@ class House(object):
     def connect_house(self, battery):
         self.connected = True
         self.battery = battery
-        
+
     def check_connection(self):
         return self.connected
 
+    def add_cable(self, cable):
+
+        self.cables.append(cable)
