@@ -1,4 +1,4 @@
-from code.algorithms import randomgrid, areadivider
+from code.algorithms import randomgrid, areadivider, areadivider2
 from code.classes import batteries, houses, randomgrid
 # from code.visualisation import *
 
@@ -17,5 +17,7 @@ if __name__ == "__main__":
     house = houses.Houses('data/wijk1_huizen.csv')
 
     # areadivider = areadivider.AreaDivider(bats1, houses1)
+    areadivider = areadivider2.AreaDivider(bats1, houses1)
 
-    randomgrid = randomgrid.Randomgrid(house, bat)
+    # randomgrid = randomgrid.Randomgrid(house, bat)
+    
