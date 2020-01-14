@@ -32,7 +32,7 @@ class Randomgrid():
                     house1 = randomgrid.random_house(houses_list)
 
                     # voeg huis toe
-                    randomgrid.connect_house_to_battery(house1, battery)
+                    randomgrid.connect_house_to_battery(house1, battery, houses, batteries)
 
 
                     # verwijder huis van lijst
@@ -52,8 +52,7 @@ class Randomgrid():
 
             if len(houses_list) == 0:
                 print("succes")
-
-                # randomgrid.show_results(batteries)
+                randomgrid.show_results(batteries)
                 go_on = False
 
             else:
