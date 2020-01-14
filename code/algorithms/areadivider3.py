@@ -36,13 +36,27 @@ class AreaDivider():
 
     def divide_largest(self):
 
-        # num_batteries = len(self.batteries)
-        # spares = []
+        num_houses = len(self.houses)
+        not_connected = []
+        index = 0
+
         for house in self.houses:
 
             x_difference = 300 # magic number
             y_difference = 300
             for battery in self.batteries:
+                for bat_house in battery.houses:
+
+                    curr_x_diff = house.x_house - bat_house.x_house
+                    curr_y_diff = house.y_house - bat_house.y_house
+                    if battery.spare_capacity - house.output >= 0:
+                        if curr_x_diff < x_difference and curr_x_diff < y_difference:
+                            x_difference = curr_x_diff
+                            nearest_battery = battery
+                        elif curr_y_diff < y_difference and curr_y_diff < x_difference:
+                            y_difference = curr_y_diff
+                            nearest_battery = battery
+                
                 curr_x_diff = house.x_house - battery.x_battery
                 curr_y_diff = house.y_house - battery.y_battery
                 if battery.spare_capacity - house.output >= 0:
@@ -58,24 +72,17 @@ class AreaDivider():
                 house.connected = True
                 nearest_battery.spare_capacity -= house.output
                 nearest_battery.add_house(house)
-            # else:
-            #     spares.append(nearest_battery)
-
-        for house in self.houses:
-            if house.connected == True:
                 self.connected_houses.append(house)
 
-        # for spare in spares:
-        #     print (spare)
-        houses_in_batteries = 0
+            index += 1
 
+        print ('spare capacities:')
+        houses_in_batteries = 0
         for bat in self.batteries:
             print (bat.spare_capacity)
             houses_in_batteries += len(bat.houses)
 
-        for house in self.connected_houses:
-            print (house)
-
+        print ()
         print ('Aantal huizen geplaatst:', houses_in_batteries)
             
     def output(self):
