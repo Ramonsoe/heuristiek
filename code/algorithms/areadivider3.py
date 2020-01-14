@@ -49,6 +49,13 @@ class AreaDivider():
 
                     curr_x_diff = house.x_house - bat_house.x_house
                     curr_y_diff = house.y_house - bat_house.y_house
+
+                    # prevent negative numbers are treated as smaller differences
+                    if curr_x_diff < 0:
+                        curr_x_diff *= -1
+                    if curr_y_diff < 0:
+                        curr_y_diff *= -1
+
                     if battery.spare_capacity - house.output >= 0:
                         if curr_x_diff < x_difference and curr_x_diff < y_difference:
                             x_difference = curr_x_diff
@@ -59,6 +66,12 @@ class AreaDivider():
                 
                 curr_x_diff = house.x_house - battery.x_battery
                 curr_y_diff = house.y_house - battery.y_battery
+
+
+                if curr_x_diff < 0:
+                        curr_x_diff *= -1
+                if curr_y_diff < 0:
+                        curr_y_diff *= -1
                 if battery.spare_capacity - house.output >= 0:
                     if curr_x_diff < x_difference and curr_x_diff < y_difference:
                         x_difference = curr_x_diff
@@ -84,20 +97,60 @@ class AreaDivider():
 
         print ()
         print ('Aantal huizen geplaatst:', houses_in_batteries)
+
+        not_connected = []
+
+        for house in self.houses:
+            if house.connected == False:
+                not_connected.append(house)
+
+        # print ()
+        # print ('Spares verdelen...')
+        # print ()
+        # self.divide_spares(not_connected)
+
+    # def divide_spares(self, not_connected):
+    #     x_diff = 300 # magic number
+    #     y_diff = 300 
+    #     largest_spare_cap = -1
+    #     for battery in self.batteries:
+    #         if battery.spare_capacity > largest_spare_cap:
+    #             largest_spare_cap = battery.spare_capacity
+    #             bat_most_spare = battery
+
+    #     for spare in not_connected:
+    #         options = []
+    #         difference = largest_spare_cap - spare.output
+    #         for house in self.connected_houses:
+    #             if spare.output - house.output >= difference:
+    #                 if house.battery.spare_capacity - difference >= 0:
+    #                     options.append(house)
+            
+    #         curr_x_diff = spare.x_house - battery.x_battery
+    #         curr_y_diff = house.y_house - battery.y_battery
+    #         for option in options:
+    #             if curr_x_diff < x_difference and curr_x_diff < y_difference:
+    #                 x_difference = curr_x_diff
+    #                 nearest_battery = battery
+    #             elif curr_y_diff < y_difference and curr_y_diff < x_difference:
+    #                 y_difference = curr_y_diff
+    #                 nearest_battery = battery
+
+
             
     def output(self):
 
         return self.connected_houses, self.batteries
 
-class Area(object):
+# class Area(object):
 
-    def __init__(self):
-        self.houses = []
-        self.battery = None
-        self.spare_capacity = 0
+#     def __init__(self):
+#         self.houses = []
+#         self.battery = None
+#         self.spare_capacity = 0
     
-    def append_houses(self, house):
-        self.houses.append(house)
+#     def append_houses(self, house):
+#         self.houses.append(house)
 
-    def __repr__(self):
-        return f"Connected to: {self.battery}, spare capacity: {self.spare_capacity}, Number of houses: {len(self.houses)}"
+#     def __repr__(self):
+#         return f"Connected to: {self.battery}, spare capacity: {self.spare_capacity}, Number of houses: {len(self.houses)}"
