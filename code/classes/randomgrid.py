@@ -5,7 +5,7 @@ class Randomgrid():
     def __init__(self, houses, batteries):
 
         self.randomgrid = self.random_dist(houses, batteries)
-        
+
     # algorithms
     def random_dist(self, houses, batteries):
 
@@ -58,4 +58,5 @@ class Randomgrid():
             else:
                 houses_list = houses.copy_houses(houses.houses)
                 randomgrid.clean_batteries(batteries)
+                houses.empty_connected()
                 print("failure")
