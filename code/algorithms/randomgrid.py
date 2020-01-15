@@ -46,12 +46,3 @@ def connect_house_to_battery(random_house, random_battery, houses, batteries):
         houses.connect_house(random_house)
         random_battery.new_spare_capacity(random_house)
         random_battery.add_house(random_house)
-
-def place_cables(house, battery):
-
-    cable = cables.Cables(house, battery)
-    house_coordinate, battery_coordinate = cable.get_all_coordinates()
-    cable.make_cable_list(house_coordinate, battery_coordinate)
-    cables_house = cable.make_cable_list(house_coordinate, battery_coordinate)
-    house.add_cable(cables_house)
-    

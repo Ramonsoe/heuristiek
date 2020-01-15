@@ -17,6 +17,9 @@ class Cables():
         self.cable_x = []
         self.cable_y = []
 
+        # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
+        self.place_cables(house)
+
     # def add_cable(self, cable):
     #
     #     cable = Cable(x1, y1, x2, y2)
@@ -80,3 +83,11 @@ class Cables():
     def which_battery(self):
 
         return self.battery
+
+    def place_cables(self, house):
+
+        X_segments, Y_segments = self.get_all_coordinates()
+
+        house_to_battery_cable = self.make_cable_list(X_segments, Y_segments)
+
+        house.add_cable(house_to_battery_cable)

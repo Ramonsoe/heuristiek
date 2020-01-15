@@ -4,6 +4,9 @@ import copy
 from code.classes.houses import Houses
 from code.classes import batteries, houses
 
+from code.algorithms import randomgrid
+
+
 class AreaDivider():
 
     def __init__(self, all_batteries, all_houses):
@@ -78,7 +81,7 @@ class AreaDivider():
                 house.connected = True
                 nearest_battery.spare_capacity -= house.output
                 nearest_battery.add_house(house)
-                randomgrid.place
+                randomgrid.place_cables(house,nearest_battery)
                 self.connected_houses.append(house)
 
         print ('spare capacities:')
@@ -114,66 +117,47 @@ class AreaDivider():
         num_houses = len(self.houses)
 
         # while len(self.connected_houses) < num_houses:
-        # for spare in not_connected:
+        for spare in not_connected:
 
-        spare = self.not_connected[0]
+            largest_spare = 0 # magic number
+            for battery in self.batteries:
+                if battery.spare_cap > largest_spare:
+                    largest_spare = battery.spare_cap
+                    bat_largest_spare = battery
 
-        # largest_spare = 0 # magic number
-        # for battery in self.batteries:
-        #     if battery.spare_cap > largest_spare:
-        #         largest_spare = battery.spare_cap
-        #         bat_largest_spare = battery
+            options = []
 
-        # capacity_difference = abs(largest_spare - spare.output)
-        # print (capacity_difference)
-        options = []
+            distance = 300 # magic number
+            for all_house in self.connected_houses:
+                for house_large in bat_largest_spare.houses:
+                    if all_house.battery != bat_largest_spare:
+                        if all_house.battery.spare_cap + all_house.output - house_large.output >= 0:
+                            if house_large.battery.spare_cap - all_house.output + house_large.output >= spare.output:
+                                curr_distance = abs(abs(all_house.x_house) - abs(house_large.x_house)) + abs(abs(all_house.y_house) - abs(house_large.y_house))
+                                if curr_distance < distance:
+                                    distance = curr_distance
+                                    options.append(house_large)
+                                    house_1 = house_large
+                                    house_2 = all_house
+                                    combi = [house_1, house_2]
+                                    options.append(combi)
 
-        # for battery in self.bat
-        copy_houses = copy.deepcopy(self.connected_houses)
-        distance = 300 # magic number
-        for all_house in self.connected_houses:
-            for house_large in copy_houses:
-                if all_house.battery != house_large.battery:
-                    if all_house.battery.spare_cap + all_house.output - house_large.output >= 0:
-                        if house_large.battery.spare_cap - all_house.output + house_large.output >= spare.output:
-                            curr_distance = abs(abs(all_house.x_house) - abs(house_large.x_house)) + abs(abs(all_house.y_house) - abs(house_large.y_house))
-                            if curr_distance < distance:
-                                distance = curr_distance
-                                house_1 = house_large
-                                house_2 = all_house
-                                combi = [house_1, house_2]
-                                options.append(combi)
 
-        for option in options:
-            house_1 = option[0]
-            house_2 = option[1]
-            if house_2.battery.spare_cap + house_2.output - house_1.output >= 0:
-                if house_1.battery.spare_cap - house_2.output + house_1.output >= spare.output:
-                    battery_for_spare = house_1.battery
+            battery_for_spare = house_1.battery
+            # print (house_1)
+            house_1.battery.remove_house(house_1)
+            print (house_1)
+            house_2.battery.add_house(house_1)
+            house_2.battery.remove_house(house_2)
+            house_1.battery.add_house(house_2)
 
-                    for house in house_1.battery.houses:
-                        if house == house_1:
-                            house_1.battery.remove_house(house)
+            battery_for_spare.add_house(spare)
+            spare.battery = battery_for_spare
+            spare.connected = True
+            self.connected_houses.append(spare)
 
-                    house_1.battery.add_house(house_2)
-                    house_2.battery.add_house(house_1)
-
-                    for house in house_2.battery.houses:
-                        if house == house_2:
-                            house_2.battery.remove_house(house)
-
-                    house_1.battery = house_2.battery
-                    house_2.battery = battery_for_spare
-                    battery_for_spare.add_house(spare)
-                    spare.battery = battery_for_spare
-                    spare.connected = True
-                    self.connected_houses.append(spare)
-                    self.not_connected.pop(0)
-
-        
-        # print (not_connected[1])
         print('spare capacities:')
-            
+
         for bat in self.batteries:
             print (bat.spare_cap)
         print ('Aantal huizen geplaatst:', len(self.connected_houses))
@@ -253,7 +237,7 @@ class AreaDivider():
     #         # for battery in self.batteries:
     #         #     print (battery.spare_capacity)
 
-            
+
     def output(self):
 
         return self.connected_houses, self.batteries
