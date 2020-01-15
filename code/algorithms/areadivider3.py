@@ -4,6 +4,9 @@ import copy
 from code.classes.houses import Houses
 from code.classes import batteries, houses
 
+from code.algorithms import randomgrid
+
+
 class AreaDivider():
 
     def __init__(self, all_batteries, all_houses):
@@ -77,6 +80,7 @@ class AreaDivider():
                 house.connected = True
                 nearest_battery.spare_capacity -= house.output
                 nearest_battery.add_house(house)
+                randomgrid.place_cables(house,nearest_battery)
                 self.connected_houses.append(house)
 
 
@@ -109,7 +113,7 @@ class AreaDivider():
                     bat_largest_spare = battery
 
             options = []
-            
+
             distance = 300 # magic number
             for all_house in self.connected_houses:
                 for house_large in bat_largest_spare.houses:
@@ -140,12 +144,12 @@ class AreaDivider():
             self.connected_houses.append(spare)
 
         print('spare capacities:')
-        
+
         for bat in self.batteries:
             print (bat.spare_capacity)
         print ('Aantal huizen geplaatst:', len(self.connected_houses))
 
-            
+
     def output(self):
 
         return self.connected_houses, self.batteries
