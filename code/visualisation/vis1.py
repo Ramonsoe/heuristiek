@@ -63,12 +63,6 @@ class Visual():
             self.coordinates_battery_x.append(bat.x_battery)
             self.coordinates_battery_y.append(bat.y_battery)
 
-
-    def houses_to_cables(self):
-        """Creates two lists of x and y cable coordinates per house"""
-
-        pass
-
     def make_plot(self):
         """Creates a gridplot with all the batteries and houses that are connected"""
 
