@@ -4,6 +4,9 @@ import numpy as np
 
 from bokeh.plotting import figure, show
 
+from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid
+from bokeh.models.glyphs import MultiLine
+from bokeh.io import curdoc, show
 from code.classes import cables, batteries, houses
 import copy
 
@@ -43,6 +46,21 @@ class Visual():
     def houses_to_cables(self):
         """Creates two lists of x and y cable coordinates per house"""
 
+        pass
+
+    def make_plot(self, house_x, house_y, battery_x, battery_y):
+        """Creates a gridplot with all the batteries and houses that are connected"""
+
+        # empty grid
+        grid = figure(plot_width = 1500 , plot_height = 600,
+                        title='Smart Grid')
+        # add houses
+        grid.square(house_x, house_y, size=5)
+
+        # add batteries
+        grid.circle(battery_x, battery_y, size=10, color='red')
+
+        # add cables to grid
         for house in self.connected_houses:
 
             kabels = house.cables
@@ -63,22 +81,10 @@ class Visual():
             # clear temporary list
             self.remove_coords()
 
-
-    def make_plot(self, house_x, house_y, battery_x, battery_y):
-        """Creates a gridplot with all the batteries and houses that are connected"""
-
-        # empty grid
-        grid = figure(plot_width = 1500 , plot_height = 600,
-                        title='Smart Grid')
-        # add houses
-        grid.square(house_x, house_y, size=5)
-
-        # add batteries
-        grid.circle(battery_x, battery_y, size=10, color='red')
-
-        # add cables to grid
-        grid.multi_line(self.coords_all_x, self.coords_all_y)
-
+        x_all = self.coords_all_x
+        y_all = self.coords_all_y
+        # print(x_all)
+        grid.multi_line(x_all, y_all)
         show(grid)
 
     def remove_coords(self):

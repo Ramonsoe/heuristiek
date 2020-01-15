@@ -1,6 +1,6 @@
 from code.algorithms import randomgrid, areadivider
 from code.classes import batteries, houses, randomgrid
-# from code.visualisation import *
+from code.visualisation import vis
 
 if __name__ == "__main__":
 
@@ -19,3 +19,11 @@ if __name__ == "__main__":
     # areadivider = areadivider.AreaDivider(bats1, houses1)
 
     randomgrid = randomgrid.Randomgrid(house, bat)
+
+    all_houses = randomgrid.randomgrid
+
+    vis = vis.Visual(all_houses, bat.batteries)
+
+    a,b,c,d = vis.get_values()
+
+    vis.make_plot(a,b,c,d)
