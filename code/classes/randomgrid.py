@@ -41,9 +41,9 @@ class Randomgrid():
 
                     # remove house from list of unconnected houses and place cables from house to battery
                     if house1.check_connection():
+                        
                         # cables being placed here
                         cables.Cables(house1, battery)
-
                         randomgrid.remove_house(house1, houses_list)
                         count = 0
 
@@ -52,7 +52,6 @@ class Randomgrid():
 
             # check if succes or failure
             if len(houses_list) == 0:
-                print("succes")
                 go_on = False
                 return houses.houses_connected
             else:
@@ -60,4 +59,3 @@ class Randomgrid():
                 houses_list = houses.copy_houses(houses.houses)
                 randomgrid.clean_batteries(batteries)
                 houses.empty_connected()
-                print("failure")
