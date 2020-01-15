@@ -43,3 +43,7 @@ class Houses():
 
     def pop_house(self, house):
         self.houses_copy.remove(house)
+
+    def empty_connected(self):
+
+        self.houses_connected.clear()
