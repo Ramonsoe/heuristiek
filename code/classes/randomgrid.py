@@ -1,4 +1,5 @@
 from code.algorithms import randomgrid
+from code.classes import cables
 
 
 class Randomgrid():
@@ -40,7 +41,9 @@ class Randomgrid():
 
                     # remove house from list of unconnected houses and place cables from house to battery
                     if house1.check_connection():
-                        randomgrid.place_cables(house1, battery)
+                        # cables being placed here
+                        cables.Cables(house1, battery)
+
                         randomgrid.remove_house(house1, houses_list)
                         count = 0
 
@@ -53,7 +56,7 @@ class Randomgrid():
                 go_on = False
                 return houses.houses_connected
             else:
-                # make sure the algorithm starts with the correct lists 
+                # make sure the algorithm starts with the correct lists
                 houses_list = houses.copy_houses(houses.houses)
                 randomgrid.clean_batteries(batteries)
                 houses.empty_connected()
