@@ -10,11 +10,20 @@ class Battery(object):
         self.cables = []
 
     def __repr__(self):
-        return f"({self.x_battery},{self.y_battery})"
+        return f"({self.x_battery},{self.y_battery}, {self.spare_capacity})"
 
     def add_house(self, house):
-
         self.houses.append(house)
+
+    def remove_house(self, house):
+        self.houses.remove(house)
+
+    def calc_spare_capacity(self):
+
+        capacity_used = sum(house.output for house in self.houses)
+        spare_capacity = self.capacity - capacity_used
+        
+        return spare_capacity
 
     def check_spare_capacity(self):
 
