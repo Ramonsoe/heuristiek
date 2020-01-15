@@ -51,7 +51,6 @@ def place_cables(house, battery):
 
     cable = cables.Cables(house, battery)
     house_coordinate, battery_coordinate = cable.get_all_coordinates()
-    cable.make_cable_list(house_coordinate, battery_coordinate)
+    
     cables_house = cable.make_cable_list(house_coordinate, battery_coordinate)
     house.add_cable(cables_house)
-    
