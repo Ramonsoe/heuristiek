@@ -29,9 +29,6 @@ class Randomgrid():
                 if houses_list is None:
                     exit()
 
-                # keep track of the length of the llist of houses
-                # length_houses = len(houses_list)
-
                 # keep looping to fill the battery while there are houses left and it does not take too long
                 while count < 100 and len(houses_list) != 0:
 
@@ -49,22 +46,14 @@ class Randomgrid():
 
                     else:
                         count += 1
-                    # keep track of the previous length and get the updated length of list of unconnected houses
-                    # previous_length = length_houses
-                    # length_houses = len(houses_list)
 
-                    # check if the house is connected
-                    # if previous_length == length_houses:
-                    #     count += 1
-                    # else:
-                    #     count = 0
-
-
+            # check if succes or failure
             if len(houses_list) == 0:
                 print("succes")
                 go_on = False
                 return houses.houses_connected
             else:
+                # make sure the algorithm starts with the correct lists 
                 houses_list = houses.copy_houses(houses.houses)
                 randomgrid.clean_batteries(batteries)
                 houses.empty_connected()
