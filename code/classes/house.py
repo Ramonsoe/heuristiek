@@ -1,5 +1,3 @@
-from . import cables
-
 class House(object):
     def __init__(self, x, y, output):
         self.x_house = int(x)
@@ -11,13 +9,16 @@ class House(object):
         self.distance_to_battery = None
 
     def __repr__(self):
-        return f"({self.x_house}, {self.y_house}), output: {self.output}, connected: {self.connected} to {self.battery}"
+        return f"({self.x_house}, {self.y_house}), output: {self.output}, connected: {self.connected} to {self.battery}, distance is {self.distance_to_battery}"
 
     def connect_house(self, house, battery):
         self.connected = True
         self.battery = battery
-        cable = cables.Cables(house, battery)
-        self.distance_to_battery = cable.distance()
+        x_battery = battery.x_battery
+        y_battery = battery.y_battery
+        x_house = house.x_house
+        y_house = house.y_house
+        self.distance_to_battery = abs(x_battery - x_house) + abs(y_house - y_battery )
 
     def check_connection(self):
         return self.connected
