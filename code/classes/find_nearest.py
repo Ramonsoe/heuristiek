@@ -16,9 +16,9 @@ class FindNearest():
     def run(self):
         self.houses = find.sort(self.houses)
         divide = find.divide_largest(self.houses, self.batteries, self.factor)
-        self.connected = divide[0]
+        self.houses = divide[0]
         self.batteries = divide[1]
-        self.connected = divide[2]
+        self.connected_houses = divide[2]
         self.not_connected = divide[3]
 
         # while len(self.not_connected) > 0:
