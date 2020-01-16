@@ -33,8 +33,8 @@ def divide_largest(houses, batteries, factor):
             if len(battery.houses) > 0:
                 for bat_house in battery.houses:
 
-                    x_diff = abs(abs(house.x_house) - abs(bat_house.x_house))
-                    y_diff = abs(abs(house.y_house) - abs(bat_house.y_house))
+                    x_diff = abs(house.x_house - bat_house.x_house)
+                    y_diff = abs(house.y_house - bat_house.y_house)
 
                     curr_diff = x_diff + y_diff
 
@@ -43,8 +43,8 @@ def divide_largest(houses, batteries, factor):
                             difference = curr_diff
                             nearest_battery = bat_house.battery
 
-            x_diff = abs(abs(house.x_house) - abs(battery.x_battery))
-            y_diff = abs(abs(house.y_house) - abs(battery.y_battery))
+            x_diff = abs(house.x_house - battery.x_battery)
+            y_diff = abs(house.y_house - battery.y_battery)
 
             if battery.spare_capacity - house.output >= 0:
                 curr_diff = x_diff + y_diff
@@ -60,7 +60,7 @@ def divide_largest(houses, batteries, factor):
             connected_houses.append(house)
 
     
-    print ('Aantal huizen geplaatst:', len(connected_houses))
+    # print ('Aantal huizen geplaatst:', len(connected_houses))
 
     for house in houses:
         if house.connected == False:
