@@ -1,5 +1,5 @@
-from code.algorithms import randomgrid, areadivider, areadivider2, areadivider3
-from code.classes import batteries, houses, randomgrid
+from code.algorithms import randomgrid, areadivider3, find_nearest as find
+from code.classes import batteries, houses, randomgrid, find_nearest
 # from code.visualisation import *
 
 if __name__ == "__main__":
@@ -17,7 +17,16 @@ if __name__ == "__main__":
     house = houses.Houses('data/wijk1_huizen.csv')
 
     # areadivider = areadivider.AreaDivider(bats1, houses1)
-    areadivider = areadivider3.AreaDivider(bats1, houses1)
+    # areadivider = areadivider3.AreaDivider(bats3, houses3)
+
+    # factor is the percentage of houses to connect to nearest battery
+    # other houses will be connected randomly
+
+    factor = 100
+    finder = find_nearest.FindNearest(bats1, houses1, factor)
+
+    # houses = areadivider.output()
+    # print (houses)
 
     # randomgrid = randomgrid.Randomgrid(house, bat)
     
