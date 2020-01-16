@@ -17,13 +17,13 @@ class Cables():
         self.cable_x = []
         self.cable_y = []
 
+        self.cable_objects = []
+
+        # self.add_cable()
+
         # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
         self.place_cables(house)
 
-    # def add_cable(self, cable):
-    #
-    #     cable = Cable(x1, y1, x2, y2)
-    #     self.cable_list.append(cable)
 
     def distance(self):
         """ Returns manhattan distance of two coordinates """
@@ -65,9 +65,8 @@ class Cables():
                 Xi -= 1
                 self.add_cable_coords(Xi, Yi)
 
-        return self.cable_x, self.cable_y
 
-    def make_cable_list(self, list_x, list_y):
+    def make_cable_list(self):
         """ Puts all the x and y coordinates in one list """
 
         for i in range(len(self.cable_x)):
@@ -87,8 +86,8 @@ class Cables():
 
     def place_cables(self, house):
 
-        X_segments, Y_segments = self.get_all_coordinates()
+        self.get_all_coordinates()
 
-        house_to_battery_cable = self.make_cable_list(X_segments, Y_segments)
+        house_to_battery_cable = self.make_cable_list()
 
         house.add_cable(house_to_battery_cable)
