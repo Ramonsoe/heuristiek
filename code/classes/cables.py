@@ -47,21 +47,22 @@ class Cables():
 
         for i in range(self.distance()):
 
-            if Xi < Xf:
-                Xi += 1
-                self.add_cable_coords(Xi, Yi)
-                continue
-            elif Xi > Xf:
-                Xi -= 1
-                self.add_cable_coords(Xi, Yi)
-                continue
-
             if Yi < Yf:
                 Yi += 1
                 self.add_cable_coords(Xi, Yi)
                 continue
             elif Yi > Yf:
                 Yi -= 1
+                self.add_cable_coords(Xi, Yi)
+                continue
+
+
+            if Xi < Xf:
+                Xi += 1
+                self.add_cable_coords(Xi, Yi)
+                continue
+            elif Xi > Xf:
+                Xi -= 1
                 self.add_cable_coords(Xi, Yi)
 
         return self.cable_x, self.cable_y
