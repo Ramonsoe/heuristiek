@@ -1,12 +1,15 @@
 from code.algorithms import randomgrid
-from code.classes import cables
-
+from code.classes import cables, batteries, houses
+import csv
 
 class Randomgrid():
     """class where the random solution is derived"""
 
     def __init__(self, houses, batteries):
         """initialize the randomgrid"""
+
+        # batteries = batteries.Batteries(battery_file)
+        # houses = houses.Houses(house_file)
 
         self.randomgrid = self.random_dist(houses, batteries)
 
@@ -41,9 +44,9 @@ class Randomgrid():
 
                     # remove house from list of unconnected houses and place cables from house to battery
                     if house1.check_connection():
-                        
+
                         # cables being placed here
-                        cables.Cables(house1, battery)
+                        c = cables.Cables(house1, battery)
                         randomgrid.remove_house(house1, houses_list)
                         count = 0
 
@@ -53,6 +56,8 @@ class Randomgrid():
             # check if succes or failure
             if len(houses_list) == 0:
                 go_on = False
+                # print(cables.delete_overleap())
+                c.delete_overleap(batteries)
                 return houses.houses_connected
             else:
                 # make sure the algorithm starts with the correct lists
