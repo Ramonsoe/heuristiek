@@ -8,7 +8,7 @@ class Battery(object):
         self.cables = []
 
     def __repr__(self):
-        return f"({self.x_battery},{self.y_battery}, {self.spare_capacity})"
+        return f"({self.x},{self.y}, {self.spare_capacity})"
 
     def add_house(self, house):
         self.houses.append(house)
