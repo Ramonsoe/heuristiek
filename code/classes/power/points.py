@@ -11,6 +11,8 @@ class Connectpoints():
         self.x2 = powersource.x_power
         self.y2 = powersource.y_power
 
+        self.connect_line = []
+
     def distance(self):
         """ Returns manhattan distance of two coordinates """
 
@@ -29,15 +31,15 @@ class Connectpoints():
 
             if Yi < Yf:
                 Yi += 1
-                continue
+
             elif Yi > Yf:
                 Yi -= 1
-                continue
 
-            if Xi < Xf:
+            elif Xi < Xf:
                 Xi += 1
-                continue
-            elif Xi > Xf:
+
+            else Xi > Xf:
                 Xi -= 1
 
             cablepoint = Cablepoint(Xi, Yi)
+            self.connect_line.append(cablepoint)

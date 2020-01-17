@@ -6,12 +6,9 @@ class Powersource():
     def __init__(self, object):
         """init hier objecten uit (kabels, batterijen en huizen)"""
 
-
         self.x_power = object.x
         self.y_power = object.y
         self.battery = battery
-
-
 
 """To do:
 

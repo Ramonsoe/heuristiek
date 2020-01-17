@@ -22,9 +22,8 @@ class Powersources():
 
     def add_cablepower(self, cablepoint):
 
-        for cable in cables:
-            powersource = Powersource(cablepoint)
-            self.powersources.append(powersource)
+        powersource = Powersource(cablepoint)
+        self.powersources.append(powersource)
 
     def remove_powersources(self):
         """verwijder powersources van een volle batterij"""
