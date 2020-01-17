@@ -22,9 +22,9 @@ if __name__ == "__main__":
     # factor is the percentage of houses to connect to nearest battery
     # other houses will be connected randomly
 
-    factor = 100
+    factor = 75
     finder = find_nearest.FindNearest(bats1, houses1, factor)
-    finder.output
+    finder.output()
     # price.Price(finder.output[0], finder.output[1])
 
 
