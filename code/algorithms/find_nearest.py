@@ -59,8 +59,7 @@ def divide_largest(houses, batteries, factor):
             nearest_battery.add_house(house)
             connected_houses.append(house)
 
-    
-    # print ('Aantal huizen geplaatst:', len(connected_houses))
+    print ('Aantal huizen geplaatst:', len(connected_houses))
 
     for house in houses:
         if house.connected == False:
@@ -68,9 +67,20 @@ def divide_largest(houses, batteries, factor):
 
     return houses, batteries, connected_houses, not_connected
 
-# def random(not_connected, batteries):
-    # random_house = random.choice(not_connected)
-    # random_battery = random.choice(batteries)    
+def find_random(not_connected, batteries, connected):
+    house = random.choice(not_connected)
+    battery = random.choice(batteries)    
+    combination = []
+    if battery.calc_spare_capacity() - house.output >= 0:
+
+        # house.battery = battery
+        # battery.add_house(house)
+        # print ('Added house:', house)
+        combination = [battery, house]
+        # connected.append(house)
+        battery.spare_capacity -= house.output
+
+    return connected, combination, house
 
 def place_cables(house, battery):
 

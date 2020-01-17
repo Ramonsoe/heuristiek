@@ -1,6 +1,6 @@
 from code.algorithms import randomgrid, areadivider3, find_nearest as find
-from code.classes import batteries, houses, randomgrid, find_nearest
-# from code.visualisation import *
+from code.classes import batteries, houses, randomgrid, find_nearest, price
+
 
 if __name__ == "__main__":
 
@@ -24,6 +24,9 @@ if __name__ == "__main__":
 
     factor = 100
     finder = find_nearest.FindNearest(bats1, houses1, factor)
+    finder.output
+    # price.Price(finder.output[0], finder.output[1])
+
 
     # houses = areadivider.output()
     # print (houses)

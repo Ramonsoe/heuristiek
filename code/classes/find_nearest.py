@@ -9,8 +9,8 @@ class FindNearest():
         self.houses = houses.houses
         self.connected_houses = []
         self.not_connected = []
+        self.random_generated = []
         self.factor = factor / 100
-
         self.run()
 
     def run(self):
@@ -20,12 +20,23 @@ class FindNearest():
         self.batteries = divide[1]
         self.connected_houses = divide[2]
         self.not_connected = divide[3]
+    #     batteries = copy.deepcopy(self.batteries)
 
-        # while len(self.not_connected) > 0:
-        #     find.random(self.not_connected, self.batteries)
+    #     while len(self.random_generated) + len(self.connected_houses) != (len(self.houses)):
+    #         self.make_random(batteries)
+    #         if len(self.random_generated) + len(self.connected_houses) == (len(self.houses)):
+    #             self.place_random()
 
-        for house in self.connected_houses:
-            find.place_cables(house, house.battery)
+    # def make_random(self, batteries):
+    
+    #     rand = find.find_random(self.not_connected, batteries, self.connected_houses)
+    #     combination = rand[1]
+    #     if len(combination) != 0:
+    #         self.random_generated.append(combination)
+    #         self.not_connected.remove(rand[2])
+
+    # def place_random():
+    #     for combination in self.random_generated:
 
     def output(self):
         return self.connected_houses, self.batteries
