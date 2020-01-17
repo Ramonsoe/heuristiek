@@ -8,7 +8,10 @@ class Powersource():
 
         self.x_power = object.x
         self.y_power = object.y
-        self.battery = battery
+        # self.spare_capacity = o
+
+    def __repr__(self):
+        return f"{self.x_power}, {self.y_power}"
 
 """To do:
 
