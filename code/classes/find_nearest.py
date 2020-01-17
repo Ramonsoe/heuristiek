@@ -1,5 +1,4 @@
 import copy
-
 from code.algorithms import find_nearest as find
 
 class FindNearest():
@@ -21,23 +20,30 @@ class FindNearest():
         self.batteries = divide[1]
         self.connected_houses = divide[2]
         self.not_connected = divide[3]
-        for battery in self.batteries:
-            print (battery.calc_spare_capacity())
         self.batteries_copy = copy.deepcopy(self.batteries)
-        self.randomize()
+        print('Number of connected houses:', len(self.connected_houses))
         
-        print()
-
-        print ('Aantal huizen geplaatst na random:', len(self.connected_houses))
-        for battery in self.batteries:
-            print (battery.calc_spare_capacity())
+        self.randomize()
+        print('Number of connected houses after randomizing:', len(self.connected_houses))
+        
 
     def randomize(self):
         if self.factor != 1:
             index = 0
             while len(self.random_generated) + len(self.connected_houses) != (len(self.houses)):
+                length = len(self.random_generated)
                 self.make_random(self.batteries_copy)
-        
+
+                if length == len(self.random_generated):
+                    index += 1
+                else:
+                    index = 0
+
+                # stop creating random connections after 100 unsuccesful attempts
+                if index == 100:
+                    self.restart()
+                    break
+
             if len(self.random_generated) + len(self.connected_houses) == (len(self.houses)):
                 self.place_random()
 
@@ -55,6 +61,17 @@ class FindNearest():
             house = connection[1]
             find.make_connection(house, battery)
             self.connected_houses.append(house)
+
+    def restart(self):
+        self.random_generated = []
+        self.batteries_copy = copy.deepcopy(self.batteries)
+        self.not_connected = []
+
+        for house in self.houses:
+            if house.connected == False:
+                self.not_connected.append(house)
+
+        self.randomize()
 
     def output(self):
         return self.connected_houses, self.batteries

@@ -13,23 +13,14 @@ if __name__ == "__main__":
     bats3 = batteries.Batteries('data/wijk3_batterijen.csv')
     houses3 = houses.Houses('data/wijk3_huizen.csv')
 
-    bat = batteries.Batteries('data/wijk1_batterijen.csv')
-    house = houses.Houses('data/wijk1_huizen.csv')
-
-    # areadivider = areadivider.AreaDivider(bats1, houses1)
-    # areadivider = areadivider3.AreaDivider(bats3, houses3)
-
     # factor is the percentage of houses to connect to nearest battery
     # other houses will be connected randomly
 
     factor = 75
     finder = find_nearest.FindNearest(bats1, houses1, factor)
-    finder.output()
-    # price.Price(finder.output[0], finder.output[1])
+    outputs = finder.output()
 
+    houses = outputs[0]
+    batteries = outputs[1]
 
-    # houses = areadivider.output()
-    # print (houses)
-
-    # randomgrid = randomgrid.Randomgrid(house, bat)
     

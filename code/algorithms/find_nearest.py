@@ -56,8 +56,6 @@ def divide_largest(houses, batteries, factor):
         make_connection(house, nearest_battery)
         connected_houses.append(house)
 
-    print ('Aantal huizen geplaatst:', len(connected_houses))
-
     # list of unconnected house needed for random placement later on
     for house in houses:
         if house.connected == False:
