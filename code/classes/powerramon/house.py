@@ -1,7 +1,7 @@
 class House(object):
     def __init__(self, x, y, output):
-        self.x_house = int(x)
-        self.y_house = int(y)
+        self.x = int(x)
+        self.y = int(y)
         self.output = float(output)
         self.connected = False
         self.cables = []

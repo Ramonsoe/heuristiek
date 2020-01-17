@@ -17,13 +17,13 @@ class Cables():
         self.cable_x = []
         self.cable_y = []
 
-        self.cable_objects = []
-
-        # self.add_cable()
-
         # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
         self.place_cables(house)
 
+    # def add_cable(self, cable):
+    #
+    #     cable = Cable(x1, y1, x2, y2)
+    #     self.cable_list.append(cable)
 
     def distance(self):
         """ Returns manhattan distance of two coordinates """
@@ -47,16 +47,6 @@ class Cables():
 
         for i in range(self.distance()):
 
-            if Yi < Yf:
-                Yi += 1
-                self.add_cable_coords(Xi, Yi)
-                continue
-            elif Yi > Yf:
-                Yi -= 1
-                self.add_cable_coords(Xi, Yi)
-                continue
-
-
             if Xi < Xf:
                 Xi += 1
                 self.add_cable_coords(Xi, Yi)
@@ -64,16 +54,26 @@ class Cables():
             elif Xi > Xf:
                 Xi -= 1
                 self.add_cable_coords(Xi, Yi)
+                continue
 
+            if Yi < Yf:
+                Yi += 1
+                self.add_cable_coords(Xi, Yi)
+                continue
+            elif Yi > Yf:
+                Yi -= 1
+                self.add_cable_coords(Xi, Yi)
 
-    def make_cable_list(self):
+        return self.cable_x, self.cable_y
+
+    def make_cable_list(self, list_x, list_y):
         """ Puts all the x and y coordinates in one list """
 
         for i in range(len(self.cable_x)):
 
             cable_points = [self.cable_x[i], self.cable_y[i]]
             self.cable_list.append(cable_points)
-
+        self.cable_list = [[self.cable_x[i], self] for ]
         return self.cable_list
 
     def connected_to_battery(self, battery):
@@ -86,8 +86,8 @@ class Cables():
 
     def place_cables(self, house):
 
-        self.get_all_coordinates()
+        X_segments, Y_segments = self.get_all_coordinates()
 
-        house_to_battery_cable = self.make_cable_list()
+        house_to_battery_cable = self.make_cable_list(X_segments, Y_segments)
 
         house.add_cable(house_to_battery_cable)

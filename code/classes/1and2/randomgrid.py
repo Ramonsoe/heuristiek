@@ -46,7 +46,7 @@ class Randomgrid():
                     if house1.check_connection():
 
                         # cables being placed here
-                        c = cables.Cables(house1, battery)
+                        cables.Cables(house1, battery)
                         randomgrid.remove_house(house1, houses_list)
                         count = 0
 
@@ -57,7 +57,7 @@ class Randomgrid():
             if len(houses_list) == 0:
                 go_on = False
                 # print(cables.delete_overleap())
-                c.delete_overleap(batteries)
+                # c.delete_overleap(batteries)
                 return houses.houses_connected
             else:
                 # make sure the algorithm starts with the correct lists
