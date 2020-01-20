@@ -9,38 +9,37 @@ class Powersources():
     def __init__(self, newsources):
 
         self.powersources = self.add_powersource(newsources)
-        self.powersource_objects = []
+        # self.powersource_objects = []
+
 
     def add_powersource(self, newsources):
         """add objects to powersource list"""
+        powersource_objects = []
+        i = 0
+        j = 0
+
         for newsource in newsources:
+            i += 1
+            print(i)
 
             try:
                 for battery in newsource.batteries:
-                    print(battery)
-                    newsource = powersource.Powersource(battery)
-                    print(newsource.x_power)
-                    self.powersource_objects.append(newsource)
+                    powersource_objects.append(battery)
             except:
                 pass
-                print("orieb")
 
             try:
-                for house in newsource.houses:
-                    print(house)
-                    newsource = powersource.Powersource(newsource[i])
-                    self.powersource_objects.append(newsource)
+                for house in newsource.houses_connected:
+                    powersource_objects.append(house)
             except:
-                print("orieb")
                 pass
+
             try:
-                for i in range(len(newsource)):
-                    newsource = Powersource(newsource[i])
-                    self.powersource_objects.append(newsource)
+                for cable in newsource.cable_list:
+                    powersource_objects.append(cable)
             except:
-                print("orieb")
                 pass
-        # return self.powersource_objects
+        return powersource_objects
 
     # def add_house_power(self, connected_houses):
     #
