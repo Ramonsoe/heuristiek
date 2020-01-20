@@ -1,4 +1,4 @@
-class Cablepoint():
+class Cablepoint(object):
 
 
     def __init__(self, x, y, battery):

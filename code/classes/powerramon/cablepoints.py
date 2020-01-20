@@ -2,13 +2,7 @@ from .cablepoint import Cablepoint
 
 class Cablepoints():
 
-    def __init__(self, house, battery):
-
-        self.x1 = house.x
-        self.y1 = house.y
-        self.x2 = battery.x
-        self.y2 = battery.y
-        self.battery = battery
+    def __init__(self):
 
         self.cable_list = []
         self.cable_x = []
@@ -18,13 +12,12 @@ class Cablepoints():
         # self.add_cable()
 
         # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
-        self.place_cables(house)
 
 
-    def distance(self):
+    def distance(self, house, battery):
         """ Returns manhattan distance of two coordinates """
 
-        distance = abs(self.x1 - self.x2) + abs(self.y1 - self.y2)
+        distance = abs(house.x - battery.x) + abs(house.y - battery.y)
         return distance
 
     def add_cable_coords(self, x, y):
@@ -33,13 +26,13 @@ class Cablepoints():
         self.cable_x.append(x)
         self.cable_y.append(y)
 
-    def get_all_coordinates(self):
+    def get_all_coordinates(self, house, battery):
         """ Appends the x and y coordinates in separated lists for visualisation purposes """
 
-        Xi, Yi = self.x1, self.y1
-        Xf, Yf = self.x2, self.y2
+        Xi, Yi = house.x, house.y
+        Xf, Yf = battery.x, battery.y
 
-        for i in range(self.distance() - 1):
+        for i in range(self.distance(house, battery) - 1):
 
             if Yi < Yf:
                 Yi += 1
@@ -60,14 +53,13 @@ class Cablepoints():
                 self.add_cable_coords(Xi, Yi)
 
 
-    def make_cable_list(self):
+    def make_cable_list(self, battery):
         """ Puts all the x and y coordinates in one list """
 
         for i in range(len(self.cable_x)):
-            cablepoints = Cablepoint(self.cable_x[i], self.cable_y[i], self.battery)
-            # cable_points = [self.cable_x[i], self.cable_y[i], self.battery]
-            self.cable_list.append(cablepoints)
-
+            cablepoint = Cablepoint(self.cable_x[i], self.cable_y[i], battery)
+            self.cable_list.append(cablepoint)
+        # print(self.cable_list)
         return self.cable_list
 
     def connected_to_battery(self, battery):
@@ -78,10 +70,13 @@ class Cablepoints():
 
         return self.battery
 
-    def place_cables(self, house):
+    def place_cables(self, house, battery):
 
-        self.get_all_coordinates()
+        self.cable_x = []
+        self.cable_y = []
+        self.get_all_coordinates(house, battery)
+        self.make_cable_list(battery)
 
-        house_to_battery_cable = self.make_cable_list()
+        house_to_battery_cable = self.make_cable_list(battery)
 
         house.add_cable(house_to_battery_cable)
