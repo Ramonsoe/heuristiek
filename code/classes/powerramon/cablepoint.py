@@ -1,4 +1,3 @@
-
 class Cablepoint():
 
 
@@ -12,4 +11,4 @@ class Cablepoint():
 
     def __repr__(self):
 
-        return f"|{x, y}|"
+        return f"|{self.x, self.y}, {self.battery}|"
