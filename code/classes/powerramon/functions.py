@@ -3,13 +3,15 @@ import copy
 
 # from code.classes import houses
 from code.classes.houses import Houses
-from code.classes import batteries, houses, cables, battery, house
+
+# from code.classes.powerramon.powersources
+from code.classes.powerramon import batteries, houses, cables, battery, house, powersources, cablepoints
 
 
-def random_battery(batteries):
+def random_powersource(powersources):
     """Returns random batteries"""
 
-    random_battery = random.choice(batteries)
+    random_powersource = random.choice(powersource)
     return random_battery
 
 def random_house(houses):
@@ -26,20 +28,38 @@ def get_closest_house(houses, powersources):
     current_powersource = None
     manhattan_distance = 10^6       # magic number
 
-    for house in houses.houses_copy:
+    for house in houses:
 
-        for powersource in powersources:
+        try:
+            for battery in powersources.batteries:
+                powersource = battery
 
-            house_distance = man_distance(house, powersource)
+                house_distance = man_distance(house, powersource)
 
-            if house_distance < manhattan_distance:
+                if house_distance < manhattan_distance:
 
-                manhattan_distance = house_distance
+                    manhattan_distance = house_distance
 
-                closest_house = house
+                    closest_house = house
 
-                current_powersource = powersource
+                    current_powersource = powersource
+        except:
+            pass
 
+        try:
+            for powersource in powersources:
+
+                house_distance = man_distance(house, powersource)
+
+                if house_distance < manhattan_distance:
+
+                    manhattan_distance = house_distance
+
+                    closest_house = house
+
+                    current_powersource = powersource
+        except:
+            pass
     return closest_house, current_powersource
 
 def man_distance(house, powersource):
@@ -63,26 +83,53 @@ def distance_all(house, batteries):
 def remove_house(house, houses):
     houses.remove(house)
 
-def clean_batteries(batteries):
-    for battery in batteries.batteries:
-        battery.houses = []
-        battery.spare_capacity = battery.capacity
+def clear_powersources(powersources):
+
+    for powersource in powersources:
+
+        try:
+            for battery in powersource.batteries:
+                battery.houses = []
+                battery.spare_capacity = battery.capacity
+        except:
+            pass
+
+    powersources.powersource_objects.clear()
 
 def show_results(batteries):
     for battery in batteries.batteries:
         print(f"({battery.x_battery}, {battery.y_battery})")
         print(battery.houses)
 
-def connect_house_to_battery(random_house, random_battery, houses, batteries):
+def add_powersource(newpowersources):
+
+    ps = powersources.Powersources()
+    ps.add_powersource(newpowersources)
+
+def connect_house_to_powersource(closest_house, current_powersource, houses, powersources):
     """stop het random huis in de battery"""
 
-    battery_capacity = random_battery.spare_capacity
-    house_output = random_house.output
+
+
+    try:
+        spare_cap = current_powersource.spare_capacity
+        battery = current_powersource
+    except:
+
+        pass
+
+    try:
+        battery = current_powersource.battery
+    except:
+        pass
+
+    # print(closest_house)
+    house_output = closest_house.output
+    battery_capacity = battery.spare_capacity
 
 
     if (battery_capacity - house_output) >= 0:
-        # print(house.add_house(random_battery))
-        random_house.connect_house(random_battery)
-        houses.connect_house(random_house)
-        random_battery.new_spare_capacity(random_house)
-        random_battery.add_house(random_house)
+        closest_house.connect_house(closest_house, battery)
+        houses.connect_house(closest_house)
+        battery.new_spare_capacity(closest_house)
+        battery.add_house(closest_house)
