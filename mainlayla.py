@@ -31,13 +31,12 @@ if __name__ == "__main__":
     houses = outputs[0]
     batteries = outputs[1]
 
-    formatted = change_cables.ChangeCables(houses)
     price_results = price.Price(houses, batteries)
     total = price_results.total_price
 
     print ('Totaalprijs:', total)
 
-    vis2.Visual(houses, bats1)
+    # vis2.Visual(houses, bats1)
 
     # with open('dumps/wijk1.pkl', 'wb') as output:
     #     pickle.dump(amazing_houses, output, pickle.HIGHEST_PROTOCOL)
