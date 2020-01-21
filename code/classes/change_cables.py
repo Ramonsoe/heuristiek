@@ -1,4 +1,4 @@
-class FormatCables():
+class ChangeCables():
 
     def __init__(self, houses):
         self.houses = houses
