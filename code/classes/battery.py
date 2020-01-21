@@ -4,6 +4,9 @@ class Battery(object):
     def __init__(self, x, y, capacity):
         self.x_battery = int(x)
         self.y_battery = int(y)
+        self.x = self.x_battery
+        self.y = self.y_battery
+        
         self.capacity = float(capacity)
         self.spare_capacity = float(capacity)
         self.houses = []
@@ -22,7 +25,7 @@ class Battery(object):
 
         capacity_used = sum(house.output for house in self.houses)
         spare_capacity = self.capacity - capacity_used
-        
+        self.spare_capacity = spare_capacity
         return spare_capacity
 
     def check_spare_capacity(self):

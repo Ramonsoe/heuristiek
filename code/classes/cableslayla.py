@@ -1,29 +1,28 @@
 from .battery import Battery
 from .batteries import Battery
-from .cable import Cable
-
+from .cablelayla import Cable
 
 class Cables():
     """Creates different lists of cable coordinates from house to battery"""
 
     def __init__(self, house, battery):
 
-        self.x1 = house.x_house
-        self.y1 = house.y_house
-        self.x2 = battery.x_battery
-        self.y2 = battery.y_battery
+
+        self.x1 = house.x
+        self.y1 = house.y
+        self.x2 = battery.x
+        self.y2 = battery.y
+        self.battery = battery
+        self.house = house
 
         self.cable_list = []
         self.cable_x = []
         self.cable_y = []
-
         self.cable_objects = []
 
-        # self.add_cable()
-
-        # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
         self.place_cables(house)
-
+        self.make_objects()
+        self.add_cables_to_house()
 
     def distance(self):
         """ Returns manhattan distance of two coordinates """
@@ -76,14 +75,6 @@ class Cables():
 
         return self.cable_list
 
-    def connected_to_battery(self, battery):
-        """ Deze functie moet gaan checken welke huizen al connected zijn """
-
-
-    def which_battery(self):
-
-        return self.battery
-
     def place_cables(self, house):
 
         self.get_all_coordinates()
@@ -91,3 +82,18 @@ class Cables():
         house_to_battery_cable = self.make_cable_list()
 
         house.add_cable(house_to_battery_cable)
+
+    def make_objects(self):
+
+        
+        for start, end in zip(self.cable_list[0::2], self.cable_list[1::2]):
+            cable = Cable(start[0], start[1], end[0], end[1], self.battery)
+
+
+            self.cable_objects.append(cable)
+
+    def add_cables_to_house(self):
+        
+        self.house.all_cable_segments = self.cable_objects        
+            
+        
