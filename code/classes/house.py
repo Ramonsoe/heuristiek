@@ -2,9 +2,13 @@ class House(object):
     def __init__(self, x, y, output):
         self.x_house = int(x)
         self.y_house = int(y)
+        self.x = self.x_house
+        self.y = self.y_house
+        
         self.output = float(output)
         self.connected = False
         self.cables = []
+        self.all_cable_segments = []
         self.battery = None
         self.distance_to_battery = None
 
