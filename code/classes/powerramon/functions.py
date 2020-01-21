@@ -1,5 +1,7 @@
 import random
 import copy
+from itertools import filterfalse
+
 
 # from code.classes import houses
 from code.classes.houses import Houses
@@ -23,9 +25,9 @@ def random_house(houses):
             return random_house
 
 def get_closest_house(houses, powersources):
-
-    closest_house = None
-    current_powersource = None
+    print(len(powersources))
+    closest_house = houses[0]
+    current_powersource = powersources[3]
     manhattan_distance = 10^6       # magic number
 
     for house in houses:
@@ -60,6 +62,8 @@ def get_closest_house(houses, powersources):
                     current_powersource = powersource
         except:
             pass
+    # print(closest_house)
+    # print(current_powersource)
     return closest_house, current_powersource
 
 def man_distance(house, powersource):
@@ -94,7 +98,7 @@ def clear_powersources(powersources):
         except:
             pass
 
-    powersources.powersource_objects.clear()
+    powersources.clear()
 
 def show_results(batteries):
     for battery in batteries.batteries:
@@ -105,27 +109,62 @@ def add_powersource(newpowersources):
 
     ps = powersources.Powersources()
     ps.add_powersource(newpowersources)
+    return ps.powersources_objects
+
+def remove_powersources(battery, powersources):
+
+    for powersource in reversed(powersources):
+
+        try:
+
+            if powersource == battery:
+                powersources.remove(powersource)
+        except:
+            pass
+
+        try:
+            if powersource.battery == battery:
+                powersources.remove(powersource)
+        except:
+            pass
+    return powersources
+
+def check_constraint(current_powersource, powersourceas):
+    try:
+        current_spare = current_powersource.spare_capacity
+    except:
+        pass
+
+    try:
+        current_spare = current_powersource.battery.spare_capacity
+    except:
+        pass
+
+    if current_spare < 20:
+        remove_powersources(battery, powersources)
+
 
 def connect_house_to_powersource(closest_house, current_powersource, houses, powersources):
     """stop het random huis in de battery"""
 
-
-
     try:
         spare_cap = current_powersource.spare_capacity
         battery = current_powersource
+        battery_capacity = battery.spare_capacity
     except:
-
         pass
 
     try:
         battery = current_powersource.battery
+        battery_capacity = current_powersource.battery.spare_capacity
+
     except:
         pass
 
-    # print(closest_house)
     house_output = closest_house.output
-    battery_capacity = battery.spare_capacity
+    # print("<><>", battery)
+    # print(house_output)
+    # battery_capacity = battery.spare_capacity
 
 
     if (battery_capacity - house_output) >= 0:

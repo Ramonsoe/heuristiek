@@ -32,11 +32,6 @@ class Houses():
 
         return house_objects
 
-    # def all_houses_connected(self):
-    #     if self.connected != len(self.houses):
-    #         return False
-    #     return True
-
     def copy_houses(self, houses):
 
         return copy.deepcopy(houses)

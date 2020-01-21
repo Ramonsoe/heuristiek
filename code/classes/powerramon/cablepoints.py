@@ -59,7 +59,7 @@ class Cablepoints():
         for i in range(len(self.cable_x)):
             cablepoint = Cablepoint(self.cable_x[i], self.cable_y[i], battery)
             self.cable_list.append(cablepoint)
-        # print(self.cable_list)
+    
         return self.cable_list
 
     def connected_to_battery(self, battery):
@@ -75,8 +75,20 @@ class Cablepoints():
         self.cable_x = []
         self.cable_y = []
         self.get_all_coordinates(house, battery)
-        self.make_cable_list(battery)
+        # self.make_cable_list(battery)
+
+        try:
+            battery.spare_capacity
+            battery = battery
+        except:
+            pass
+
+        try:
+            battery = battery.battery
+        except:
+            pass
 
         house_to_battery_cable = self.make_cable_list(battery)
-
         house.add_cable(house_to_battery_cable)
+
+        return self.cable_list
