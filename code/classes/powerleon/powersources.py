@@ -2,6 +2,7 @@ from . import powersource
 
 
 
+
 class Powersources():
 
     def __init__(self):
@@ -11,25 +12,26 @@ class Powersources():
     def add_house_power(self, connected_houses):
 
         for house in connected_houses:
-            powersource = Powersource(house)
-            self.powersources.append(powersource)
+            ps = powersource.Powersource(house)
+            self.powersources.append(ps)
 
     def add_bat_power(self, batteries):
 
         for battery in batteries.batteries:
-            powersource = Powersource(battery)
-            self.powersources.append(powersource)
+            print(battery.x)
+            ps = powersource.Powersource(battery)
+            self.powersources.append(ps)
 
     def add_cablepower(self, cablepoint):
 
-        powersource = Powersource(cablepoint)
-        self.powersources.append(powersource)
+        ps = powersource.Powersource(cablepoint)
+        self.powersources.append(ps)
 
     def remove_powersources(self):
         """verwijder powersources van een volle batterij"""
         pass
-        if battery == full:
-
-            remove every house connected to this battery
-            remove every cable connected to every house
-            remove own battery coordinates
+        # if battery == full:
+        #
+        #     remove every house connected to this battery
+        #     remove every cable connected to every house
+        #     remove own battery coordinates
