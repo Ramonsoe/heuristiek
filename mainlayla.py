@@ -1,7 +1,7 @@
 from code.algorithms import find_nearest as find
-from code.classes import batteries, houses, find_nearest, price
+from code.classes import batteries, houses, find_nearest, price, change_cables
 from code.classes import pricelayla as price
-from code.visualisation import vis2, format_cables
+from code.visualisation import vis2
 import pickle
 
 # import sys
@@ -22,74 +22,25 @@ if __name__ == "__main__":
     # factor is the percentage of houses to connect to nearest battery
     # other houses will be connected randomly
 
-    factor = 0
-    def compare_prices(batteries, houses, factor):
-        finder = find_nearest.FindNearest(batteries, houses, factor)
-        outputs = finder.output()
-        houses = outputs[0]
-        batteries = outputs[1]
-        # print ('factor:', factor)
-        # print('price:')
-        calculate_price = price.Price(houses, batteries)
-        return calculate_price, houses, batteries
-
-    # factor = 100
-    # bats1 = batteries.Batteries('data/wijk1_batterijen.csv')
-    # houses1 = houses.Houses('data/wijk1_huizen.csv')
-    # output = compare_prices(bats1, houses1, factor)
-    # price_per_factor = output[0]
-    # houses_output = output[1]
-    # batteries_output = output[2]
-    # total_price = price_per_factor.total_price()
-    # print (total_price)
-
+    bats1 = batteries.Batteries('data/wijk1_batterijen.csv')
+    houses1 = houses.Houses('data/wijk1_huizen.csv')
     factor = 100
-    index = 0
-    # opper_index = 0
-    smallest_price = 10000000
 
-    while factor <= 100:
-        # print (factor)
-        index = 0
-        
-        while index < 1:
-            bats1 = batteries.Batteries('data/wijk1_batterijen.csv')
-            houses1 = houses.Houses('data/wijk1_huizen.csv')
+    finder = find_nearest.FindNearest(bats1, houses1, factor)
+    outputs = finder.output()
+    houses = outputs[0]
+    batteries = outputs[1]
 
-            output = compare_prices(bats1, houses1, factor)
-            price_per_factor = output[0]
-            houses_output = output[1]
-            batteries_output = output[2]
-            total_price = price_per_factor.total_price()
+    price_results = price.Price(houses, batteries)
+    total = price_results.total_price
 
-            if total_price < smallest_price:
-                best_houses = houses_output
-                amazing_houses = houses1
-                best_batteries = bats1
-                smallest_price = total_price
-                best_factor = factor
-                cables = price_per_factor.cables()
+    print ('Totaalprijs:', total)
 
-            index += 1
+    # vis2.Visual(houses, bats1)
 
-        factor += 1
+    # with open('dumps/wijk1.pkl', 'wb') as output:
+    #     pickle.dump(amazing_houses, output, pickle.HIGHEST_PROTOCOL)
+    #     pickle.dump(best_batteries, output, pickle.HIGHEST_PROTOCOL)
 
-    
-    print()
-    print('best option:')
-    print(smallest_price)
-    print('factor:', factor)
-
-
-    print (cables)
-    formatted = format_cables.FormatCables(best_houses)
-
-
-    vis2.Visual(best_houses, best_batteries, formatted.x, formatted.y)
-
-    with open('dumps/wijk1.pkl', 'wb') as output:
-        pickle.dump(amazing_houses, output, pickle.HIGHEST_PROTOCOL)
-        pickle.dump(best_batteries, output, pickle.HIGHEST_PROTOCOL)
-
-    with open('dumps/wijk1.pkl', 'rb') as file:
-        data = pickle.load(file)
+    # with open('dumps/wijk1.pkl', 'rb') as file:
+    #     data = pickle.load(file)

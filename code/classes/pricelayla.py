@@ -3,44 +3,38 @@ class Price():
 
     def __init__(self, houses, batteries):
 
-        self.price_cables = self.price_cables(houses)
-        self.price_batteries = self.price_bats(batteries)
-        self.price_total = self.price_cables + self.price_batteries
-        self.cable_objects = []
+        self.houses = houses
+        self.batteries = batteries
+        self.total_price = 0
+        self.unique_cables = set()
 
-    def price_bats(self, batteries):
+        self.run()
+
+    def run(self):
+        
+        price_batteries = self.price_batteries()
+        price_cables = self.price_cables()
+        self.calc_total_price(price_batteries, price_cables)
+
+    def price_batteries(self):
         price_bats = 0
 
-        for battery in batteries:
+        for battery in self.batteries:
             price_bats += 5000
 
         return price_bats
 
-    def price_cables(self, houses):
+    def price_cables(self):
         '''Returns price of all cables and removes double prices'''
-
-        price_cables = 0
-        cable_objects = {}
-
-        for house in houses:
-
+    
+        for house in self.houses:
             for cable in house.all_cable_segments:
+                self.unique_cables.add(cable)
 
-                key = repr(cable)
-                cable_objects[key] = cable
-
-        price_cables = 9 * (len(cable_objects))
-        self.cable_objects = list(cable_objects.values()) 
-
-        # print (price_cables)
-
-        return price_cables
-
-    def total_price(self):
-
-        total_price = self.price_batteries + self.price_cables
-        return total_price
-
-    def cables(self):
+        price = len(self.unique_cables) * 9
         
-        return self.cable_objects
+        return price
+
+    def calc_total_price(self, batteries, cables):
+
+        self.total_price = batteries + cables

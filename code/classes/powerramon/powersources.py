@@ -14,33 +14,29 @@ class Powersources():
 
     def add_powersource(self, newsources):
         """add objects to powersource list"""
-        # powersource_objects = []
-
-        # aps = allpowersources.All_powersources()
 
         for newsource in newsources:
 
             try:
                 for battery in newsource.batteries:
-                    # aps.add_powersources(battery)
                     self.powersources_objects.append(battery)
             except:
                 pass
 
             try:
-                for house in newsource.houses_connected:
-                    # aps.add_powersources(house)
-                    self.powersources_objects.append(house)
+                newsource.distance_to_battery
+                self.powersources_objects.append(house)
             except:
                 pass
 
             try:
                 for cable in newsource.cable_list:
-                    # aps.add_powersources(cable)
+
                     self.powersources_objects.append(cable)
             except:
                 pass
 
+        return self.powersources_objects
         # self.powersources_objects.append(powersource_objects)
 
         # print(aps.allpowersources)

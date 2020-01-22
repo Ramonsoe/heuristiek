@@ -5,7 +5,6 @@ class Cablepoint(object):
 
         self.x = x
         self.y = y
-
         self.battery = battery
 
 

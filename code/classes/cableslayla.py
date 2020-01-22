@@ -7,6 +7,7 @@ class Cables():
 
     def __init__(self, house, battery):
 
+
         self.x1 = house.x
         self.y1 = house.y
         self.x2 = battery.x
@@ -84,12 +85,15 @@ class Cables():
 
     def make_objects(self):
 
+        
         for start, end in zip(self.cable_list[0::2], self.cable_list[1::2]):
             cable = Cable(start[0], start[1], end[0], end[1], self.battery)
+
 
             self.cable_objects.append(cable)
 
     def add_cables_to_house(self):
+        
         self.house.all_cable_segments = self.cable_objects        
             
         
