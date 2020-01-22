@@ -25,45 +25,29 @@ def random_house(houses):
             return random_house
 
 def get_closest_house(houses, powersources):
-    print(len(powersources))
+    """looks for the smallest distance between all unconnected houses and powersources"""
+    # print(len(powersources))
+    # print(len(houses))
+    # initialize
     closest_house = houses[0]
-    current_powersource = powersources[3]
+    current_powersource = powersources[0]
     manhattan_distance = 10^6       # magic number
 
+    # loop over all houses and powersources, if new smallest distance, change current powersource and house
     for house in houses:
+        for powersource in powersources:
 
-        try:
-            for battery in powersources.batteries:
-                powersource = battery
+            house_distance = man_distance(house, powersource)
 
-                house_distance = man_distance(house, powersource)
+            if house_distance < manhattan_distance:
 
-                if house_distance < manhattan_distance:
+                manhattan_distance = house_distance
 
-                    manhattan_distance = house_distance
+                closest_house = house
 
-                    closest_house = house
+                current_powersource = powersource
 
-                    current_powersource = powersource
-        except:
-            pass
 
-        try:
-            for powersource in powersources:
-
-                house_distance = man_distance(house, powersource)
-
-                if house_distance < manhattan_distance:
-
-                    manhattan_distance = house_distance
-
-                    closest_house = house
-
-                    current_powersource = powersource
-        except:
-            pass
-    # print(closest_house)
-    # print(current_powersource)
     return closest_house, current_powersource
 
 def man_distance(house, powersource):
@@ -85,6 +69,8 @@ def distance_all(house, batteries):
     return all_distances
 
 def remove_house(house, houses):
+    """remove house from list of unconnected houses"""
+
     houses.remove(house)
 
 def clear_powersources(powersources):
@@ -112,6 +98,8 @@ def add_powersource(newpowersources):
     return ps.powersources_objects
 
 def remove_powersources(battery, powersources):
+    """function to remove powersources if capacity of battery is too low"""
+
 
     for powersource in reversed(powersources):
 
@@ -127,26 +115,32 @@ def remove_powersources(battery, powersources):
                 powersources.remove(powersource)
         except:
             pass
+
     return powersources
 
-def check_constraint(current_powersource, powersourceas):
+def check_constraint(current_powersource, powersources):
+    """function to check the sparecapacity for the current powersource to see if too low"""
+
+
     try:
         current_spare = current_powersource.spare_capacity
+        battery = current_powersource
     except:
         pass
 
     try:
         current_spare = current_powersource.battery.spare_capacity
+        battery = current_powersource.battery
     except:
         pass
 
-    if current_spare < 20:
+    # reomve powersources from list of powersources if lower than 20 (magic number)
+    if current_spare < 25:
         remove_powersources(battery, powersources)
 
 
 def connect_house_to_powersource(closest_house, current_powersource, houses, powersources):
     """stop het random huis in de battery"""
-
     try:
         spare_cap = current_powersource.spare_capacity
         battery = current_powersource
@@ -161,14 +155,13 @@ def connect_house_to_powersource(closest_house, current_powersource, houses, pow
     except:
         pass
 
+    # take the outpout of the closest_house to check if it fits in bat
     house_output = closest_house.output
-    # print("<><>", battery)
-    # print(house_output)
-    # battery_capacity = battery.spare_capacity
 
-
+    # if house fits, take care of the following steps
     if (battery_capacity - house_output) >= 0:
         closest_house.connect_house(closest_house, battery)
         houses.connect_house(closest_house)
         battery.new_spare_capacity(closest_house)
         battery.add_house(closest_house)
+        houses.remove_unconnected(closest_house)

@@ -7,11 +7,16 @@ class Houses():
     def __init__(self, house_file):
         self.houses = self.load_houses(house_file)
 
-        self.houses_copy = self.copy_houses(self.houses)
+        self.houses_unconnected = self.copy_houses(self.houses)
         self.houses_connected = []
 
     def connect_house(self, house):
         self.houses_connected.append(house)
+
+    def remove_unconnected(self, house):
+        for housee in self.houses_unconnected:
+            if housee.output is house.output:
+                self.houses_unconnected.remove(housee)
 
     def load_houses(self, house_file):
         """load the houses from the input file into a list"""
@@ -37,7 +42,7 @@ class Houses():
         return copy.deepcopy(houses)
 
     def pop_house(self, house):
-        self.houses_copy.remove(house)
+        self.houses_unconnected.remove(house)
 
     def empty_connected(self):
 

@@ -32,7 +32,8 @@ class Cablepoints():
         Xi, Yi = house.x, house.y
         Xf, Yf = battery.x, battery.y
 
-        for i in range(self.distance(house, battery) - 1):
+        self.add_cable_coords(Xi, Yi)
+        for i in range(self.distance(house, battery)):
 
             if Yi < Yf:
                 Yi += 1
@@ -59,7 +60,7 @@ class Cablepoints():
         for i in range(len(self.cable_x)):
             cablepoint = Cablepoint(self.cable_x[i], self.cable_y[i], battery)
             self.cable_list.append(cablepoint)
-    
+
         return self.cable_list
 
     def connected_to_battery(self, battery):

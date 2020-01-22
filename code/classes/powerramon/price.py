@@ -20,6 +20,6 @@ class Price():
 
         for house in houses:
 
-            price_cables += 9 * (len(house.cables[0]) - 1)
+            price_cables += 9 * (len(house.cables[0]) - 2)
 
         return price_cables
