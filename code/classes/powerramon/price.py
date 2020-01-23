@@ -2,10 +2,10 @@ class Price():
 
     def __init__(self, houses, batteries):
 
-        self.price_cables = self.price_cables(houses)
-        self.price_batteries = self.price_bats(batteries)
+        self.price_cables = int(self.price_cables(houses))
+        self.price_batteries = int(self.price_bats(batteries))
         self.price_total = self.price_cables + self.price_batteries
-        print(self.price_total)
+
 
     def price_bats(self, batteries):
         price_bats = 0

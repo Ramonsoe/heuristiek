@@ -1,6 +1,7 @@
 import csv
 from .battery import Battery
 
+
 class Batteries():
 
     def __init__(self, battery_file):

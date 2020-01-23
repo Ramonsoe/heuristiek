@@ -25,6 +25,13 @@ class House(object):
     def check_connection(self):
         return self.connected
 
+    def disconnect(self):
+        self.connected = False
+        self.battery = None
+        self.distance_to_battery = None
+        self.cables = []
+        
+
     def add_cable(self, cable):
 
         self.cables.append(cable)
