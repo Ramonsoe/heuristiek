@@ -13,6 +13,11 @@ class Houses():
     def connect_house(self, house):
         self.houses_connected.append(house)
 
+    def house_unconnect(self, house):
+
+        self.houses_connected.remove(house)
+        house.disconnect()
+
     def remove_unconnected(self, house):
         for housee in self.houses_unconnected:
             if housee.output is house.output:
@@ -40,6 +45,12 @@ class Houses():
     def copy_houses(self, houses):
 
         return copy.deepcopy(houses)
+
+    def fill_unconnected(self):
+        self.houses_unconnected = self.copy_houses(self.houses)
+
+    def add_unconnected(self, house):
+        self.houses_unconnected.append(house)
 
     def pop_house(self, house):
         self.houses_unconnected.remove(house)

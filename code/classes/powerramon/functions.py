@@ -26,8 +26,9 @@ def random_house(houses):
 
 def get_closest_house(houses, powersources):
     """looks for the smallest distance between all unconnected houses and powersources"""
-    # print(len(powersources))
-    # print(len(houses))
+
+    # print(len(houses), len(powersources))
+
     # initialize
     closest_house = houses[0]
     current_powersource = powersources[0]
@@ -135,8 +136,33 @@ def check_constraint(current_powersource, powersources):
         pass
 
     # reomve powersources from list of powersources if lower than 20 (magic number)
-    if current_spare < 25:
+    if current_spare < 10:
         remove_powersources(battery, powersources)
+
+def check_feasibility(houses_list, houses, powerlist):
+    # print("<<<", len(houses_list))
+    if len(houses_list) == 0:
+        for i in range(25):
+            random_connected = random.choice(houses.houses_connected)
+
+            if random_connected in powerlist:
+                powerlist.remove(random_connected)
+
+                for cable in random_connected.cables[0]:
+                    powerlist.remove(cable)
+
+
+            houses_list.append(random_connected)
+
+            battery = random_connected.battery
+
+            if not battery in powerlist:
+                powerlist.append(battery)
+
+            battery.remove_house(random_connected)
+            battery.restore_capacity(random_connected)
+            houses.add_unconnected(random_connected)
+            houses.house_unconnect(random_connected)
 
 
 def connect_house_to_powersource(closest_house, current_powersource, houses, powersources):
@@ -157,6 +183,7 @@ def connect_house_to_powersource(closest_house, current_powersource, houses, pow
 
     # take the outpout of the closest_house to check if it fits in bat
     house_output = closest_house.output
+    # print(battery)
 
     # if house fits, take care of the following steps
     if (battery_capacity - house_output) >= 0:
