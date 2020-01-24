@@ -30,6 +30,8 @@ def get_closest_house(houses, powersources):
     # print(len(houses), len(powersources))
 
     # initialize
+
+    # try:
     closest_house = houses[0]
     current_powersource = powersources[0]
     manhattan_distance = 10^6       # magic number
@@ -50,6 +52,10 @@ def get_closest_house(houses, powersources):
 
 
     return closest_house, current_powersource
+    # except:
+    #     # print("adjust check_constraint")
+    #     return False
+
 
 def man_distance(house, powersource):
     """ Returns manhattan distance of two coordinates """
@@ -119,7 +125,7 @@ def remove_powersources(battery, powersources):
 
     return powersources
 
-def check_constraint(current_powersource, powersources):
+def check_constraint(current_powersource, powersources, min_capacity):
     """function to check the sparecapacity for the current powersource to see if too low"""
 
 
@@ -136,13 +142,14 @@ def check_constraint(current_powersource, powersources):
         pass
 
     # reomve powersources from list of powersources if lower than 20 (magic number)
-    if current_spare < 10:
+    if current_spare < 30:
         remove_powersources(battery, powersources)
 
 def check_feasibility(houses_list, houses, powerlist):
-    # print("<<<", len(houses_list))
+
     if len(houses_list) == 0:
-        for i in range(25):
+        # print("halo")
+        for i in range(30):
             random_connected = random.choice(houses.houses_connected)
 
             if random_connected in powerlist:
