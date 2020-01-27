@@ -14,27 +14,10 @@ class Cable(object):
 
     def __eq__(self, other):
         return (
-             self.__class__ == other.__class__ and 
-             (self.x1 == other.x1 and 
-             self.y1 == other.y1 and 
-             self.x2 == other.x2 and 
-             self.y2 == other.y2 and
-             self.battery == other.battery) or
-            (self.x1 == other.x2 and 
-             self.y1 == other.y2 and 
-             self.x2 == other.x1 and 
-             self.y2 == other.y1 and
-             self.battery == other.battery) or
-            (self.x1 == other.x1 and 
-             self.y1 == other.y2 and 
-             self.x2 == other.x2 and 
-             self.y2 == other.y1 and
-             self.battery == other.battery) or
-            (self.x1 == other.x2 and 
-             self.y1 == other.y1 and 
-             self.x2 == other.x1 and 
-             self.y2 == other.y2 and
-             self.battery == other.battery) 
+            ((self.x1 == other.x1 and self.x2 == other.x2) or 
+             (self.x1 == other.x2 and self.x2 == other.x1)) and 
+            ((self.y1 == other.y1 and self.y2 == other.y2) or 
+             (self.y1 == other.y2 and self.y2 == other.x1))
         )
 
     def __repr__(self):

@@ -1,112 +1,109 @@
 
-from code.classes import cables
+from code.classes import cableslayla2 as cables
 import copy
 import random
 
 def sort(houses):
-    """Sort houses from largest to smallest output"""
+    """Shuffle the list for random results"""
 
-    # bubble sort
-    swap = True
-    while swap:
-        swap = False
-        for i in range(len(houses) - 1):
-            if houses[i].output < houses[i + 1].output:
-                houses[i], houses[i + 1] = houses[i + 1], houses[i]
-                swap = True
+    random.shuffle(houses)
 
     return houses
 
-def divide_largest(houses, batteries, factor):
-    connected_houses = []
-    not_connected = []
-    num_houses_to_connect = round(factor * len(houses))
-    
-    house_num = 0
+def run_divide(houses, batteries):
     for house in houses:
+        divide_houses(house, batteries, houses)
 
-        # stop connecting houses to batteries when factor % of the houses is connected
-        if house_num == num_houses_to_connect:
-            break
+def divide_houses(house, batteries, houses):
 
-        house_num += 1
-        smallest_distance = 300 # magic number
+    cable_house = None
+    nearest = None
+    smallest_distance = 300 # magic number
 
-        for battery in batteries:
+    for battery in batteries:
+        if battery.check_availability(house) == True:
+
+            for bat_house in battery.houses:
+
+                if house not in bat_house.connected_houses and house != bat_house:
+                    current_distance = calculate_distance(house, bat_house)
+
+                    # change nearest battery when smaller distance is found
+                    if current_distance < smallest_distance:
+                        smallest_distance = current_distance
+                        nearest = bat_house
+
+                    # check cables as well
+                    for cable in bat_house.all_cable_segments:
+                        distance = calculate_distance(house, cable)
+                        if distance < smallest_distance:
+                            smallest_distance = distance
+                            nearest = cable
+                            cable_house = bat_house
+
+            # check whether a battery itself is near(er than houses already iterated over)
+            current_distance = calculate_distance(house, battery)
+            if current_distance < smallest_distance:
+                smallest_distance = current_distance
+                nearest = battery
+
+    # connect house to nearest battery or to the battery connected to nearest house
+    make_connection(house, nearest, cable_house)
+
+def make_connection(house, connection, cable_house):
+    '''Place cables from house to nearest point'''
+
+    if hasattr(connection, 'output'):
+        if connection.connected == True:
+            house.connected = True
+            for connected_house in house.connected_houses:
+                connected_house.connected = True
+
+        house.battery = connection.battery
+        house.connected_houses.add(connection)
+        house.connected_houses.update(connection.connected_houses)
+        connection.connected_houses.add(house)
+        connection.connected_houses.update(house.connected_houses)
+        connection.battery.add_house(house)
+
+        place_cables(house, connection)
+
+    elif hasattr(connection, 'capacity'):
+
+        house.battery = connection
+        house.connected = True
+        connection.add_house(house)
+
+        place_cables(house, connection)
+
+    elif hasattr(connection, 'x1'):
+
+        if hasattr(cable_house, 'connected'):
+            if cable_house.connected == True:
+                house.connected = True
+                for connected_house in house.connected_houses:
+                    connected_house.connected = True
+            house.battery = cable_house.battery
             
-            if check_availability(house, battery) == True:
+            house.connected_houses.add(cable_house)
+            house.connected_houses.update(cable_house.connected_houses)
+            cable_house.connected_houses.add(house)
+            cable_house.connected_houses.update(house.connected_houses)
+            cable_house.battery.add_house(house)
 
-                # if battery has a list of already connected houses, iterate over these houses as well
-                if len(battery.houses) > 0:
-                    for bat_house in battery.houses:
-                        current_distance = calculate_houses_distance(house, bat_house)
-
-                        # change nearest battery when smaller distance is found
-                        if current_distance < smallest_distance:
-                            smallest_distance = current_distance
-                            nearest_battery = bat_house.battery
-
-                # check whether a battery itself is near(er than houses already iterated over)
-                current_distance = calculate_battery_distance(house, battery)
-                if current_distance < smallest_distance:
-                    smallest_distance = current_distance
-                    nearest_battery = battery
-
-        # connect house to nearest battery or to the battery connected to nearest house
-        make_connection(house, nearest_battery)
-        connected_houses.append(house)
-
-    # list of unconnected house needed for random placement later on
-    for house in houses:
-        if house.connected == False:
-            not_connected.append(house)
-
-    return houses, batteries, connected_houses, not_connected
-
-def make_connection(house, battery):
-
-    house.battery = battery
-    house.connected = True
-    battery.new_spare_capacity(house)
-    battery.add_house(house)
-    place_cables(house, battery)
-
-def check_availability(house, battery):
-
-    if battery.spare_capacity - house.output >= 0:
-        return True
-    return False
+        place_cables(house, connection)
  
-def calculate_houses_distance(house, connection_to_house):
+def calculate_distance(house, point):
+    '''Return Manhattan distance of two coordinates'''
 
-    x_distance = abs(house.x_house - connection_to_house.x_house)
-    y_distance = abs(house.y_house - connection_to_house.y_house)
-    current_distance = x_distance + y_distance
+    if hasattr(point, 'x'):
+        distance = abs(house.x - point.x) + abs(point.y - point.y)
+        return distance
 
-    return current_distance
+    else:
+        distance = abs(house.x - (point.x1 + point.x2) / 2) + abs(house.y - (point.y1 + point.y2) / 2)
+        return distance
 
-def calculate_battery_distance(house, battery):
-
-    x_distance = abs(house.x_house - battery.x_battery)
-    y_distance = abs(house.y_house - battery.y_battery)
-    current_distance = x_distance + y_distance
-
-    return current_distance
-
-def find_random(not_connected, copy_batteries, batteries):
-    house = random.choice(not_connected)
-    battery = random.choice(copy_batteries)
-    index = copy_batteries.index(battery) 
-    combination = []
-    
-    if check_availability(house, battery):
-
-        battery.spare_capacity -= house.output
-        combination = [batteries[index], house]
-
-    return combination, house, batteries
-
-def place_cables(house, battery):
-
-    cable = cables.Cables(house, battery)
+def place_cables(house, connection):
+    cables.Cables(house, connection)
 

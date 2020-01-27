@@ -11,6 +11,7 @@ class ChangeCables():
     def run(self):
         self.remove_doubles()
         self.change_house_cables()
+        # self.format()
 
     def remove_doubles(self):
 
@@ -21,7 +22,7 @@ class ChangeCables():
                 key = repr(cable)
                 cable_objects[key] = cable
 
-        self.cables = list(cable_objects.values())
+        self.cables = list(cable_objects.values()) 
 
     # def format(self):
 
@@ -40,13 +41,11 @@ class ChangeCables():
     #         # self.y.append(cable.y2)
 
     def change_house_cables(self):
-        index = 0
+
         for cable in self.cables:
             for house in self.houses:
                 for house_cable in house.all_cable_segments:
-                    if house_cable == cable:
+                    if house_cable.x1 == cable.x1 and house_cable.x2 == cable.x2 and house_cable.y1 == cable.y1 and house_cable.y2 == cable.y2 and house_cable.battery == cable.battery:
                         house_cable = cable
-                
-                        
 
     
