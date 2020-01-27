@@ -143,14 +143,14 @@ def check_constraint(current_powersource, powersources, min_capacity):
     if current_spare < min_capacity:
         remove_powersources(battery, powersources)
 
-def check_feasibility(houses_list, houses, powerlist):
+def check_feasibility(houses_list, houses, powerlist, steps_back):
     """function to check if a solution is stillfeasible, i.e. there are still houses left to match with powersources"""
 
     # if no houses, remove random houses
     if len(houses_list) == 0:
 
         # perform x times, where x is the user defined number of step backs
-        for i in range(50):
+        for i in range(steps_back):
             random_connected = random.choice(houses.houses_connected)
 
             # remove selected house and its cables from powerlist
