@@ -1,5 +1,4 @@
 
-
 class Powersource():
     """Als een huis of kabel verbonden is, wordt het een powersource"""
 
@@ -8,7 +7,7 @@ class Powersource():
 
         self.x_power = object.x
         self.y_power = object.y
-        self.battery = battery
+        # self.battery = battery
 
 """To do:
 

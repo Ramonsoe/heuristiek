@@ -16,6 +16,11 @@ class Battery(object):
     def remove_house(self, house):
         self.houses.remove(house)
 
+    def restore_capacity(self, house):
+
+        self.spare_capacity += house.output
+
+
     def calc_spare_capacity(self):
 
         capacity_used = sum(house.output for house in self.houses)

@@ -2,9 +2,10 @@
 # from house import House
 import numpy as np
 
-from bokeh.plotting import figure, show, output_file
-from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid, Range1d
-from bokeh.models.glyphs import MultiLine, ImageURL
+from bokeh.plotting import figure, show
+
+from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid
+from bokeh.models.glyphs import MultiLine
 from bokeh.io import curdoc, show
 from code.classes import cables, batteries, houses
 import copy
@@ -26,28 +27,29 @@ class Visual():
         self.coords_all_x = []
         self.coords_all_y = []
 
-        self.get_values()
-        self.make_plot()
-
+        # self.get_values()
+        # self.make_plot()
+        self.color_plot()
+        # self.test_plot()
     def get_values(self):
         """Setting x and y coordinates of batteries and houses in separate lists"""
 
         for house in self.connected_houses:
 
             # append x and y coords of houses separately
-            self.coordinates_house_x.append(house.x_house)
-            self.coordinates_house_y.append(house.y_house)
-
+            self.coordinates_house_x.append(house.x)
+            self.coordinates_house_y.append(house.y)
+            #
             kabels = house.cables
-
+            # print(kabels)
             # append x and y coords of cables separately
-            for coordinates in kabels:
+            for cablepoint in kabels[0]:
 
-                x = coordinates[0]
-                y = coordinates[1]
+                # x = coordinates[0]
+                # y = coordinates[1]
 
-                self.coord_cable_x.append(x)
-                self.coord_cable_y.append(y)
+                self.coord_cable_x.append(cablepoint.x)
+                self.coord_cable_y.append(cablepoint.y)
 
             # append x and y coords in lists
             self.coords_all_x.append(copy.deepcopy(self.coord_cable_x))
@@ -57,42 +59,27 @@ class Visual():
             self.remove_coords()
 
         # same for batteries
-        for bat in self.batteries:
+        for battery in self.batteries:
 
-            self.coordinates_battery_x.append(bat.x_battery)
-            self.coordinates_battery_y.append(bat.y_battery)
+            self.coordinates_battery_x.append(battery.x)
+            self.coordinates_battery_y.append(battery.y)
 
     def make_plot(self):
-        """Creates a grid plot with all the batteries and houses that are connected"""
-        
-        # url = "static/house.png"
-
-        list_squares = copy.deepcopy(self.coordinates_house_y)
-        list_bats = copy.deepcopy(self.coordinates_battery_x)
-
-        for i in range(len(list_squares)):
-            list_squares[i] -= 0.35
-
-        for i in range(len(list_bats)):
-            list_bats[i] -= 0.1
+        """Creates a gridplot with all the batteries and houses that are connected"""
 
         # empty grid
-        grid = figure(plot_width = 600 , plot_height = 600,
+        grid = figure(plot_width = 1500 , plot_height = 600,
                         title='Smart Grid')
-        
-        # add cables to grid
-        # grid.multi_line(self.coords_all_x, self.coords_all_y, alpha=0.5)
-
         # add houses
-        grid.square(self.coordinates_house_x, list_squares, size=5, color='#cc6600')
-        grid.triangle(self.coordinates_house_x, self.coordinates_house_y, size=5, color='#cc6600')
+        grid.square(self.coordinates_house_x, self.coordinates_house_y, size=5)
 
         # add batteries
-        grid.rect(self.coordinates_battery_x, self.coordinates_battery_y, width=0.9, height=0.8, color='green')
-        grid.rect(list_bats, self.coordinates_battery_y, width=1, height=0.4, color='green')
+        grid.circle(self.coordinates_battery_x, self.coordinates_battery_y, size=10, color='red')
 
-
-        # plot
+        # add cables to grid
+        grid.multi_line(self.coords_all_x, self.coords_all_y)
+        #
+        # # plot
         show(grid)
 
     def remove_coords(self):
@@ -100,3 +87,60 @@ class Visual():
 
         self.coord_cable_x.clear()
         self.coord_cable_y.clear()
+
+    def color_plot(self):
+
+        color = ['blue','red','black','orange','green']
+        i = -1
+        color_list = []
+        for battery in self.batteries:
+
+            self.coordinates_battery_x.append(battery.x)
+            self.coordinates_battery_y.append(battery.y)
+
+
+            i += 1
+            for house in battery.houses:
+
+                self.coordinates_house_x.append(house.x)
+                self.coordinates_house_y.append(house.y)
+
+                color_list.append(color[i])
+                cablez = house.cables[0]
+
+                for cable in cablez:
+
+                    self.coord_cable_x.append(cable.x)
+                    self.coord_cable_y.append(cable.y)
+
+                self.coords_all_x.append(copy.deepcopy(self.coord_cable_x))
+                # print(self.coords_all_x)
+                self.coords_all_y.append(copy.deepcopy(self.coord_cable_y))
+                self.remove_coords()
+
+        # empty grid
+        grid = figure(plot_width = 1500 , plot_height = 600,
+                        title='Smart Grid')
+        # add houses
+        grid.square(self.coordinates_house_x, self.coordinates_house_y, size=5)
+
+        # add batteries
+        grid.circle(self.coordinates_battery_x, self.coordinates_battery_y, size=10, color='red')
+
+        # add cables to grid
+        grid.multi_line(self.coords_all_x, self.coords_all_y, color=color_list)
+
+        show(grid)
+
+
+    def test_plot(self):
+        # empty grid
+        grid = figure(plot_width = 1500 , plot_height = 600,
+                        title='Smart Grid')
+        # add houses
+        # grid.square(self.coordinates_house_x, self.coordinates_house_y, size=5)
+        # # add batteries
+        # grid.circle(self.coordinates_battery_x, self.coordinates_battery_y, size=10, color='red')
+
+        for battery in self.batteries:
+            print(battery.houses)

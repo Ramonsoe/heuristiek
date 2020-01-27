@@ -1,7 +1,7 @@
 from .cablepoint import Cablepoint
 
 class Cablepoints():
-
+        """Cablepoints in powerleon trekt kabels niet per se naar batterijen maar naar de dichtsbijzijnde battery"""
     def __init__(self):
 
         self.cable_list = []
@@ -9,9 +9,6 @@ class Cablepoints():
         self.cable_y = []
 
         self.cable_objects = []
-        # self.add_cable()
-
-        # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
 
 
     def distance(self, house, battery):
@@ -32,8 +29,7 @@ class Cablepoints():
         Xi, Yi = house.x, house.y
         Xf, Yf = battery.x, battery.y
 
-        self.add_cable_coords(Xi, Yi)
-        for i in range(self.distance(house, battery)):
+        for i in range(self.distance(house, battery) - 1):
 
             if Yi < Yf:
                 Yi += 1
@@ -60,7 +56,7 @@ class Cablepoints():
         for i in range(len(self.cable_x)):
             cablepoint = Cablepoint(self.cable_x[i], self.cable_y[i], battery)
             self.cable_list.append(cablepoint)
-
+        # print(self.cable_list)
         return self.cable_list
 
     def connected_to_battery(self, battery):
@@ -76,19 +72,8 @@ class Cablepoints():
         self.cable_x = []
         self.cable_y = []
         self.get_all_coordinates(house, battery)
-
-        try:
-            battery.spare_capacity
-            battery = battery
-        except:
-            pass
-
-        try:
-            battery = battery.battery
-        except:
-            pass
+        self.make_cable_list(battery)
 
         house_to_battery_cable = self.make_cable_list(battery)
-        house.add_cable(house_to_battery_cable)
 
-        return self.cable_list
+        house.add_cable(house_to_battery_cable)
