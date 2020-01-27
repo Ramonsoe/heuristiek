@@ -8,7 +8,7 @@ import random
 
 class Closest_first():
 
-    def __init__(self, houses, powersources, batteries, number_iterations):
+    def __init__(self, houses, powersources, batteries, number_iterations, steps_back):
 
         # initialize the minimal capacity when a battery has to be left out of the list of powersources
         self.min_capacity = functions.minimal_output(houses) - 5
@@ -20,9 +20,9 @@ class Closest_first():
         self.initial_powerlist = copy.deepcopy(self.powerlist)
 
         # run the algorithm
-        self.closest_first = self.run(houses, self.powerlist, batteries, self.min_capacity, number_iterations)
+        self.closest_first = self.run(houses, self.powerlist, batteries, self.min_capacity, number_iterations, steps_back)
 
-    def run(self, houses, powersources, batteries, min_capacity, number_iterations):
+    def run(self, houses, powersources, batteries, min_capacity, number_iterations, steps_back):
         """function where an algorithms, based on shortest manhattan distance from a powersource to a house"""
 
         # initialize the run counter
@@ -35,7 +35,7 @@ class Closest_first():
         gross_price = 0
 
         # keep the algorithmn running until the right amount of solutions is found
-        while run < number_iterations:
+        while run < int(number_iterations):
 
             # initialize a list with houses to use as input
             houses_list = copy.deepcopy(houses.houses_unconnected)
@@ -80,7 +80,7 @@ class Closest_first():
                         houses_list.remove(closest_house)
 
                         # check if there are still houses in the list after previous line, if not, fill with random houses
-                        functions.check_feasibility(houses_list, houses, self.powerlist)
+                        functions.check_feasibility(houses_list, houses, self.powerlist, steps_back)
 
                         # increase count by one
                         count += 1
@@ -98,7 +98,7 @@ class Closest_first():
 
             # check if configuration was succesfull, if yes, stop the algorithm
             if len(houses.houses_unconnected) == 0:
-                # print("succes")
+                print("succes")
                 run += 1
 
                 priceman = price.Price(houses.houses_connected, batteries)
@@ -113,8 +113,6 @@ class Closest_first():
                 self.powerlist = copy.deepcopy(self.initial_powerlist)
                 houses.empty_connected()
                 houses.fill_unconnected()
-                # print(run)
-
 
             # otherwise, set all data to starting values
             else:
@@ -128,12 +126,6 @@ class Closest_first():
         print(number_iterations)
         print(self.min_capacity)
         print(price_init)
-        print("average:", gross_price/number_iterations)
+        print("steps back:", steps_back)
+        print("average:", gross_price/int(number_iterations))
         return houses.houses_connected, price_init
-
-if __name__ == "__main__":
-
-    neighbourhood = input("Enter neighbourhood (1, 2 or 3):  ")
-    number_iterations = input("Enter number of iterations:  ")
-    houses = houses.Houses(f"'data/wijk{neighbourhood}_huizen.csv'")
-    batteries = batteries.Batteries(f"'data/wijk{neighbourhood}_batterijen.csv'")
