@@ -1,80 +1,88 @@
 import copy
 from code.algorithms import find_nearest as find
+from . import cableslayla2 as cables
+import gc
 
 class FindNearest():
 
-    def __init__(self, batteries, houses, factor):
+    def __init__(self, batteries, houses):
         self.batteries = batteries.batteries
         self.houses = houses.houses
-        self.batteries_copy = []
         self.connected_houses = []
-        self.not_connected = []
-        self.random_generated = []
-        self.factor = factor / 100
         self.run()
+        gc.disable()
 
     def run(self):
+        '''Start algorithm'''
+
+        # if not every house should be placed randomly
         self.houses = find.sort(self.houses)
-        divide = find.divide_largest(self.houses, self.batteries, self.factor)
-        self.houses = divide[0]
-        self.batteries = divide[1]
-        self.connected_houses = divide[2]
-        self.not_connected = divide[3]
-        self.batteries_copy = copy.deepcopy(self.batteries)
-        print('Number of connected houses:', len(self.connected_houses))
-        
-        self.randomize()
-        print('Number of connected houses after randomizing:', len(self.connected_houses))
-        
+        find.run_divide(self.houses, self.batteries)
 
-    def randomize(self):
-        if self.factor != 1:
-            index = 0
-            while len(self.random_generated) + len(self.connected_houses) != (len(self.houses)):
-                length = len(self.random_generated)
-                self.make_random(self.batteries_copy)
+        # keep track of connected and unconnected houses
+        self.make_connected_list()
 
-                if length == len(self.random_generated):
-                    index += 1
-                else:
-                    index = 0
+        if (len(self.connected_houses)) != len(self.houses):
+            self.restart()
 
-                # stop creating random connections after 100 unsuccesful attempts
-                if index == 100:
-                    self.restart()
-                    break
-
-            if len(self.random_generated) + len(self.connected_houses) == (len(self.houses)):
-                self.place_random()
-
-    def make_random(self, batteries):
-    
-        rand = find.find_random(self.not_connected, self.batteries_copy, self.batteries)
-        combination = rand[0]
-        if len(combination) != 0:
-            self.random_generated.append(combination)
-            self.not_connected.remove(rand[1])
-
-    def place_random(self):
-        for connection in self.random_generated:
-            battery = connection[0]
-            house = connection[1]
-            find.make_connection(house, battery)
-            self.connected_houses.append(house)
-
-    def restart(self):
-        self.random_generated = []
-        self.batteries_copy = copy.deepcopy(self.batteries)
-        self.not_connected = []
+    def make_connected_list(self):
 
         for house in self.houses:
-            if house.connected == False:
-                self.not_connected.append(house)
-
-        self.randomize()
+            if house.battery != None:
+                self.connected_houses.append(house)
 
     def output(self):
-        return self.connected_houses, self.batteries
+        return self.houses, self.batteries
 
+    def all_connected(self):
+        '''Check whether all houses are connected'''
+
+        connected_houses = 0
+        connected_batteries = 0
+
+        # check for the connected attribute
+        for house in self.houses:
+            if house.connected == True and house.battery is not None:
+                connected_houses += 1
+
+        # all houses should be in battery lists as well
+        for battery in self.batteries:
+            connected_batteries += len(battery.houses)
+
+        # the sum of these two should be twice the number of houses
+        if connected_houses + connected_batteries == 2 * len(self.houses):
+            return True
+
+        return False
+
+    def place_all(self):
+        '''Place cables for every house house'''
+
+        # houses are from now on only connected if they have a(n) (in)direct cable connection to their battery
+        for house in self.houses:
+            house.connected = False
+
+        # place cables from house to nearest (point connected to) battery
+        for house in self.houses:
+            cables.Cables(house, self.houses)
+
+    def restart(self):
+            '''Remove all attributes from houses and batteries to start over'''
+
+            self.connected_houses = []
+            for house in self.houses:
+                house.connected = False
+                house.cables = []
+                house.all_cable_segments = []
+                house.battery = None
+                house.connected_houses = set()
+            
+            for battery in self.batteries:
+                battery.houses = []
+                battery.cables = []
+                battery.cable_objects = []
+                battery.spare_capacity = battery.capacity
+            
+            self.run()
 
                         

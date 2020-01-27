@@ -1,28 +1,29 @@
+# from code import classes
+# from house import House
 import numpy as np
 
 from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid, Range1d
 from bokeh.models.glyphs import MultiLine, ImageURL
 from bokeh.io import curdoc, show
-from code.classes import cables, batteries, houses
+from code.classes import cableslayla, batteries, houses
 import copy
 
 class Visual():
 
-    def __init__(self, houses, batteries):
+    def __init__(self, houses, batteries, x, y):
 
         self.batteries = batteries.batteries
         self.connected_houses = houses
 
         self.coordinates_house_x = []
         self.coordinates_house_y = []
+
         self.coordinates_battery_x = []
         self.coordinates_battery_y = []
 
-        self.coord_cable_x = []
-        self.coord_cable_y = []
-        self.coords_all_x = []
-        self.coords_all_y = []
+        self.x_coordinates_cables = x
+        self.y_coordinates_cables = y
 
         self.get_values()
         self.make_plot()
@@ -35,33 +36,6 @@ class Visual():
             # append x and y coords of houses separately
             self.coordinates_house_x.append(house.x_house)
             self.coordinates_house_y.append(house.y_house)
-
-            # kabels = house.cables
-
-            # append x and y coords of cables separately
-            for coord in house.cables:
-                x = 1
-                y = 3
-                x = coord[0]
-                y = coord[1]
-                self.coord_cable_x.append(x)
-                self.coord_cable_y.append(y)
-
-
-            # append x and y coords in lists
-            
-            xje = copy.deepcopy(self.coord_cable_x)
-            ytje = copy.deepcopy(self.coord_cable_y)
-
-            # print (xje)
-            # print (ytje)
-            # print()
-            
-            self.coords_all_x.append([xje])
-            self.coords_all_y.append([ytje])
-
-            # clear temporary list
-            self.remove_coords()
 
         # same for batteries
         for bat in self.batteries:
@@ -88,10 +62,7 @@ class Visual():
                         title='Smart Grid')
         
         # add cables to grid
-        grid.multi_line(self.coords_all_x, self.coords_all_y, alpha=0.5)
-        # print (self.coords_all_x)
-        # print()
-        # print (self.coords_all_y)
+        grid.multi_line(self.x_coordinates_cables, self.y_coordinates_cables, alpha=0.3)
 
         # add houses
         grid.square(self.coordinates_house_x, list_squares, size=5, color='#cc6600')
@@ -105,8 +76,3 @@ class Visual():
         # plot
         show(grid)
 
-    def remove_coords(self):
-        """Clears the temporary lists"""
-
-        self.coord_cable_x.clear()
-        self.coord_cable_y.clear()
