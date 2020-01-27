@@ -76,7 +76,6 @@ class Cablepoints():
         self.cable_x = []
         self.cable_y = []
         self.get_all_coordinates(house, battery)
-        # self.make_cable_list(battery)
 
         try:
             battery.spare_capacity

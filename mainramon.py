@@ -4,28 +4,21 @@ from code.classes.powerramon import batteries, houses, randomgrid, price, powers
 
 if __name__ == "__main__":
 
-    # data load
-    bats1 = batteries.Batteries('data/wijk1_batterijen.csv')
-    houses1 = houses.Houses('data/wijk1_huizen.csv')
+    neighbourhood = input("Enter neighbourhood (1, 2 or 3):  ")
+    number_iterations = input("Enter number of iterations:  ")
+    steps_back = input("Enter steps back: ")
+    houses = houses.Houses(f'data/wijk{neighbourhood}_huizen.csv')
+    batteries = batteries.Batteries(f'data/wijk{neighbourhood}_batterijen.csv')
 
-    bats2 = batteries.Batteries('data/wijk2_batterijen.csv')
-    houses2 = houses.Houses('data/wijk2_huizen.csv')
-
-    bats3 = batteries.Batteries('data/wijk3_batterijen.csv')
-    houses3 = houses.Houses('data/wijk3_huizen.csv')
-
-    batteries = batteries.Batteries('data/wijk1_batterijen.csv')
-    houses = houses.Houses('data/wijk1_huizen.csv')
+    
+    # batteries = batteries.Batteries('data/wijk1_batterijen.csv')
+    # houses = houses.Houses('data/wijk1_huizen.csv')
 
     # tests
-
-    # areadivider = areadivider.AreaDivider(bats1, houses1)
-
-
-    # print(len(cable.cable_list))
     newpowersources = [batteries]
-    algomanhattan = algomanhattan.Closest_first(houses, newpowersources, batteries)
-    pricemanhattan = price.Price(algomanhattan.closest_first, batteries)
+    algomanhattan = algomanhattan.Closest_first(houses, newpowersources, batteries, number_iterations, int(steps_back))
+    # algomanhattan = algomanhattan.Closest_first(houses, newpowersources, batteries, 1, 20)
+    # pricemanhattan = price.Price(algomanhattan.closest_first, batteries)
     # powersourc = powersources.Powersources()
     # powersourc.add_powersource(newpowersources)
     # print(powersourc.powersources_objects[1].battery)
