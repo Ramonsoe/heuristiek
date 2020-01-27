@@ -1,12 +1,7 @@
 import random
 import copy
 from itertools import filterfalse
-
-
-# from code.classes import houses
 from code.classes.houses import Houses
-
-# from code.classes.powerramon.powersources
 from code.classes.powerramon import batteries, houses, cables, battery, house, powersources, cablepoints
 
 
@@ -27,11 +22,6 @@ def random_house(houses):
 def get_closest_house(houses, powersources):
     """looks for the smallest distance between all unconnected houses and powersources"""
 
-    # print(len(houses), len(powersources))
-
-    # initialize
-
-    # try:
     closest_house = houses[0]
     current_powersource = powersources[0]
     manhattan_distance = 10^6       # magic number
@@ -52,9 +42,6 @@ def get_closest_house(houses, powersources):
 
 
     return closest_house, current_powersource
-    # except:
-    #     # print("adjust check_constraint")
-    #     return False
 
 
 def man_distance(house, powersource):
@@ -65,6 +52,7 @@ def man_distance(house, powersource):
 
 
 def distance_all(house, batteries):
+    """KANWEG??"""
 
     all_distances = {}
 
@@ -80,8 +68,11 @@ def remove_house(house, houses):
 
     houses.remove(house)
 
-def clear_powersources(powersources):
 
+def clear_powersources(powersources):
+    """function where list of powersources is emptied"""
+
+    # restore battery info for every battery in powersources to initial info
     for powersource in powersources:
 
         try:
@@ -91,17 +82,24 @@ def clear_powersources(powersources):
         except:
             pass
 
+    # clear the list of powersources
     powersources.clear()
 
+
 def show_results(batteries):
+    """KANWEG??"""
     for battery in batteries.batteries:
         print(f"({battery.x_battery}, {battery.y_battery})")
         print(battery.houses)
 
-def add_powersource(newpowersources):
 
+def add_powersource(newpowersources):
+    """add a new powersource to the list of powersources"""
+
+    # use a function from pwersources.py
     ps = powersources.Powersources()
     ps.add_powersource(newpowersources)
+
     return ps.powersources_objects
 
 def remove_powersources(battery, powersources):
@@ -142,38 +140,54 @@ def check_constraint(current_powersource, powersources, min_capacity):
         pass
 
     # reomve powersources from list of powersources if lower than 20 (magic number)
-    if current_spare < 30:
+    if current_spare < min_capacity:
         remove_powersources(battery, powersources)
 
 def check_feasibility(houses_list, houses, powerlist):
+    """function to check if a solution is stillfeasible, i.e. there are still houses left to match with powersources"""
 
+    # if no houses, remove random houses
     if len(houses_list) == 0:
-        # print("halo")
-        for i in range(30):
+
+        # perform x times, where x is the user defined number of step backs
+        for i in range(50):
             random_connected = random.choice(houses.houses_connected)
 
+            # remove selected house and its cables from powerlist
             if random_connected in powerlist:
                 powerlist.remove(random_connected)
 
                 for cable in random_connected.cables[0]:
                     powerlist.remove(cable)
 
-
+            # append selected house to list of unconnected houses
             houses_list.append(random_connected)
 
             battery = random_connected.battery
 
+            # check if battery of sleected house is still in powersources list
             if not battery in powerlist:
                 powerlist.append(battery)
 
+            # adjust battery and houses
             battery.remove_house(random_connected)
             battery.restore_capacity(random_connected)
             houses.add_unconnected(random_connected)
             houses.house_unconnect(random_connected)
 
+def minimal_output(houses):
+    """function to calculate the minimum outpout of all houses in a neighbourhood"""
+
+    all_outputs = []
+    for house in houses.houses_unconnected:
+        all_outputs.append(house.output)
+
+    return min(all_outputs)
 
 def connect_house_to_powersource(closest_house, current_powersource, houses, powersources):
-    """stop het random huis in de battery"""
+    """put the random house in a battery"""
+
+    # use try except because the list of powersources consists out of both houses, batteries and cables
     try:
         spare_cap = current_powersource.spare_capacity
         battery = current_powersource
@@ -190,7 +204,6 @@ def connect_house_to_powersource(closest_house, current_powersource, houses, pow
 
     # take the outpout of the closest_house to check if it fits in bat
     house_output = closest_house.output
-    # print(battery)
 
     # if house fits, take care of the following steps
     if (battery_capacity - house_output) >= 0:
