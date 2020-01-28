@@ -3,23 +3,22 @@ batteries.py
 
 Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
-File where battery objects are saved in a list of all batteries.
+File in which battery objects are saved in a list of all batteries
 """
-
 
 import csv
 from .battery import Battery
 
 
 class Batteries():
-    """batteries are loaded from the csv file"""
+    """Batteries are loaded from the csv file"""
 
     def __init__(self, battery_file):
         self.batteries = self.read_batteries(battery_file)
 
 
     def read_batteries(self, battery_file):
-        """Loads all the batteries into a list"""
+        """Load all the batteries into a list"""
 
         battery_objects = []
         with open(battery_file, "r") as csv_file:
