@@ -32,15 +32,19 @@ def random_house(houses):
 def get_closest_house(houses, powersources):
     """looks for the smallest distance between all unconnected houses and powersources"""
 
+    # initialize the house and powersource
     closest_house = houses[0]
     current_powersource = powersources[0]
-    manhattan_distance = 10^6       # magic number
+
+    # magic number, very large to make sure that the manhattan distance is always shorter than the initial distance
+    manhattan_distance = 10^6
 
     # loop over all houses and powersources, if new smallest distance, change current powersource and house
     for house in houses:
         for powersource in powersources:
 
             house_distance = man_distance(house, powersource)
+
 
             if house_distance < manhattan_distance:
 
@@ -83,15 +87,17 @@ def clear_powersources(powersources):
     # clear the list of powersources
     powersources.clear()
 
+
 def connect_cable(house, powersource):
+    """place all cables from a house to battery"""
 
     cable_power = cablepoints.Cablepoints()
     cable = cable_power.place_cables(closest_house, current_powersource)
-    print("iets")
     return cable
 
 
 def calc_price(houses, batteries):
+    """calculate the price of the grid"""
 
     pricetotal = price.Price(houses, batteries)
 
@@ -99,16 +105,20 @@ def calc_price(houses, batteries):
 
 
 def append_powersource(powersources, closest_house):
+    """append connected house to list of powersources"""
 
     powersources.append(closest_house)
 
 
 def append_cables(powersources, cables):
+    """append cables to powersources"""
 
     for cable in cables:
         powersources.append(cable)
 
+
 def copy_list(list):
+    """function to deepcopy a list"""
 
     return copy.deepcopy(list)
 
@@ -128,6 +138,7 @@ def remove_powersources(battery, powersources):
 
     for powersource in reversed(powersources):
 
+        # try and except neccesary because not all objects in powersources have the same attributes
         try:
 
             if powersource == battery:
@@ -147,7 +158,7 @@ def remove_powersources(battery, powersources):
 def check_constraint(current_powersource, powersources, min_capacity):
     """function to check the sparecapacity for the current powersource to see if too low"""
 
-
+    # try and except necessary becasue not all ibjects in powersources have the same attributes
     try:
         current_spare = current_powersource.spare_capacity
         battery = current_powersource

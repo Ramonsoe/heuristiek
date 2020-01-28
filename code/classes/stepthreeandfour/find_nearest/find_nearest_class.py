@@ -1,27 +1,45 @@
 import copy
-from code.algorithms import find_nearest as find
+from code.classes.standardobjects.price import Price
+from code.algorithms.stepthreeandfour import find_nearest_algo as find
 
 class FindNearest():
 
     def __init__(self, batteries, houses):
         self.batteries = batteries.batteries
         self.houses = houses.houses
+
+        # needed for price calculation
+        self.battery_objects = batteries
+
         self.connected_houses = []
-        self.run()
+        self.best_houses = None
+        self.best_batteries = None
+        self.n = 0
 
-    def run(self):
-        """Start algorithm"""
+        # large number needed for comparison
+        self.best_price = 10000000
 
-        self.houses = find.sort(self.houses)
-        find.run_divide(self.houses, self.batteries)
+    def run(self, n):
+        """Start algorithm. N parameter is the number of times the code should be run"""
 
-        # keep track of connected and unconnected houses
-        self.make_connected_list()
+        self.n = n
+        for i in range(self.n):
+            self.houses = find.sort(self.houses)
+            find.run_divide(self.houses, self.batteries)
 
-        if (len(self.connected_houses)) != len(self.houses):
-            self.restart()
+            # keep track of connected and unconnected houses
+            self.make_connected_list()
+
+            if self.all_connected() == False:
+                self.restart()
+                break
+            else:
+                self.n -= 1
+
+                self.save_best_grid()
 
     def make_connected_list(self):
+        """Keep track of connected houses"""
 
         for house in self.houses:
             if house.battery != None:
@@ -29,26 +47,20 @@ class FindNearest():
 
     def output(self):
         """Output needed for visualisation"""
-        
-        return self.houses, self.batteries
+
+        return self.best_houses, self.best_batteries, self.best_price
 
     def all_connected(self):
         """Check whether all houses are connected"""
 
-        connected_houses = 0
         connected_batteries = 0
 
-        # check for the connected attribute
-        for house in self.houses:
-            if house.connected == True and house.battery is not None:
-                connected_houses += 1
-
-        # all houses should be in battery lists as well
+        # all houses should be in battery lists
         for battery in self.batteries:
             connected_batteries += len(battery.houses)
 
         # the sum of these two should be twice the number of houses
-        if connected_houses + connected_batteries == 2 * len(self.houses):
+        if len(self.connected_houses) + connected_batteries == 2 * len(self.houses):
             return True
 
         return False
@@ -60,16 +72,22 @@ class FindNearest():
             for house in self.houses:
                 house.connected = False
                 house.cables = []
-                house.all_cable_segments = []
                 house.battery = None
                 house.connected_houses = set()
-            
+
             for battery in self.batteries:
                 battery.houses = []
                 battery.cables = []
-                battery.cable_objects = []
                 battery.spare_capacity = battery.capacity
-            
-            self.run()
 
-                        
+            self.run(self.n)
+
+    def save_best_grid(self):
+
+        calc_price = Price(self.houses, self.battery_objects)
+        current_price = calc_price.price_total
+
+        if current_price < self.best_price:
+            self.best_houses = copy.deepcopy(self.houses)
+            self.best_batteries = copy.deepcopy(self.battery_objects)
+            self.best_price = current_price         

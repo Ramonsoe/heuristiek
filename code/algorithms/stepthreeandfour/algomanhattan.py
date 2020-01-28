@@ -7,9 +7,6 @@ Algorithms based on the manhattan distance: find the closest connection from a h
 """
 
 
-import sys
-# insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/path/to/code/classes/powerramon')
 from code.classes.stepthreeandfour.manhattan import functions
 from code.classes.standardobjects import cablepoints
 import copy
@@ -127,9 +124,5 @@ class Closest_first():
                 houses.empty_connected()
                 houses.fill_unconnected()
 
-        print(number_iterations)
-        print(self.min_capacity)
-        print(price_init)
-        print("steps back:", steps_back)
-        print("average:", gross_price/int(number_iterations))
+        
         return batteries, houses.houses_connected, price_init
