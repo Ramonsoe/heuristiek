@@ -12,7 +12,6 @@ from bokeh.plotting import figure, show
 from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid
 from bokeh.models.glyphs import MultiLine
 from bokeh.io import curdoc, show
-from code.classes.steponeandtwo.random import cables
 from code.classes.standardobjects import batteries, houses
 import copy
 
