@@ -3,7 +3,7 @@ cables.py
 
 Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
-File where cable objects are created and a list of cables is filled.
+File in which cable objects are created and a list of cables is filled.
 """
 
 
@@ -11,7 +11,7 @@ from .cable import Cable
 
 
 class Cables():
-    """Creates different lists of cable coordinates from house to battery"""
+    """Create different lists of cable coordinates from house to battery"""
 
     def __init__(self, house, battery):
 
@@ -24,26 +24,26 @@ class Cables():
         self.cable_x = []
         self.cable_y = []
 
-        # hierdoor hoef je alleen maar Cables aan te roepen als je kabels voor alle huizen wilt
+        # automatically start the process of placing cables
         self.place_cables(house)
 
 
     def distance(self):
-        """ Returns manhattan distance of two coordinates """
+        """Return Manhattan distance of two coordinates"""
 
         distance = abs(self.x1 - self.x2) + abs(self.y1 - self.y2)
         return distance
 
 
     def add_cable_coords(self, X, Y):
-        """This functie may be removed"""
+        """Append cable x and y coordinates to seperate lists"""
 
         self.cable_x.append(X)
         self.cable_y.append(Y)
 
 
     def get_all_coordinates(self):
-        """ Appends the x and y coordinates in separated lists for visualisation purposes """
+        """Append the x and y coordinates in separated lists for visualisation purposes"""
 
         Xi, Yi = self.x1, self.y1
         Xf, Yf = self.x2, self.y2
@@ -73,7 +73,7 @@ class Cables():
 
 
     def make_cable_list(self, list_x, list_y):
-        """ Puts all the x and y coordinates in one list"""
+        """Put all x and y coordinates into one list"""
 
         for i in range(len(self.cable_x)):
             cable_points = [self.cable_x[i], self.cable_y[i]]
@@ -82,7 +82,7 @@ class Cables():
 
 
     def place_cables(self, house):
-        """function where cables are placed"""
+        """Add all cables to house"""
         
         X_segments, Y_segments = self.get_all_coordinates()
 
