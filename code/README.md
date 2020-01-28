@@ -7,13 +7,13 @@ In de folder *standardobjects* staan de files die voor alle deelopdrachten nodig
 In de mappen *steponeandtwo* en *stepthreeandfour* staan files met functies die voor de algoritmes zijn gebruikt.
 
 ### Algorithms  
-In de eerste twee deelopdrachten is het de bedoeling om alle huizen aan een batterij te verbinden. Dit gebeurt in *randomgrid.py*, er wordt per batterij een random huis gekozen. Vervolgens wordt er een verbinding gemaakt, hierbij worden de huizen in de batterij geplaatst en daarna worden pas daadwerkelijk kabels getrokken.
+In de eerste twee deelopdrachten is het de bedoeling om alle huizen aan een batterij te verbinden. Dit gebeurt in *randomgrid.py*; er wordt per batterij een random huis gekozen. Vervolgens wordt er een verbinding gemaakt. Hierbij worden de huizen in de batterij geplaatst en daarna worden pas daadwerkelijk kabels getrokken.
 
 De hieronder beschreven algoritmes zijn voor de laatste twee deelopdrachten. In deze deelopdrachten mogen huizen kabels delen.
 
-Manhattan dept-first algorithm: in dit algoritme wordt bij elke stap de kortst mogelijke connectie tussen een huis en een powersource        gemaakt. Powersources zijn hier de batterijen, aangesloten huizen en gelegde kabels. Als het algoritme geen oplossing kan vinden, gaat het algoritme n stappen terug, waar n door de gebruiker is aangegeven. 
+Manhattan depth-first algorithm: in dit algoritme wordt bij elke stap de kortst mogelijke connectie tussen een huis en een power source        gemaakt. Power sources zijn hier de batterijen, aangesloten huizen en gelegde kabels. Als het algoritme geen oplossing kan vinden, gaat het algoritme n stappen terug, waar n door de gebruiker is aangegeven. 
 
-Find nearest algorithm: in dit algoritme wordt er bij elke stap een random -nog niet aangesloten- huis geselecteerd en vervolgens wordt deze aangesloten aan de dichtbijzijnde nog beschikbare powersource. 
+Find nearest algorithm: in dit algoritme wordt er bij elke stap een random -nog niet aangesloten- huis geselecteerd en vervolgens wordt deze aangesloten aan de dichtbijzijnde nog beschikbare power source. 
 
 ### Visualisation
-Tevens in visualisation is er een scheiding van de opdracht, het randomalgoritme wordt geplot met de random file in visualisation en find_nearest en algomanhattan met de manhattan file.
+Tevens is er in visualisation een scheiding van de opdracht, het randoma lgoritme wordt geplot met de random file in visualisation en find_nearest en algomanhattan met de Manhattan file.
