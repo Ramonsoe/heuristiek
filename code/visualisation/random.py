@@ -1,7 +1,7 @@
 """
 manhattan.py
 
-Layla Hooegveen, Leon Brakkee and Ramon Soesan
+Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
 File with the code to make a visualisation of the algomanhattan.
 """
@@ -33,7 +33,7 @@ class Visual():
         self.coords_all_y = []
 
     def get_values(self):
-        """Setting x and y coordinates of batteries and houses in separate lists"""
+        """Append x and y coordinates of batteries and houses to separate lists"""
 
         for house in self.connected_houses:
 
@@ -49,7 +49,7 @@ class Visual():
 
 
     def make_plot(self, house_x, house_y, battery_x, battery_y):
-        """Creates a gridplot with all the batteries and houses that are connected"""
+        """Create a gridplot with all the batteries and houses that are connected"""
 
         # empty grid
         grid = figure(plot_width = 1500 , plot_height = 600,
