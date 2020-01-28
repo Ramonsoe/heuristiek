@@ -1,26 +1,36 @@
+"""
+algomanhattan.py
+
+Layla Hoogeveen, Leon Brakkee and Ramon Soesan
+
+Algorithms based on the manhattan distance: find the closest connection from a house to a powersource and try to connect.
+"""
+
+
 import sys
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, '/path/to/code/classes/powerramon')
-from code.classes.powerramon import functions, cablepoints, price
-# , batteries, houses, randomgrid, price, powersources, house
+from code.classes.stepthreeandfour import functions, cablepoints, price
 import copy
 import random
 
+
 class Closest_first():
 
-    def __init__(self, houses, powersources, batteries, number_iterations, steps_back):
+    def __init__(self, houses, batteries, number_iterations, steps_back):
 
         # initialize the minimal capacity when a battery has to be left out of the list of powersources
         self.min_capacity = functions.minimal_output(houses) - 5
 
         # initialize a list with powersources
-        self.powerlist = functions.add_powersource(powersources)
+        self.powerlist = functions.add_powersource([batteries])
 
         # save the initial powerlist
-        self.initial_powerlist = copy.deepcopy(self.powerlist)
+        self.initial_powerlist = functions.copy_list(self.powerlist)
 
         # run the algorithm
         self.closest_first = self.run(houses, self.powerlist, batteries, self.min_capacity, number_iterations, steps_back)
+
 
     def run(self, houses, powersources, batteries, min_capacity, number_iterations, steps_back):
         """function where an algorithms, based on shortest manhattan distance from a powersource to a house"""
@@ -35,7 +45,7 @@ class Closest_first():
         gross_price = 0
 
         # keep the algorithmn running until the right amount of solutions is found
-        while run < int(number_iterations):
+        while run < number_iterations:
 
             # initialize a list with houses to use as input
             houses_list = copy.deepcopy(houses.houses_unconnected)
@@ -59,9 +69,8 @@ class Closest_first():
                         cable_to_house = cable_power.place_cables(closest_house, current_powersource)
 
                         # append closest_house and all cables to powerlist
-                        self.powerlist.append(closest_house)
-                        for cable in cable_to_house:
-                            self.powerlist.append(cable)
+                        functions.append_powersource(self.powerlist, closest_house)
+                        functions.append_cables(self.powerlist, cable_to_house)
 
                         # remove the house from the list of houses
                         functions.remove_house(closest_house, houses_list)
@@ -70,14 +79,14 @@ class Closest_first():
                         functions.check_constraint(current_powersource, self.powerlist, min_capacity)
 
                         # take all unconnected houses as houses_list
-                        houses_list = copy.deepcopy(houses.houses_unconnected)
+                        houses_list = functions.copy_list(houses.houses_unconnected)
 
                         # start counting at 0 again
                         count = 0
 
                     else:
                         # remove the closest house from the list to make sure that you dont look at the same house again
-                        houses_list.remove(closest_house)
+                        functions.remove_house(closest_house, houses_list)
 
                         # check if there are still houses in the list after previous line, if not, fill with random houses
                         functions.check_feasibility(houses_list, houses, self.powerlist, steps_back)
@@ -87,30 +96,25 @@ class Closest_first():
 
                 # if exception, reset data and start again
                 except:
-                    houses_list = houses.copy_houses(houses.houses)
+                    houses_list = functions.copy_list(houses.houses)
                     functions.clear_powersources(self.powerlist)
-                    self.powerlist = copy.deepcopy(self.initial_powerlist)
+                    self.powerlist = functions.copy_list(self.initial_powerlist)
                     houses.empty_connected()
                     houses.fill_unconnected()
 
-
-
-
             # check if configuration was succesfull, if yes, stop the algorithm
             if len(houses.houses_unconnected) == 0:
-                print("succes")
                 run += 1
 
                 priceman = price.Price(houses.houses_connected, batteries)
-                # print(priceman.price_total)
                 if priceman.price_total < price_init:
                     price_init = priceman.price_total
-                    best_solution = houses.copy_houses(houses)
+                    best_solution = functions.copy_list(houses)
 
                 gross_price = gross_price + priceman.price_total
-                houses_list = houses.copy_houses(houses.houses)
+                houses_list = functions.copy_list(houses.houses)
                 functions.clear_powersources(self.powerlist)
-                self.powerlist = copy.deepcopy(self.initial_powerlist)
+                self.powerlist = functions.copy_list(self.initial_powerlist)
                 houses.empty_connected()
                 houses.fill_unconnected()
 
@@ -121,7 +125,6 @@ class Closest_first():
                 self.powerlist = copy.deepcopy(self.initial_powerlist)
                 houses.empty_connected()
                 houses.fill_unconnected()
-                print("failure")
 
         print(number_iterations)
         print(self.min_capacity)
