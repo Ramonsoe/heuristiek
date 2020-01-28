@@ -3,7 +3,7 @@ find_nearest.py
 
 Ramon Soesan, Leon Brakkee, Layla Hoogeveen
 
-File where an algorithm is coded. This algorithm selects random houses and connect it to the closest powersource.
+File in which an algorithm is coded. This algorithm selects random houses and connects it to the closest power source.
 """
 
 
@@ -13,7 +13,7 @@ from code.classes.stepthreeandfour.find_nearest import functions as find
 
 
 class FindNearest():
-    """findnearest algorithm"""
+    """FindNearest algorithm"""
     
     def __init__(self, batteries, houses):
         self.batteries = batteries.batteries
