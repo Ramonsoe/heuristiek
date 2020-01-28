@@ -11,13 +11,13 @@ if __name__ == "__main__":
     while int(neighbourhood) > 3 or int(neighbourhood) < 1 or neighbourhood is None:
         neighbourhood = input("Enter neighbourhood (1, 2 or 3):  ")
 
-    # load the houses and batteries
+    # load houses and batteries
     houses = houses.Houses(f'data/wijk{neighbourhood}_huizen.csv')
     batteries = batteries.Batteries(f'data/wijk{neighbourhood}_batterijen.csv')
 
-    section = input("With cable overlap enter 1. Without cable overlap enter 2: ")
+    section = input("With cable overlap, enter 1. Without cable overlap, enter 2: ")
     while int(section) < 1 or int(section) > 2 or section is None:
-        section = input("With cable overlap enter 1. Without cable overlap enter 2: ")
+        section = input("With cable overlap, enter 1. Without cable overlap, enter 2: ")
 
     if int(section) == 1:
         randomgrid = randomgrid.Randomgrid(houses, batteries)
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     elif int(section) == 2:
         battery_outputs = output.Output(batteries)
         answer = input("View battery output? y/n: ")
-        if answer.capitalize() == 'Y' or answer == 'YES':
+        if answer.capitalize() == 'Y':
             battery_outputs.return_outputs()
 
         manhattan.Visual(houses_connected, batteries)
