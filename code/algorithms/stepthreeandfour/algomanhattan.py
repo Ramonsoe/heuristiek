@@ -19,7 +19,7 @@ class Closest_first():
     def __init__(self, houses, batteries, number_iterations, steps_back):
 
         # initialize the minimal capacity when a battery has to be left out of the list of powersources
-        self.min_capacity = functions.minimal_output(houses) - 5
+        self.min_capacity = functions.minimal_output(houses)
 
         # initialize a list with powersources
         self.powerlist = functions.add_powersource([batteries])
