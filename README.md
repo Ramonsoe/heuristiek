@@ -26,7 +26,15 @@ Alle python code staat in de folder code, daar wordt een verdeling over classes 
 
 ### Testen
 
-Run de command *python main.py* om het programma te starten, volg daarna het command-line menu om de verschillende algorithmes te runnen voor elke wijk.
+Run de command *python main.py* om het programma te starten, volg daarna het command-line menu om de verschillende algorithmes te runnen voor elke wijk. De eerste keuze die de gebruiker krijgt is de keuze voor welke wijk een smartgrid gemaakt moet worden (1, 2 of 3).
+Daarna volgt een keuze voor met kabel overlap of zonder kabel overlap. Met kabeloverlap is voor de eerste twee deelopdrachten van smartgrid, zonder kabel overlap voor de laatste twee. Gekozen voor met kabel overlap volgt de output en visualisatie van het random algoritme. Gekozen voor zonder kabel overlap volgt een keuze voor het manhattan algoritme of het find nearest algoritme. Daarna volgt een keuze voor het aantal iteraties. Hierna volgt bij het manhattan algoritme nog de keuze voor hoeveel stappe nhet dept first algoritme terug moet gaan. Dit moet tussen de 5 en 90 zijn om binnen een reele tijd tot een oplossing te komen.
+
+Voorbeeld input: 2
+2
+1
+1
+20
+
 De visualisatie zal automatisch in een html-pagina gegenereerd worden.
 
 ### Auteurs
