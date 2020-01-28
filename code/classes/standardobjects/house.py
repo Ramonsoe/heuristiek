@@ -3,7 +3,7 @@ houses.py
 
 Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
-File where house objects are created.
+File in which house objects are created.
 """
 
 
@@ -25,7 +25,7 @@ class House(object):
 
 
     def connect_house(self, house, battery):
-        """connects a house to a battery"""
+        """Connect house to battery"""
 
         self.connected = True
         self.battery = battery
@@ -37,13 +37,13 @@ class House(object):
 
 
     def check_connection(self):
-        """check whether a house is connected"""
+        """Check whether a house is connected"""
 
         return self.connected
 
 
     def disconnect(self):
-        """function which disconnects a house"""
+        """Disconnect house from current battery"""
 
         self.connected = False
         self.battery = None
@@ -52,6 +52,6 @@ class House(object):
 
 
     def add_cable(self, cable):
-        """add a cable to a house"""
+        """Add a cable to house"""
 
         self.cables.append(cable)
