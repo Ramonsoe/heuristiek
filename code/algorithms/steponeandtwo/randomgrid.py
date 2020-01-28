@@ -21,7 +21,7 @@ class Randomgrid():
 
         self.randomgrid = self.random_dist(houses, batteries)
 
-    # algorithms
+
     def random_dist(self, houses, batteries):
         """algorithm for the solution"""
 
@@ -65,7 +65,7 @@ class Randomgrid():
             if len(houses_list) == 0:
                 go_on = False
                 pricerandom = price.Price(houses.houses_connected, batteries)
-                return houses.houses_connected, pricerandom
+                return batteries, houses.houses_connected, pricerandom
 
             else:
                 # make sure the algorithm starts with the correct lists
