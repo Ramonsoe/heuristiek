@@ -38,6 +38,8 @@ class Cablepoints():
         Xf, Yf = battery.x, battery.y
 
         self.add_cable_coords(Xi, Yi)
+
+        # places the cables step by step from origin to destination
         for i in range(self.distance(house, battery)):
 
             if Yi < Yf:
@@ -60,7 +62,7 @@ class Cablepoints():
 
 
     def make_cable_list(self, battery):
-        """ Puts all the x and y coordinates in one list """
+        """ Puts all the x and y coordinates in one list and create object of every cablepoint"""
 
         for i in range(len(self.cable_x)):
             cablepoint = Cablepoint(self.cable_x[i], self.cable_y[i], battery)
@@ -68,13 +70,6 @@ class Cablepoints():
 
         return self.cable_list
 
-    def connected_to_battery(self, battery):
-        """ Deze functie moet gaan checken welke huizen al connected zijn """
-
-
-    def which_battery(self):
-
-        return self.battery
 
     def place_cables(self, house, battery):
 
@@ -82,6 +77,7 @@ class Cablepoints():
         self.cable_y = []
         self.get_all_coordinates(house, battery)
 
+        # try except because not all powerosurces are batteries, they can also be houses or cables
         try:
             battery.spare_capacity
             battery = battery

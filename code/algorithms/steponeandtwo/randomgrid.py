@@ -65,7 +65,7 @@ class Randomgrid():
             if len(houses_list) == 0:
                 go_on = False
                 pricerandom = price.Price(houses.houses_connected, batteries)
-                return batteries, houses.houses_connected, pricerandom
+                return batteries, houses.houses_connected, pricerandom.price_total
 
             else:
                 # make sure the algorithm starts with the correct lists

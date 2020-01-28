@@ -123,5 +123,4 @@ class Closest_first():
                 houses.empty_connected()
                 houses.fill_unconnected()
 
-
-        return batteries, houses.houses_connected, price_init
+        return batteries, best_solution, price_init

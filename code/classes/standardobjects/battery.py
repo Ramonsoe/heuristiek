@@ -8,7 +8,7 @@ File in which battery objects are created.
 
 
 class Battery(object):
-
+    """battery object with attributes"""
 
     def __init__(self, x, y, capacity):
         self.x = int(x)
@@ -21,6 +21,7 @@ class Battery(object):
 
     def __repr__(self):
         return f"({self.x},{self.y}, {self.spare_capacity})"
+
 
     def add_house(self, house):
         """Add house to list of connected houses"""
@@ -61,6 +62,7 @@ class Battery(object):
         """Return spare capacity"""
 
         return self.spare_capacity
+
 
     def new_spare_capacity(self, output):
         """Change spare capacity"""

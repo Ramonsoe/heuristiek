@@ -7,7 +7,6 @@ File with the code to make a visualisation of the algomanhattan.
 """
 
 
-import numpy as np
 from bokeh.plotting import figure, show
 from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid
 from bokeh.models.glyphs import MultiLine

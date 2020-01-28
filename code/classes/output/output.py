@@ -15,6 +15,7 @@ class Output:
 
         self.convert()
 
+
     def convert(self):
         '''Convert information of all batteries to dictionary'''
 
@@ -38,6 +39,7 @@ class Output:
 
             info['houses'] = houses
             self.outputs.append(info)
+
 
     def return_outputs(self):
         """Return output of all batteries"""

@@ -12,7 +12,7 @@ from .battery import Battery
 
 
 class Batteries():
-
+    """batteries are loaded from the csv file"""
 
     def __init__(self, battery_file):
         self.batteries = self.read_batteries(battery_file)

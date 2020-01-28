@@ -1,9 +1,20 @@
+"""
+find_nearest.py
+
+Ramon Soesan, Leon Brakkee, Layla Hoogeveen
+
+File where an algorithm is coded. This algorithm selects random houses and connect it to the closest powersource.
+"""
+
+
 import copy
 from code.classes.standardobjects.price import Price
 from code.classes.stepthreeandfour.find_nearest import functions as find
 
-class FindNearest():
 
+class FindNearest():
+    """findnearest algorithm"""
+    
     def __init__(self, batteries, houses):
         self.batteries = batteries.batteries
         self.houses = houses.houses
@@ -23,7 +34,9 @@ class FindNearest():
         """Start algorithm. N parameter is the number of times the code should be run"""
 
         self.n = n
-        for i in range(self.n):
+        run = 0
+        while run < self.n:
+
             self.houses = find.sort(self.houses)
             find.run_divide(self.houses, self.batteries)
 
@@ -32,10 +45,9 @@ class FindNearest():
 
             if self.all_connected() == False:
                 self.restart()
-                break
-            else:
-                self.n -= 1
 
+            else:
+                run += 1
                 self.save_best_grid()
 
     def make_connected_list(self):
@@ -65,6 +77,7 @@ class FindNearest():
 
         return False
 
+
     def restart(self):
             """Remove all attributes from houses and batteries to start over"""
 
@@ -80,7 +93,6 @@ class FindNearest():
                 battery.cables = []
                 battery.spare_capacity = battery.capacity
 
-            self.run(self.n)
 
     def save_best_grid(self):
         """Save cheapest solution"""

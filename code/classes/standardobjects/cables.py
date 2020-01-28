@@ -7,8 +7,6 @@ File where cable objects are created and a list of cables is filled.
 """
 
 
-# from .battery import Battery
-# from .batteries import Battery
 from .cable import Cable
 
 
@@ -75,26 +73,17 @@ class Cables():
 
 
     def make_cable_list(self, list_x, list_y):
-        """ Puts all the x and y coordinates in one list """
+        """ Puts all the x and y coordinates in one list"""
 
         for i in range(len(self.cable_x)):
-
             cable_points = [self.cable_x[i], self.cable_y[i]]
             self.cable_list.append(cable_points)
         return self.cable_list
 
 
-    def connected_to_battery(self, battery):
-        """ Deze functie moet gaan checken welke huizen al connected zijn """
-
-
-    def which_battery(self):
-
-        return self.battery
-
-
     def place_cables(self, house):
-
+        """function where cables are placed"""
+        
         X_segments, Y_segments = self.get_all_coordinates()
 
         house_to_battery_cable = self.make_cable_list(X_segments, Y_segments)

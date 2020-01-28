@@ -19,6 +19,7 @@ class Powersources():
 
         for newsource in newsources:
 
+            # use try except because newsource can be a house, cable or battery; they have different attributes
             try:
                 for battery in newsource.batteries:
                     self.powersources_objects.append(battery)

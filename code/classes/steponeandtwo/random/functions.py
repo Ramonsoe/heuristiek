@@ -8,7 +8,7 @@ File with all functions used in the random algorithms.
 
 
 import random
-import copy 
+import copy
 from code.classes.standardobjects import batteries, houses, cables
 
 
@@ -29,10 +29,14 @@ def random_house(houses):
 
 
 def remove_house(house, houses):
+    """removes house from houses"""
+
     houses.remove(house)
 
 
 def clean_batteries(batteries):
+    """clear batteries"""
+    
     for battery in batteries.batteries:
         battery.houses = []
         battery.spare_capacity = battery.capacity

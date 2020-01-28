@@ -1,3 +1,12 @@
+"""
+functions.py
+
+Ramon Soesan, Leon Brakkee and Layla Hoogeveen
+
+functions for the find nearest algorithm
+"""
+
+
 from code.classes.standardobjects import cablepoints
 import copy
 import random

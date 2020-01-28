@@ -16,23 +16,28 @@ class Houses():
 
 
     def __init__(self, house_file):
-        self.houses = self.load_houses(house_file)
 
+        self.houses = self.load_houses(house_file)
         self.houses_unconnected = self.copy_houses(self.houses)
         self.houses_connected = []
 
 
     def connect_house(self, house):
+        """connects house"""
+
         self.houses_connected.append(house)
 
 
     def house_unconnect(self, house):
+        """remove house from connected houses list"""
 
         self.houses_connected.remove(house)
         house.disconnect()
 
 
     def remove_unconnected(self, house):
+        """remove a house frmo unconnected houses"""
+
         for housee in self.houses_unconnected:
             if housee.output is house.output:
                 self.houses_unconnected.remove(housee)
@@ -59,22 +64,24 @@ class Houses():
 
 
     def copy_houses(self, houses):
+        """copy list of houses"""
 
         return copy.deepcopy(houses)
 
 
     def fill_unconnected(self):
+        """fill unconnected houses list with all houses"""
+
         self.houses_unconnected = self.copy_houses(self.houses)
 
 
     def add_unconnected(self, house):
+        """adds house to unconnected houses list"""
+
         self.houses_unconnected.append(house)
 
 
-    def pop_house(self, house):
-        self.houses_unconnected.remove(house)
-
-
     def empty_connected(self):
+        """clears connected houses list"""
 
         self.houses_connected.clear()

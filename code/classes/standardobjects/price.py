@@ -16,6 +16,8 @@ class Price():
 
 
     def price_bats(self, batteries):
+        """price for batteries is calculated here"""
+
         price_bats = 0
         for battery in batteries.batteries:
             price_bats += 5000
@@ -24,11 +26,10 @@ class Price():
 
 
     def price_cables(self, houses):
+        """price for cables calculated here"""
 
         price_cables = 0
-
         for house in houses:
-
             price_cables += 9 * (len(house.cables[0]) - 2)
 
         return price_cables

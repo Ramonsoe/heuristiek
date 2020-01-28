@@ -25,6 +25,8 @@ class House(object):
 
 
     def connect_house(self, house, battery):
+        """connects a house to a battery"""
+
         self.connected = True
         self.battery = battery
         x_battery = battery.x
@@ -35,10 +37,14 @@ class House(object):
 
 
     def check_connection(self):
+        """check whether a house is connected"""
+
         return self.connected
 
 
     def disconnect(self):
+        """function which disconnects a house"""
+
         self.connected = False
         self.battery = None
         self.distance_to_battery = None
@@ -46,5 +52,6 @@ class House(object):
 
 
     def add_cable(self, cable):
+        """add a cable to a house"""
 
         self.cables.append(cable)
