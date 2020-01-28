@@ -3,7 +3,7 @@ powersource.py
 
 Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
-File where a list of powersources (batteries, connected houses and cables) are created.
+File in which a list of power sources (batteries, connected houses and cables) are created.
 """
 
 
@@ -15,7 +15,7 @@ class Powersources():
 
 
     def add_powersource(self, newsources):
-        """add objects to powersource list"""
+        """Add objects to power source list"""
 
         for newsource in newsources:
 
