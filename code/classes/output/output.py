@@ -1,10 +1,12 @@
 """
+output.py
+
+Ramon Soesan, Leon Brakkee and Layla Hoogeveen
+
 Return all information of batteries, including connected houses, (spare) capacity and location
 """
 
-
 import pprint
-
 
 class Output:
 
@@ -42,6 +44,6 @@ class Output:
 
 
     def return_outputs(self):
-        """Return output of all batteries"""
+        """Return output of all batteries in required format"""
 
         pprint.pprint(self.outputs)
