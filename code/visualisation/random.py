@@ -36,7 +36,7 @@ class Visual():
     def get_values(self):
         """Setting x and y coordinates of batteries and houses in separate lists"""
 
-        for house in self.connected_houses[0]:
+        for house in self.connected_houses:
 
             self.coordinates_house_x.append(house.x)
             self.coordinates_house_y.append(house.y)
@@ -62,7 +62,7 @@ class Visual():
         grid.circle(battery_x, battery_y, size=10, color='red')
 
         # add cables to grid
-        for house in self.connected_houses[0]:
+        for house in self.connected_houses:
 
             kabels = house.cables
 
