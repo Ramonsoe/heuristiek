@@ -3,7 +3,7 @@ algomanhattan.py
 
 Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
-Algorithms based on the manhattan distance: find the closest connection from a house to a powersource and try to connect.
+Algorithms based on the Manhattan distance: find the closest connection from a house to a power source and try to connect.
 """
 
 
@@ -14,17 +14,17 @@ import random
 
 
 class Closest_first():
-    """algorithm based on making the shortest possible connection untill all houses are divided over the batteries"""
+    """Algorithm based on making the shortest possible connection until all houses are divided over the batteries"""
 
     def __init__(self, houses, batteries, number_iterations, steps_back):
 
-        # initialize the minimal capacity when a battery has to be left out of the list of powersources
+        # initialize the minimal capacity when a battery has to be left out of the list of power sources
         self.min_capacity = functions.minimal_output(houses)
 
-        # initialize a list with powersources
+        # initialize a list with power sources
         self.powerlist = functions.add_powersource([batteries])
 
-        # save the initial powerlist
+        # save the initial power list
         self.initial_powerlist = functions.copy_list(self.powerlist)
 
         # run the algorithm
@@ -32,18 +32,18 @@ class Closest_first():
 
 
     def run(self, houses, powersources, batteries, min_capacity, number_iterations, steps_back):
-        """function where an algorithms, based on shortest manhattan distance from a powersource to a house"""
+        """Run the algorithms, based on shortest Manhattan distance from a power source to a house"""
 
         # initialize the run counter
         run = 0
 
-        # set the init price very high (higher than the upper bound), so the price will always be adjusted if a silution is found
+        # set the init price very high (higher than the upper bound), so the price will always be adjusted if a solution is found
         price_init = 10000000000000000000
 
-        # keep track if the gross price to be able to calculate the average price
+        # keep track of the gross price to be able to calculate the average price
         gross_price = 0
 
-        # keep the algorithmn running until the right amount of solutions is found
+        # keep the algorithmn running until the right amount of solutions has been found
         while run < number_iterations:
 
             # initialize a list with houses to use as input
@@ -51,16 +51,17 @@ class Closest_first():
 
             count = 0
 
-            # keep looking for a solution while not all houses are connected and it is tried less than 10000 times to find a solution
+            # keep looking for a solution while not all houses are connected and it has been tried less than 10000 times to find a solution
             while len(houses.houses_unconnected) > 0 and count < 10000:
 
-                # make sure that there are objects in the list of powersources
+                # make sure that there are objects in the list of power sources
                 if len(self.powerlist) == 0:
                     break
 
-                # find the closest distance between a house and a powersource
+                # find the closest distance between a house and a power source
                 closest_house, current_powersource = functions.get_closest_house(houses_list, self.powerlist)
-                # connect the closest house to the powersource
+                
+                # connect the closest house to the power source
                 functions.connect_house_to_powersource(closest_house, current_powersource, houses, self.powerlist)
 
                 # check if the house is connected, i.e. the output is lower than the capacity
