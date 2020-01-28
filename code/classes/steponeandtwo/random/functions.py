@@ -13,14 +13,14 @@ from code.classes.standardobjects import batteries, houses, cables
 
 
 def random_battery(batteries):
-    """Returns random batteries"""
+    """Return random batteries"""
 
     random_battery = random.choice(batteries)
     return random_battery
 
 
 def random_house(houses):
-    """Returns random battery if it's not connected"""
+    """Return random battery if not connected"""
 
     while True:
         random_house = random.choice(houses)
@@ -29,13 +29,13 @@ def random_house(houses):
 
 
 def remove_house(house, houses):
-    """removes house from houses"""
+    """Remove house from houses"""
 
     houses.remove(house)
 
 
 def clean_batteries(batteries):
-    """clear batteries"""
+    """Clear batteries"""
     
     for battery in batteries.batteries:
         battery.houses = []
@@ -43,11 +43,12 @@ def clean_batteries(batteries):
 
 
 def connect_house_to_battery(random_house, random_battery, houses, batteries):
-    """stop het random huis in de battery"""
+    """Connect random house to battery"""
 
     battery_capacity = random_battery.spare_capacity
     house_output = random_house.output
 
+    # only connect if battery has enough capacity
     if (battery_capacity - house_output) >= 0:
         random_house.connect_house(random_house, random_battery)
         houses.connect_house(random_house)
