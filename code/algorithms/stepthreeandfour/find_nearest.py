@@ -1,6 +1,6 @@
 import copy
 from code.classes.standardobjects.price import Price
-from code.algorithms.stepthreeandfour import find_nearest_algo as find
+from code.classes.stepthreeandfour.find_nearest import functions as find
 
 class FindNearest():
 
@@ -83,11 +83,13 @@ class FindNearest():
             self.run(self.n)
 
     def save_best_grid(self):
+        """Save cheapest solution"""
 
         calc_price = Price(self.houses, self.battery_objects)
         current_price = calc_price.price_total
 
+        # if price is smaller than the current best_price, make this solution the best
         if current_price < self.best_price:
             self.best_houses = copy.deepcopy(self.houses)
             self.best_batteries = copy.deepcopy(self.battery_objects)
-            self.best_price = current_price         
+            self.best_price = current_price

@@ -2,6 +2,7 @@ from code.classes.standardobjects import cablepoints
 import copy
 import random
 
+
 def sort(houses):
     """Shuffle the list for random results"""
 
@@ -9,11 +10,13 @@ def sort(houses):
 
     return houses
 
+
 def run_divide(houses, batteries):
     """Run the algorithm for dividing houses"""
 
     for house in houses:
         divide_houses(house, batteries, houses)
+
 
 def divide_houses(house, batteries, houses):
     """Divide all houses to batteries or cables/houses connected to batteries"""
@@ -59,6 +62,7 @@ def divide_houses(house, batteries, houses):
     # connect house to nearest battery or to the battery connected to nearest house
     if nearest is not None:
         make_connection(house, nearest, cable_house)
+
 
 def make_connection(house, connection, cable_house):
     """Place cables from house to nearest point"""
@@ -107,12 +111,15 @@ def make_connection(house, connection, cable_house):
 
         place_cables(house, connection)
 
+
 def calculate_distance(house, point):
     '''Return Manhattan distance of two coordinates'''
+
 
     if hasattr(point, 'x'):
         distance = abs(house.x - point.x) + abs(house.y - point.y)
         return distance
+
 
 def place_cables(house, connection):
     """Place cable from house to nearest point"""

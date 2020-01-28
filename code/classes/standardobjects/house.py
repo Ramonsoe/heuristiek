@@ -18,7 +18,7 @@ class House(object):
         self.cables = []
         self.battery = None
         self.distance_to_battery = None
-
+        self.connected_houses = set()
 
     def __repr__(self):
         return f"({self.x}, {self.y}), output: {self.output}, connected: {self.connected} to {self.battery}, distance is {self.distance_to_battery}"

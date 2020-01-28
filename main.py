@@ -1,6 +1,7 @@
 from code.algorithms.steponeandtwo import randomgrid
 from code.algorithms.stepthreeandfour import algomanhattan
 from code.classes.standardobjects import batteries, houses
+from code.classes.output import output
 from code.visualisation import random, manhattan
 
 if __name__ == "__main__":
