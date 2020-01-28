@@ -14,6 +14,7 @@ import random
 
 
 class Closest_first():
+    """algorithm based on making the shortest possible connection untill all houses are divided over the batteries"""
 
     def __init__(self, houses, batteries, number_iterations, steps_back):
 
@@ -53,70 +54,68 @@ class Closest_first():
             # keep looking for a solution while not all houses are connected and it is tried less than 10000 times to find a solution
             while len(houses.houses_unconnected) > 0 and count < 10000:
 
+                # make sure that there are objects in the list of powersources
+                if len(self.powerlist) == 0:
+                    break
+
                 # find the closest distance between a house and a powersource
-                try:
-                    closest_house, current_powersource = functions.get_closest_house(houses_list, self.powerlist)
-                    # connect the closest house to the powersource
-                    functions.connect_house_to_powersource(closest_house, current_powersource, houses, self.powerlist)
+                closest_house, current_powersource = functions.get_closest_house(houses_list, self.powerlist)
+                # connect the closest house to the powersource
+                functions.connect_house_to_powersource(closest_house, current_powersource, houses, self.powerlist)
 
-                    # check if the house is connected, i.e. the output is lower than the capacity
-                    if closest_house.check_connection():
+                # check if the house is connected, i.e. the output is lower than the capacity
+                if closest_house.check_connection():
 
-                        # place the cables
-                        # cable_to_house = functions.connect_cable(closest_house, current_powersource)
-                        cable_power = cablepoints.Cablepoints()
-                        cable_to_house = cable_power.place_cables(closest_house, current_powersource)
+                    # place the cables
+                    cable_power = cablepoints.Cablepoints()
+                    cable_to_house = cable_power.place_cables(closest_house, current_powersource)
 
-                        # append closest_house and all cables to powerlist
-                        functions.append_powersource(self.powerlist, closest_house)
-                        functions.append_cables(self.powerlist, cable_to_house)
+                    # append closest_house and all cables to powerlist
+                    functions.append_powersource(self.powerlist, closest_house)
+                    functions.append_cables(self.powerlist, cable_to_house)
 
-                        # remove the house from the list of houses
-                        functions.remove_house(closest_house, houses_list)
+                    # remove the house from the list of houses
+                    functions.remove_house(closest_house, houses_list)
 
-                        # check if current_powersource is still
-                        functions.check_constraint(current_powersource, self.powerlist, min_capacity)
+                    # check if current_powersource is still
+                    functions.check_constraint(current_powersource, self.powerlist, min_capacity)
 
-                        # take all unconnected houses as houses_list
-                        houses_list = functions.copy_list(houses.houses_unconnected)
+                    # take all unconnected houses as houses_list
+                    houses_list = functions.copy_list(houses.houses_unconnected)
 
-                        # start counting at 0 again
-                        count = 0
+                    # start counting at 0 again
+                    count = 0
 
-                    else:
-                        # remove the closest house from the list to make sure that you dont look at the same house again
-                        functions.remove_house(closest_house, houses_list)
+                else:
+                    # remove the closest house from the list to make sure that you dont look at the same house again
+                    functions.remove_house(closest_house, houses_list)
 
-                        # check if there are still houses in the list after previous line, if not, fill with random houses
-                        functions.check_feasibility(houses_list, houses, self.powerlist, steps_back)
+                    # check if there are still houses in the list after previous line, if not, fill with random houses
+                    functions.check_feasibility(houses_list, houses, self.powerlist, steps_back)
 
-                        # increase count by one
-                        count += 1
-
-                # if exception, reset data and start again
-                except:
-                    houses_list = functions.copy_list(houses.houses)
-                    functions.clear_powersources(self.powerlist)
-                    self.powerlist = functions.copy_list(self.initial_powerlist)
-                    houses.empty_connected()
-                    houses.fill_unconnected()
+                    # increase count by one
+                    count += 1
 
             # check if configuration was succesfull, if yes, stop the algorithm
             if len(houses.houses_unconnected) == 0:
                 run += 1
                 priceman = functions.calc_price(houses.houses_connected, batteries)
+
+                # check if current price is lower than the lowest price
                 if priceman.price_total < price_init:
                     price_init = priceman.price_total
                     best_solution = functions.copy_list(houses)
 
                 gross_price = gross_price + priceman.price_total
+
+                # set all data to the starting values before starting the algorithm again
                 houses_list = functions.copy_list(houses.houses)
                 functions.clear_powersources(self.powerlist)
                 self.powerlist = functions.copy_list(self.initial_powerlist)
                 houses.empty_connected()
                 houses.fill_unconnected()
 
-            # otherwise, set all data to starting values
+            # set all data to starting values before starting again
             else:
                 houses_list = houses.copy_houses(houses.houses)
                 functions.clear_powersources(self.powerlist)
@@ -124,5 +123,5 @@ class Closest_first():
                 houses.empty_connected()
                 houses.fill_unconnected()
 
-        
+
         return batteries, houses.houses_connected, price_init
