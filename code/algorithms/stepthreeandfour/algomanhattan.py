@@ -104,7 +104,7 @@ class Closest_first():
                 # check if current price is lower than the lowest price
                 if priceman.price_total < price_init:
                     price_init = priceman.price_total
-                    best_solution = functions.copy_list(houses)
+                    best_solution = functions.copy_list(houses.houses_connected)
 
                 gross_price = gross_price + priceman.price_total
 
