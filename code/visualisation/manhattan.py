@@ -1,7 +1,7 @@
 """
 manhattan.py
 
-Layla Hooegveen, Leon Brakkee and Ramon Soesan
+Layla Hoogeveen, Leon Brakkee and Ramon Soesan
 
 File with the code to make a visualisation of the algomanhattan.
 """
@@ -36,13 +36,14 @@ class Visual():
 
 
     def remove_coords(self):
-        """Clears the temporary lists"""
+        """Clear the temporary lists"""
 
         self.coord_cable_x.clear()
         self.coord_cable_y.clear()
 
 
     def color_plot(self):
+        """Plot houses, batteries and cables using different colors for each battery"""
 
         color = ['blue','red','black','orange','green']
         i = -1
@@ -51,7 +52,6 @@ class Visual():
 
             self.coordinates_battery_x.append(battery.x)
             self.coordinates_battery_y.append(battery.y)
-
 
             i += 1
             for house in battery.houses:
