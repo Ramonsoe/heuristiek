@@ -16,7 +16,7 @@ class Price():
 
 
     def price_bats(self, batteries):
-        """price for batteries is calculated here"""
+        """Calculate price of all batteries"""
 
         price_bats = 0
         for battery in batteries.batteries:
@@ -26,10 +26,13 @@ class Price():
 
 
     def price_cables(self, houses):
-        """price for cables calculated here"""
+        """Calculate price for all cables"""
 
         price_cables = 0
         for house in houses:
+            
+            # one cable part costs €9
+            # first and last cable point already exist (house and destination), hence -2 
             price_cables += 9 * (len(house.cables[0]) - 2)
 
         return price_cables
