@@ -3,7 +3,7 @@ functions.py
 
 Ramon Soesan, Leon Brakkee and Layla Hoogeveen
 
-functions for the find nearest algorithm
+Functions for the find nearest algorithm
 """
 
 
@@ -123,7 +123,6 @@ def make_connection(house, connection, cable_house):
 
 def calculate_distance(house, point):
     '''Return Manhattan distance of two coordinates'''
-
 
     if hasattr(point, 'x'):
         distance = abs(house.x - point.x) + abs(house.y - point.y)
