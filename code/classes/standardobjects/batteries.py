@@ -13,8 +13,10 @@ from .battery import Battery
 
 class Batteries():
 
+
     def __init__(self, battery_file):
         self.batteries = self.read_batteries(battery_file)
+
 
     def read_batteries(self, battery_file):
         """Loads all the batteries into a list"""

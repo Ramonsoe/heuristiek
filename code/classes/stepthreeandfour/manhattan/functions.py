@@ -10,7 +10,7 @@ File where all functions of the algomanhattan are coded.
 import random
 import copy
 from itertools import filterfalse
-from code.classes.stepthreeandfour import batteries, houses, battery, house, powersources, cablepoints
+from code.classes.standardobjects import batteries, houses, battery, house, price, powersources, cablepoints
 
 
 def random_powersource(powersources):
@@ -82,6 +82,20 @@ def clear_powersources(powersources):
 
     # clear the list of powersources
     powersources.clear()
+
+def connect_cable(house, powersource):
+
+    cable_power = cablepoints.Cablepoints()
+    cable = cable_power.place_cables(closest_house, current_powersource)
+    print("iets")
+    return cable
+
+
+def calc_price(houses, batteries):
+
+    pricetotal = price.Price(houses, batteries)
+
+    return pricetotal
 
 
 def append_powersource(powersources, closest_house):

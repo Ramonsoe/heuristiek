@@ -9,7 +9,8 @@ File with all functions used in the random algorithms.
 
 import random
 import copy
-from code.classes.steponeandtwo import batteries, houses, cables, battery, house
+from code.classes.steponeandtwo.random import cables
+from code.classes.standardobjects import batteries, houses
 
 
 def random_battery(batteries):

@@ -7,8 +7,8 @@ File where cable objects are created and a list of cables is filled.
 """
 
 
-from .battery import Battery
-from .batteries import Battery
+# from .battery import Battery
+# from .batteries import Battery
 from .cable import Cable
 
 
@@ -17,10 +17,10 @@ class Cables():
 
     def __init__(self, house, battery):
 
-        self.x1 = house.x_house
-        self.y1 = house.y_house
-        self.x2 = battery.x_battery
-        self.y2 = battery.y_battery
+        self.x1 = house.x
+        self.y1 = house.y
+        self.x2 = battery.x
+        self.y2 = battery.y
 
         self.cable_list = []
         self.cable_x = []

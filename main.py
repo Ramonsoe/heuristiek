@@ -1,9 +1,12 @@
 from code.algorithms.steponeandtwo import randomgrid
-from code.classes.steponeandtwo.random import functions, cables, cable
-from code.classes.standardobjects import batteries, houses, price, house
+from code.algorithms.stepthreeandfour import algomanhattan
+from code.classes.steponeandtwo import batteries, houses, functions, price, cables, cable, house
+from code.classes.stepthreeandfour import batteries, houses, price, powersources, cablepoints, house
 from code.visualisation import random
 
 if __name__ == "__main__":
+
+    # prompt user for neighbourhood
 
     # prompt user for neighbourhood
     neighbourhood = input("Enter neighbourhood (1, 2 or 3):  ")

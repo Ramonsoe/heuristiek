@@ -12,7 +12,8 @@ from bokeh.plotting import figure, show
 from bokeh.models import ColumnDataSource, Plot, LinearAxis, Grid
 from bokeh.models.glyphs import MultiLine
 from bokeh.io import curdoc, show
-from code.classes.steponeandtwo import cables, batteries, houses
+from code.classes.steponeandtwo.random import cables
+from code.classes.standardobjects import batteries, houses
 import copy
 
 class Visual():
@@ -38,13 +39,13 @@ class Visual():
 
         for house in self.connected_houses[0]:
 
-            self.coordinates_house_x.append(house.x_house)
-            self.coordinates_house_y.append(house.y_house)
+            self.coordinates_house_x.append(house.x)
+            self.coordinates_house_y.append(house.y)
 
         for bat in self.batteries:
 
-            self.coordinates_battery_x.append(bat.x_battery)
-            self.coordinates_battery_y.append(bat.y_battery)
+            self.coordinates_battery_x.append(bat.x)
+            self.coordinates_battery_y.append(bat.y)
 
         return self.coordinates_house_x, self.coordinates_house_y, self.coordinates_battery_x, self.coordinates_battery_y
 

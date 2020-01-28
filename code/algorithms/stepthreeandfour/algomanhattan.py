@@ -10,7 +10,8 @@ Algorithms based on the manhattan distance: find the closest connection from a h
 import sys
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, '/path/to/code/classes/powerramon')
-from code.classes.stepthreeandfour import functions, cablepoints, price
+from code.classes.stepthreeandfour.manhattan import functions
+from code.classes.standardobjects import cablepoints
 import copy
 import random
 
@@ -48,7 +49,7 @@ class Closest_first():
         while run < number_iterations:
 
             # initialize a list with houses to use as input
-            houses_list = copy.deepcopy(houses.houses_unconnected)
+            houses_list = functions.copy_list(houses.houses_unconnected)
 
             count = 0
 
@@ -65,6 +66,7 @@ class Closest_first():
                     if closest_house.check_connection():
 
                         # place the cables
+                        # cable_to_house = functions.connect_cable(closest_house, current_powersource)
                         cable_power = cablepoints.Cablepoints()
                         cable_to_house = cable_power.place_cables(closest_house, current_powersource)
 
@@ -105,8 +107,7 @@ class Closest_first():
             # check if configuration was succesfull, if yes, stop the algorithm
             if len(houses.houses_unconnected) == 0:
                 run += 1
-
-                priceman = price.Price(houses.houses_connected, batteries)
+                priceman = functions.calc_price(houses.houses_connected, batteries)
                 if priceman.price_total < price_init:
                     price_init = priceman.price_total
                     best_solution = functions.copy_list(houses)
@@ -131,4 +132,4 @@ class Closest_first():
         print(price_init)
         print("steps back:", steps_back)
         print("average:", gross_price/int(number_iterations))
-        return houses.houses_connected, price_init
+        return batteries, houses.houses_connected, price_init

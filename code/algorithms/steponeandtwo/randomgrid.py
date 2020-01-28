@@ -8,7 +8,8 @@ assigns the houses to them at random.
 """
 
 
-from code.classes.steponeandtwo.random import batteries, houses, cables, price, functions
+from code.classes.steponeandtwo.random import cables, functions
+from code.classes.standardobjects import batteries, houses, price
 import csv
 
 

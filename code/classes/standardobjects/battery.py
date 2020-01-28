@@ -8,6 +8,8 @@ File where battery objects are created.
 
 
 class Battery(object):
+
+    
     def __init__(self, x, y, capacity):
         self.x = int(x)
         self.y = int(y)
@@ -24,8 +26,10 @@ class Battery(object):
     def add_house(self, house):
         self.houses.append(house)
 
+
     def remove_house(self, house):
         self.houses.remove(house)
+
 
     def restore_capacity(self, house):
 
